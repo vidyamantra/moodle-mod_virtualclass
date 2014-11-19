@@ -45,3 +45,5 @@ $string['selectteacher'] = 'Select teacher';
 $string['selectteacher_help'] = 'Select teacher as a moderator for virtual classroom';
 $string['joinroom'] = 'Join virtual class room';
 $string['sessionclosed'] = 'This session has been closed :)';
+$string['virtualclass:view'] = 'View virtualclass';
+$string['virtualclass:addinstance'] = 'Add a new virtualclass';
