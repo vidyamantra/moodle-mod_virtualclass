@@ -1,25 +1,8 @@
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="<?php echo $whiteboard_path;?>bundle/jquery/jquery-ui.min.js"></script>
 
 <!--<script type="text/javascript" src="<?php echo $whiteboard_path;?>build/wb.min.js"></script>-->
-
 <script type="text/javascript" src="<?php echo $whiteboard_path;?>bundle/io/src/iolib.js"></script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <script type="text/javascript" src="<?php echo $whiteboard_path;?>src/vmapp.js"></script>
 <script type="text/javascript" src="<?php echo $whiteboard_path;?>src/vcan.js"></script>
 <script type="text/javascript" src="<?php echo $whiteboard_path;?>src/whboard.js"></script>
@@ -63,8 +46,7 @@
 <script type="text/javascript" src="<?php echo $whiteboard_path;?>src/screenshare.js"></script>
 <script type="text/javascript" src="<?php echo $whiteboard_path;?>src/recorder.js"></script>
 <script type="text/javascript" src="<?php echo $whiteboard_path;?>src/storage.js"></script>
-
-<script type="text/javascript" src="<?php echo $whiteboard_path;?>bundle/jquery/jquery-ui.min.js"></script>
+<script type="text/javascript" src="<?php echo $whiteboard_path;?>src/user.js"></script>
 
 <script type="text/javascript" src="<?php echo $whiteboard_path;?>csrc/footer.js"></script>
 <script type="text/javascript" src="<?php echo $whiteboard_path;?>csrc/jquery.ui.chatlist.js"></script>

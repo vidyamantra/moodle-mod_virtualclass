@@ -14,6 +14,7 @@
 //              ssConfig : { id : "vApp" + appName[1], classes : "appOptions"},
 //              wssConfig :{ id : "vApp" + appName[2], classes : "appOptions"}, 
               apps : ["Whiteboard", "ScreenShare", "WholeScreenShare"],
+              appSessionEnd : ' "vAppSessionEnd',
               rWidgetConfig : {id: 'chatWidget' },
               wb : "", 
               ss : "",
@@ -27,31 +28,34 @@
                 uName : window.wbUser.name
               },
               
-              init : function (urole, app){
-                  
-                  this.wbConfig = { id : "vApp" + this.apps[0], classes : "appOptions"};
-                  this.ssConfig = { id : "vApp" + this.apps[1], classes : "appOptions"};
-                  this.wssConfig = { id : "vApp" + this.apps[2], classes : "appOptions"};
+            init : function (urole, app){
 
-                  this.lang.getString = window.getString;
-                  this.lang.message = window.message;
-                  this.vutil = window.vutil;
-                  this.media = window.media; 
-              //    this.chat = window.chat;
-                  this.system = window.system;
-                  this.recorder = window.recorder;
-                  this.clear = "";
-                  this.currApp = app;
-                 
-                  this.storage = window.storage;
-                  
-                  this.storage.init();
-                  
-                  this.html.init(this);
-                  if(urole == 't'){
-                      this.html.optionsWithWrapper();
-                      this.attachFunction();
-                  }
+                this.wbConfig = { id : "vApp" + this.apps[0], classes : "appOptions"};
+                this.ssConfig = { id : "vApp" + this.apps[1], classes : "appOptions"};
+                this.wssConfig = { id : "vApp" + this.apps[2], classes : "appOptions"};
+                this.user = new window.user();
+                this.lang.getString = window.getString;
+                this.lang.message = window.message;
+                this.vutil = window.vutil;
+                this.media = window.media; 
+            //    this.chat = window.chat;
+                this.system = window.system;
+                this.recorder = window.recorder;
+                this.clear = "";
+                this.currApp = app;
+
+                this.storage = window.storage;
+
+                this.storage.init();
+
+                this.html.init(this);
+
+//                  alert("LeftOptions");
+//                  //19
+//                  if(urole == 't'){
+//                      this.html.optionsWithWrapper();
+//                      this.attachFunction();
+//                  }
                   
                   this.adapter = window.adapter;
                   this.makeAppReady(app, "byclick");
@@ -60,22 +64,23 @@
                   this.system.check();
                   this.vutil.isSystemCompatible();
                   
-                  if(app == this.apps[1]){
-                      this.system.setCanvasDimension();
-                  }
+//                  vApp.user.assignRole(vApp.gObj.uRole, app); 
                   
-                  // rightsidebar
-                //  this.vutil.sidebarHeightInit();
+                  //todo convert into function
+                vApp.wb.utility.displayCanvas();
+                if(app == this.apps[1]){
+                    this.system.setCanvasDimension();
+                }
                   
+                  //To teacher
+                if(vApp.gObj.uRole == 't'){
+                    vApp.user.assignRole(vApp.gObj.uRole, app);
+                    vcan.utility.canvasCalcOffset(vcan.main.canid);
+                }
                   
-                  
-                  this.gObj.video = new window.vApp.media();
-                  
-                  //this.gObj.chat = new window.vApp.chat();
-                  
-             //     this.gObj.chat.init();
-                  
-                  this.initSocketConn();                  
+                this.gObj.video = new window.vApp.media();
+                this.initSocketConn();                  
+                
               },
               
               initSocketConn : function (){
@@ -88,7 +93,7 @@
                         'rid': wbUser.path,
                         'authuser':wbUser.auth_user,
                         'authpass':wbUser.auth_pass,
-                        'userobj': {'userid':wbUser.id,'name':wbUser.name, 'img' : window.imageurl},
+                        'userobj': {'userid':wbUser.id,'name':wbUser.name, 'img' : window.imageurl, role :  wbUser.role},
                         'fastchat_lasttime':'0',
                         'fastchatroom_title':'fastchat',
                         'fastchatroom_name':wbUser.room
@@ -107,6 +112,7 @@
                 },
                 
                 optionsWithWrapper : function (){
+//                    alert('suman bogati');
                     var appCont = document.getElementById(this.id);
                     var appOptCont =  this.createElement('div', 'vAppOptionsCont');
                     appCont.insertBefore(appOptCont, appCont.firstChild);
@@ -114,9 +120,12 @@
                     this.createDiv(vApp.wbConfig.id + "Tool", "whiteboard", appOptCont, vApp.wbConfig.classes);
                     this.createDiv(vApp.ssConfig.id + "Tool", "screenshare", appOptCont, vApp.ssConfig.classes);
                     this.createDiv(vApp.wssConfig.id + "Tool", "wholescreenshare", appOptCont, vApp.wssConfig.classes);
+//                    alert(vApp.wssConfig.id);
+//                    alert(vApp.sessionEnd);
+                    this.createDiv(vApp.appSessionEnd + "Tool", "sessionend", appOptCont, 'appOptions');
                 },  
                 
-                createDiv: function(toolId, text, cmdToolsWrapper, cmdClass) {
+                createDiv: function(toolId, text, cmdToolsWrapper, cmdClass, toBeReplace) {
                     var ancTag = document.createElement('a');
                     ancTag.href = '#';
 
@@ -140,8 +149,14 @@
                     ancTag.className = 'tooltip';
 
                     lDiv.appendChild(ancTag);
-
-                    cmdToolsWrapper.appendChild(lDiv);
+                    
+                    if(typeof toBeReplace != 'undefined'){
+                        var toBeReplace = document.getElementById('vAppScreenShareTool');
+                        cmdToolsWrapper.replaceChild(lDiv, toBeReplace);
+                    }else{
+                        cmdToolsWrapper.appendChild(lDiv);
+                    }
+                    
                 },
                 
                 
@@ -165,14 +180,6 @@
               
               
               makeAppReady : function (app, cusEvent){
-                    if(app == 'Whiteboard' && vApp.gObj.uRole == 't'){
-                        if(vApp.hasOwnProperty('prevApp')){
-                            vApp.vutil.makeActiveApp("vApp" + app, vApp.prevApp);
-                        } else{
-                            vApp.vutil.makeActiveApp("vApp" + app);
-                        }
-                    }
-                    
                   if(app == this.apps[0]){
                       
                       if(typeof this.ss == 'object'){
@@ -207,22 +214,17 @@
                             this.wb._replay = _replay;
                             this.wb.readyTextObj = window.readyTextObj;
 
-    //                        this.adapter = window.adapter;
-
-//                            this.wb.media = window.media; 
                             this.wb.bridge = window.bridge;
                             this.wb.response = window.response;
                             
                             
-                            this.wb.utility.displayCanvas();
+                           // this.wb.utility.displayCanvas();
                             
                             //this.wb.utility.replayFromLocalStroage();
                             var olddata = "";
                             this.wb.utility.initUpdateInfo(olddata);
                             
                         }
-                        
-                        
                         
                         if(typeof this.prevScreen != 'undefined' && this.prevScreen.hasOwnProperty('currentStream')){
                             this.prevScreen.unShareScreen();    
@@ -242,10 +244,7 @@
                       if(typeof this.wss != 'object'){
                             this.wss = new window.screenShare(vApp.wssConfig);
                       }
-                        
-                   // this.wss.init(app);
-                    
-                    this.wss.init({type: 'wss', app : app});
+                      this.wss.init({type: 'wss', app : app});
                   }
               },
               
@@ -256,6 +255,7 @@
                       var anchTag = allAppOptions[i].getElementsByTagName('a')[0];
                       //anchTag.addEventListener('click', this.initlizer);
                       var that = this;
+                      clickedAnchor = anchTag;
                       anchTag.onclick = function (){
                           that.initlizer(this)
                       };
@@ -263,7 +263,14 @@
               },
               
               initlizer : function (elem){
-                    var appName = elem.parentNode.id.split("vApp")[1];
+                  
+               // alert(elem.getAttribute('data-title'));
+                
+                var appName = elem.parentNode.id.split("vApp")[1];
+                if(appName == 'SessionEndTool'){
+                    vApp.storage.config.endSession();
+                    vApp.wb.utility.beforeSend({sEnd : true});
+                }else{
                     appName = appName.substring(0, appName.indexOf("Tool"));
                     this.currApp = appName;
                     if(!this.PrvAndCurrIsWss(this.previous, appName)){
@@ -271,6 +278,7 @@
                     }else{
                         alert("Already the whole screen is being shared.");
                     }
+                }
               },
               
               PrvAndCurrIsWss : function (previous, appName){

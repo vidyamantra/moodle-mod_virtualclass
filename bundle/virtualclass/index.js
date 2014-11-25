@@ -99,9 +99,8 @@ jQuery.cachedScript = function( url, options ) {
 
             //if (e.fromUser.userid == id ){
         vApp.wb.utility.initDefaultInfo(wbUser.role);
-        vApp.wb.utility.makeUserAvailable();
         
-       
+        //vApp.wb.utility.makeUserAvailable();
         
         $(document).on("user_logout", function(e){
             removedMemberId = e.fromUser.userid;
@@ -133,6 +132,7 @@ jQuery.cachedScript = function( url, options ) {
 
             duser.push(dummyUser);   
             memberUpdate({message : duser});
+            
             dn++;
             if(dn <=30){
                 myTimeout = setTimeout(createDemoUserList, 1000);
@@ -150,12 +150,34 @@ jQuery.cachedScript = function( url, options ) {
         $(document).on("member_added", function(e){
             vApp.wb.clientLen = e.message.length;
             var joinId = e.message[e.message.length - 1].userid;
-            memberUpdate(e);
+            vApp.jId = joinId;
+            
+//            if(joinId ==  vApp.gObj.uid){
+//                vApp.gObj.video._handleUserMedia(joinId);
+//            }
+            
+            
+            memberUpdate(e, 'added');
             if(typeof vApp.gObj.hasOwnProperty('updateHeight')){
                 vApp.gObj.video.updateVidContHeight();
                 vApp.gObj.updateHeight = true;
             }
             
+//            if(joinId == vApp.gObj.uid && vApp.gObj.uRole == 't'){
+//                alert('suman bogati');
+//                if(vApp.user.teacherIsAlreadyExist()){
+//                    
+//                   //  alert('exist');
+//                  //  usr.role = 's';
+//                    vApp.gObj.uRole = 's';
+//                }else{
+//                    alert('SSS');
+//                    if(document.getElementById('commandToolsWrapper') ==  null){
+//                        vApp.user.assignRole(vApp.gObj.uRole, 'Whiteboard');
+//                        vcan.utility.canvasCalcOffset(vcan.main.canid);
+//                    }
+//                }
+//            }
             
             if(joinId == vApp.gObj.uid && vApp.gObj.uRole != 't'){
 				
@@ -177,20 +199,22 @@ jQuery.cachedScript = function( url, options ) {
             
         $(document).on("newmessage", function(e){
             vApp.wb.view.removeElement('serverErrorCont');
-            if(typeof e.message == 'string' || e.message.hasOwnProperty('msg')){
-                messageUpdate(e);
-                return;
-            }
-            
+                        
 //            if(!e.message.hasOwnProperty('audioSamp') && !e.message.hasOwnProperty('videoByImage')){
 //                alert('sss');
 //                debugger;
 //            }
 
-            if(e.message.hasOwnProperty('dispWhiteboard')){
+            if(typeof e.message == 'string' || e.message.hasOwnProperty('msg')){
+                messageUpdate(e);
+                return;
+            }if(e.message.hasOwnProperty('sEnd')){
+                vApp.storage.config.endSession();
+                return;
+            }if(e.message.hasOwnProperty('dispWhiteboard')){
               //  if(e.fromUser.userid != wbUser.id){
-                    vApp.makeAppReady(vApp.apps[0]);
-                    return;
+                vApp.makeAppReady(vApp.apps[0]);
+                return;
                // }
             } else if(e.message.hasOwnProperty('si')){ //screen share start
                 if(vApp.gObj.uRole == 's'){
@@ -518,19 +542,18 @@ jQuery.cachedScript = function( url, options ) {
          
         /*** chat start from here ***/
         
-        
-        var session = {
-        audio: true,
-        video: false
-    };
+        //this file have to be convert into function   
+         var session = {
+             audio: true,
+             video: false
+         };
 
-    var recordRTC = null;
-    var resampler = new Resampler(44100, 8000, 1, 4096);
+         var recordRTC = null;
+         var resampler = new Resampler(44100, 8000, 1, 4096);
 
-    var Html5Audio = {};
-    Html5Audio.audioContext = new AudioContext();
+         var Html5Audio = {};
+         Html5Audio.audioContext = new AudioContext();
 
-    var encMode = "alaw"; 
-         
+        var encMode = "alaw"; 
    });
 //});
