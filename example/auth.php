@@ -44,29 +44,25 @@ $post_data = array('authuser'=> $authusername,'authpass' => $authpassword, 'lice
   	exit;
   }
   
-setcookie('auth_user', $authusername, 0, '/');
-setcookie('auth_pass', $authpassword, 0, '/');
-setcookie('path', $rid, 0, '/');
+//setcookie('auth_user', $authusername, 0, '/');
+//setcookie('auth_pass', $authpassword, 0, '/');
+//setcookie('path', $rid, 0, '/');
  
   //$rid='8000.vidya.io';
 ?>
 
 <script type="text/javascript">
 <?php echo "var wbUser = {};";?>
-<?php echo "wbUser.auth_user='".$authusername."';"; ?>
-<?php echo "wbUser.auth_pass='".$authpassword."';"; ?>
-<?php echo "wbUser.path='".$rid."';";?>
+<?php echo " wbUser.auth_user='".$authusername."';"; ?>
+<?php echo " wbUser.auth_pass='".$authpassword."';"; ?>
+<?php echo " wbUser.path='".$rid."';";?>
 </script>
 
 
-
-
-
-
-
 <script type="text/javascript">
-    <?php echo "auth_user='".$_COOKIE['auth_user']."';"; ?>
-    <?php echo "auth_pass='".$_COOKIE['auth_pass']."';"; ?>
-    <?php echo "path='".$_COOKIE['path']."';";?>
+	//earlier cookie is using
+    <?php echo "auth_user='".$authusername."';"; ?>
+    <?php echo "auth_pass='".$authpassword."';"; ?>
+    <?php echo "path='".$rid."';";?>
     <?php echo "imageurl='./images/quality-support.png';";?>
 </script>
