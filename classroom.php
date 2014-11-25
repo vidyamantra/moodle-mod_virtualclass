@@ -92,7 +92,15 @@ if(has_capability('mod/virtualclass:addinstance', $context)){
 // Output starts here.
 echo $OUTPUT->header();
 ?>
+<?php 
 
+//$PAGE->requires->js('/mod/virtualclass/bundle/virtualclass/bundle/io/src/iolib.js');
+//$PAGE->requires->js('/mod/virtualclass/bundle/virtualclass/build/wb.min.js');
+////$PAGE->requires->js('/mod/virtualclass/bundle/virtualclass/build/chat.min.js');
+//$PAGE->requires->js('/mod/virtualclass/bundle/virtualclass/index.js');
+
+
+?>
 <script type="text/javascript">
     <?php echo "name='".$USER->username."';"; ?>
     <?php echo "id='".$USER->id."';"; ?>
@@ -112,15 +120,20 @@ echo $OUTPUT->header();
 </script>
 
 <?php
-//require_once('bundle/virtualclass/build/js.debug.php');
-$PAGE->requires->js('/mod/virtualclass/bundle/virtualclass/bundle/io/src/iolib.js');
-$PAGE->requires->js('/mod/virtualclass/bundle/virtualclass/build/wb.min.js');
-$PAGE->requires->js('/mod/virtualclass/bundle/virtualclass/build/chat.min.js');
-$PAGE->requires->js('/mod/virtualclass/bundle/virtualclass/index.js');
+require_once('bundle/virtualclass/build/js.debug.php');
+//$PAGE->requires->js('/mod/virtualclass/bundle/virtualclass/bundle/io/src/iolib.js');
+//$PAGE->requires->js('/mod/virtualclass/bundle/virtualclass/build/wb.min.js');
+////$PAGE->requires->js('/mod/virtualclass/bundle/virtualclass/build/chat.min.js');
+//$PAGE->requires->js('/mod/virtualclass/bundle/virtualclass/index.js');
 
-echo html_writer::start_tag('div', array('id' => 'vAppCont','class' => 'teacher'));
+if($r == 't'){
+   $role  = 'teacher';
+}else if($r == 's'){
+   $role  = 'student'; 
+}
+echo html_writer::start_tag('div', array('id' => 'vAppCont','class' => "$role"));
     echo html_writer::start_tag('div', array('id' => 'vAppWhiteboard','class' => 'vmApp'));
-        echo html_writer::start_tag('div', array('id' => 'vcanvas','class' => 'socketon teacher'));
+        echo html_writer::start_tag('div', array('id' => 'vcanvas','class' => 'socketon '.$role.''));
             echo html_writer::tag('div', '', array('id' => 'containerWb'));
                 echo html_writer::start_tag('div', array('id' => 'mainContainer'));
                     echo html_writer::tag('div', '', array('id' => 'packetContainer'));
@@ -129,7 +142,12 @@ echo html_writer::start_tag('div', array('id' => 'vAppCont','class' => 'teacher'
             echo html_writer::tag('div', '', array('class' => 'clear'));
         echo html_writer::end_tag('div');
     echo html_writer::end_tag('div');
-
+    
+if($r == 's'){
+    echo html_writer::start_tag('div', array('id' => 'speakerStudent'));
+        echo html_writer::tag('canvas', '', array('id' => 'speeakerStudentImage', 'width' => 40, 'height' => 40));
+    echo html_writer::end_tag('div');
+}
     echo html_writer::start_tag('div', array('id' => 'chatWidget'));
         echo html_writer::tag('div', '', array('id' => 'stickycontainer'));
     echo html_writer::end_tag('div');

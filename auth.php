@@ -40,16 +40,16 @@ if(empty($rid) or strlen($rid) > 32){
   	echo "Chat server is unavailable!";
   	exit;
 }
-  
-setcookie('auth_user', $authusername, 0, '/');
-setcookie('auth_pass', $authpassword, 0, '/');
-setcookie('path', $rid, 0, '/');
+//use if required  
+//setcookie('auth_user', $authusername, 0, '/');
+//setcookie('auth_pass', $authpassword, 0, '/');
+//setcookie('path', $rid, 0, '/');
 
 if ($USER->id) {
     $userpicture = moodle_url::make_pluginfile_url(context_user::instance($USER->id)->id, 'user', 'icon', null, '/', 'f2');
     $src = $userpicture->out(false);
 }else{
-    $src = 'bundle/whiteboard/images/quality-support.png';
+    $src = 'bundle/virtualclass/images/quality-support.png';
 }
 ?>
 <script type="text/javascript">
@@ -58,9 +58,15 @@ if ($USER->id) {
     echo "wbUser.auth_user='".$authusername."';"; 
     echo "wbUser.auth_pass='".$authpassword."';"; 
     echo "wbUser.path='".$rid."';";
-    echo "auth_user='".$_COOKIE['auth_user']."';"; 
-    echo "auth_pass='".$_COOKIE['auth_pass']."';"; 
-    echo "path='".$_COOKIE['path']."';";
+    echo "auth_user='".$authusername."';"; 
+    echo "auth_pass='".$authpassword."';"; 
+    echo "path='".$rid."';";
+
+//use if required     
+//    echo "auth_user='".$_COOKIE['auth_user']."';"; 
+//    echo "auth_pass='".$_COOKIE['auth_pass']."';"; 
+//    echo "path='".$_COOKIE['path']."';";
+    
     echo "imageurl='".$src."';";
     ?>
 </script>
