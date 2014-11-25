@@ -38,9 +38,9 @@ include('auth.php');
 <?php
 
 //the www path for whiteboard
-$whiteboard_path = "https://192.168.1.114/virtualclass/";
-include('js.debug.php');
-//include('js.php');
+$whiteboard_path = "https://192.168.1.101/virtualclass/";
+//include('js.debug.php');
+include('js.php');
 
 ?>
 
@@ -82,7 +82,7 @@ $lname = "Sharma";
 	<?php echo "wbUser.role='".$r."';"; ?>
 	
 	window.io = io;
-    window.whiteboardPath =  'https://192.168.1.114/virtualclass/';
+    window.whiteboardPath =  'https://192.168.1.101/virtualclass/';
     
     //these below script should be into audio object
 //    
@@ -111,7 +111,8 @@ $lname = "Sharma";
 
 
 <div id="vAppCont" class="teacher">
-
+    
+<!--    <button id="installScreenShare">Install Screen Share </button>-->
  
     <div id="vAppWhiteboard" class="vmApp">
 
@@ -143,3 +144,4 @@ $lname = "Sharma";
 </div>   
     
 </div>
+

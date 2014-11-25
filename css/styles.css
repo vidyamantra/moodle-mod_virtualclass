@@ -1113,10 +1113,10 @@ div.ui-memblist-usr video, div.ui-memblist-usr .userVideos{
     height : 100%;
 }
 
-#commandToolsWrapper .active a{
-    border : 1px solid green;
+.ui-memblist-usr a, .ui-memblist-usr img{
+    clear : both;
 }
 
-#vAppOptionsCont .active a {
-    border : 1px solid red;
+#commandToolsWrapper .active a{
+   border : 2px solid green;
 }
