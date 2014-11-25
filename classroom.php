@@ -68,7 +68,10 @@ $PAGE->set_pagelayout('embedded');
 $PAGE->requires->jquery(true);
 $PAGE->requires->jquery_plugin('ui');
 $PAGE->requires->jquery_plugin('ui-css');
+
 $PAGE->requires->css(new moodle_url($CFG->wwwroot . '/mod/virtualclass/bundle/virtualclass/css/styles.css'));
+$PAGE->requires->css(new moodle_url($CFG->wwwroot . '/mod/virtualclass/bundle/virtualclass/bundle/jquery/css/base/jquery-ui.css'));
+$PAGE->requires->css(new moodle_url($CFG->wwwroot . '/mod/virtualclass/bundle/virtualclass/css/jquery.ui.chatbox.css'));
 
 // Mark viewed by user (if required)
 $completion = new completion_info($course);
