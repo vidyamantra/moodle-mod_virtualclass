@@ -39,6 +39,7 @@ $whiteboard_path = "https://192.168.1.101/virtualclass/";
 <link rel="stylesheet" type="text/css" href= <?php echo $whiteboard_path."css/jquery.ui.chatbox.css" ?> />
 
 <?php
+//include('js.debug.php');
 include('js.php');
 
 //$PAGE->requires->js(new moodle_url($CFG->wwwroot .'/mod/onetoone/whiteboard/js/c190214.js'));
