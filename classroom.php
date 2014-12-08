@@ -147,8 +147,15 @@ echo html_writer::start_tag('div', array('id' => 'vAppCont','class' => "$role"))
     echo html_writer::end_tag('div');
     
 if($r == 's'){
-    echo html_writer::start_tag('div', array('id' => 'speakerStudent'));
-        echo html_writer::tag('canvas', '', array('id' => 'speeakerStudentImage', 'width' => 40, 'height' => 40));
+    echo html_writer::start_tag('div', array('id' => 'speakerStudent', 'class' => 'active'));
+        echo html_writer::start_tag('div', array('id' => 'speakerPressing'));
+            echo html_writer::tag('canvas', '', array('id' => 'speakerPressingImg', 'width' => 40, 'height' => 40));
+        echo html_writer::end_tag('div');
+        
+        echo html_writer::start_tag('div', array('id' => 'speakerPressOnce'));
+            echo html_writer::tag('canvas', '', array('id' => 'speakerPressOnceImg', 'width' => 40, 'height' => 40));
+        echo html_writer::end_tag('div');
+        
     echo html_writer::end_tag('div');
 }
     echo html_writer::start_tag('div', array('id' => 'chatWidget'));
