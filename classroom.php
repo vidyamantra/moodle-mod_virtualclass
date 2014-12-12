@@ -145,19 +145,68 @@ echo html_writer::start_tag('div', array('id' => 'vAppCont','class' => "$role"))
             echo html_writer::tag('div', '', array('class' => 'clear'));
         echo html_writer::end_tag('div');
     echo html_writer::end_tag('div');
+
     
-if($r == 's'){
-    echo html_writer::start_tag('div', array('id' => 'speakerStudent', 'class' => 'active'));
-        echo html_writer::start_tag('div', array('id' => 'speakerPressing'));
-            echo html_writer::tag('canvas', '', array('id' => 'speakerPressingImg', 'width' => 40, 'height' => 40));
+echo html_writer::start_tag('div', array('id' => 'audioWidget'));
+
+    if($r == 's'){
+        echo html_writer::start_tag('div', array('id' => 'speakerStudent', 'class' => 'active'));
+
+            echo html_writer::start_tag('div', array('id' => 'speakerPressing', 'class' => 'audioTool' ));
+                //echo html_writer::tag('canvas', '', array('id' => 'speakerPressingImg', 'width' => 40, 'height' => 40));
+                echo html_writer::start_tag('a', array('id' => 'speakerPressingAnch'));
+//                    $iconurl = new moodle_url('http://web.icq.com/whitepages/online', array('icq' => $user->icq, 'img' => '5'));
+//                    $statusicon = html_writer::tag('img', '', array('src' => $iconurl, 'class' => 'icon icon-post', 'alt' => get_string('status')));
+                    $pressing_img = $whiteboard_path . "images/speakerpressing.png";
+                    echo html_writer::tag('img', '', array('id' => 'speakerPressingImg', 'src' => $pressing_img, 'width' => 40, 'height' => 40));
+                    
+                echo html_writer::end_tag('a');
+                
+                
+            echo html_writer::end_tag('div');
         echo html_writer::end_tag('div');
-        
-        echo html_writer::start_tag('div', array('id' => 'speakerPressOnce'));
-            echo html_writer::tag('canvas', '', array('id' => 'speakerPressOnceImg', 'width' => 40, 'height' => 40));
-        echo html_writer::end_tag('div');
-        
+    }
+    
+    echo html_writer::start_tag('div', array('id' => 'speakerPressOnce', 'class' => 'audioTool', 'data-audio-playing' => 'false'));
+
+//    if($r== 't'){
+//        echo html_writer::start_tag('div', array('id' => 'speakerPressOnce', 'class' => 'audioTool active', 'data-audio-playing' => 'true'));
+//    }else{
+//        echo html_writer::start_tag('div', array('id' => 'speakerPressOnce', 'class' => 'audioTool', 'data-audio-playing' => 'false'));
+//    }
+    
+        $pressonce_img = $whiteboard_path . "images/speakerpressonce.png";
+        echo html_writer::start_tag('a', array('id' => 'speakerPressonceAnch'));
+             echo html_writer::tag('img', '', array('id' => 'speakerPressonceImg', 'src' => $pressonce_img, 'width' => 40, 'height' => 40));
+        echo html_writer::end_tag('a');
     echo html_writer::end_tag('div');
-}
+    
+    
+//    echo html_writer::start_tag('div', array('id' => 'speakerPressOnce', 'class' => 'audioTool'));
+//        $pressonce_img = $whiteboard_path . "images/speakerpressonce.png";
+//        echo html_writer::start_tag('a', array('id' => 'speakerPressonceAnch'));
+//             echo html_writer::tag('img', '', array('id' => 'speakerPressonceImg', 'src' => $pressonce_img, 'width' => 40, 'height' => 40));
+//        echo html_writer::end_tag('a');
+//    echo html_writer::end_tag('div');
+    
+    echo html_writer::start_tag('div', array('id' => 'audioTest', 'class' => 'audioTool'));
+        $audioimg = $whiteboard_path . "images/audiotest.png";
+        echo html_writer::start_tag('a', array('id' => 'audiotestAnch'));
+             echo html_writer::tag('img', '', array('id' => 'audiotestImg', 'src' => $audioimg, 'width' => 40, 'height' => 40));
+        echo html_writer::end_tag('a');
+    echo html_writer::end_tag('div');
+    
+    
+    echo html_writer::start_tag('div', array('id' => 'silenceDetect', 'class' => 'audioTool'));
+        $silencedetect = $whiteboard_path . "images/silencedetect.png";
+        echo html_writer::start_tag('a', array('id' => 'silenceDetectAnch'));
+             echo html_writer::tag('img', '', array('id' => 'silencedetectImg', 'src' => $silencedetect, 'width' => 40, 'height' => 40));
+        echo html_writer::end_tag('a');
+    echo html_writer::end_tag('div');
+
+echo html_writer::end_tag('div');
+
+
     echo html_writer::start_tag('div', array('id' => 'chatWidget'));
         echo html_writer::tag('div', '', array('id' => 'stickycontainer'));
     echo html_writer::end_tag('div');
