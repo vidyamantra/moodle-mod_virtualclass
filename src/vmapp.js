@@ -126,7 +126,9 @@
                     this.createDiv(vApp.wssConfig.id + "Tool", "wholescreenshare", appOptCont, vApp.wssConfig.classes);
                     
                     this.createDiv(vApp.appSessionEnd + "Tool", "sessionend", appOptCont, 'appOptions');
-                    this.createDiv(vApp.appAudioTest + "Tool", "audiotest", appOptCont, 'appOptions');
+                    //this.createDiv(vApp.appAudioTest + "Tool", "audiotest", appOptCont, 'appOptions');
+                    
+                    //vApp.vutil.createSlienceDetect();
                     
                     //this.createDiv(vApp.appAudioTestPlay + "Tool", "audiotestplay", appOptCont, 'appOptions');
                 },  
@@ -248,7 +250,8 @@
                         if(document.getElementById('canvas') != null){
                             //alert('whiteboard exist');
                             vcan.utility.canvasCalcOffset(vcan.main.canid);
-                            vApp.wb.utility.makeCanvasEnable();
+                            
+                            //vApp.wb.utility.makeCanvasEnable();
 
                         }
                         this.previous = this.wbConfig.id;
@@ -284,21 +287,20 @@
               },
               
               initlizer : function (elem){
-               // alert(elem.getAttribute('data-title'));
                 var appName = elem.parentNode.id.split("vApp")[1];
-                
-                if(appName == 'AudioTestTool'){
-                    var playSound = confirm ("Please say some words for recording the Audio");
-                    if(playSound){
-                        vApp.gObj.video.audio.testInit();
-                    }  
-                }
-//                else if(appName == 'AudioTestPlayTool'){
-//                    vApp.gObj.video.audio.playRecordedAudio();
+//                if(appName == 'AudioTestTool'){
+//                    appName = appName.substring(0, appName.indexOf("Tool"));
+//                   
+//                    var playSound = confirm ("Please say some words for recording the Audio");
+//                    if(playSound){
+//                        vApp.gObj.video.audio.testInit();
+//                    }
 //                    
-//                }
-                
-                  else if(appName == 'SessionEndTool'){
+//                    vApp.vutil.makeActiveApp("vApp" + appName, vApp.previous);
+//                    vApp.prevApp = "vApp" + appName;
+//                } else 
+                    
+                if(appName == 'SessionEndTool'){
                     appName = appName.substring(0, appName.indexOf("Tool"));
                    
                     vApp.vutil.makeActiveApp("vApp" + appName, vApp.previous);
@@ -310,15 +312,17 @@
                     }
                     
                     vApp.prevApp = "vApp" + appName;
-                }else{
-                    appName = appName.substring(0, appName.indexOf("Tool"));
-                    this.currApp = appName;
-                    if(!this.PrvAndCurrIsWss(this.previous, appName)){
-                        this.makeAppReady(appName, "byclick");
-                    }else{
-                        alert("Already the whole screen is being shared.");
-                    }
                 }
+                
+//                else{
+//                    appName = appName.substring(0, appName.indexOf("Tool"));
+//                    this.currApp = appName;
+//                    if(!this.PrvAndCurrIsWss(this.previous, appName)){
+//                        this.makeAppReady(appName, "byclick");
+//                    }else{
+//                        alert("Already the whole screen is being shared.");
+//                    }
+//                }
               },
               
               PrvAndCurrIsWss : function (previous, appName){
@@ -326,56 +330,46 @@
               },
               
               
-              initStudentScreen : function (imgData, d, stype, stool){
-                  app = stype;
-//                  alert(app);
-//                  alert(stool);
-//                    app = 'ss';
-//                    var stool = 'ScreenShare';
-                    
-                    
-                    
-                    if(typeof vApp[app] != 'object' ){
-                         if(typeof vtype != 'undefined'){
-                             vApp.recorder.recImgPlay = true;
-                         }
-                         vApp.makeAppReady(stool);
+            initStudentScreen : function (imgData, d, stype, stool){
+                app = stype;
+                if(typeof vApp[app] != 'object' ){
+                     if(typeof vtype != 'undefined'){
+                         vApp.recorder.recImgPlay = true;
+                     }
+                     vApp.makeAppReady(stool);
 
-                    }else{
-                         var prvScreen = document.getElementById(vApp.previous);
-                         if(prvScreen != null){
-                             prvScreen.style.display = 'none';
-                             document.getElementById(vApp[app].id).style.display = 'block';
-                         }
+                }else{
+                     var prvScreen = document.getElementById(vApp.previous);
+                     if(prvScreen != null){
+                         prvScreen.style.display = 'none';
+                         document.getElementById(vApp[app].id).style.display = 'block';
+                     }
+                }
+
+                if(d.hasOwnProperty('d')){
+                    vApp[app].dimensionStudentScreenResize(d);
+                    vApp[app].drawImages(imgData);
+                }else{
+                    if(typeof dim == 'undefined' || ((typeof prvWidth != 'undefined') && (prvWidth != d.w) && (!d.hasOwnProperty('x')))){
+                        dim = true
+                        vApp[app].dimensionStudentScreen(d.w, d.h);
+                        prvWidth = d.w;
+                        prvHeight = d.h;
                     }
-                    
-                    if(d.hasOwnProperty('d')){
-                        vApp[app].dimensionStudentScreenResize(d);
+
+                    if(d.hasOwnProperty('x')){
+                        vApp[app].drawImages(imgData, d);
+                    }else{
                         vApp[app].drawImages(imgData);
-                    }else{
-                        if(typeof dim == 'undefined' || ((typeof prvWidth != 'undefined') && (prvWidth != d.w) && (!d.hasOwnProperty('x')))){
-                            dim = true
-                            vApp[app].dimensionStudentScreen(d.w, d.h);
-                            prvWidth = d.w;
-                            prvHeight = d.h;
-                        }
-                        
-                        if(d.hasOwnProperty('x')){
-                            vApp[app].drawImages(imgData, d);
-                        }else{
-                            vApp[app].drawImages(imgData);
-                        }
                     }
-                    
-                    vApp.previous =  vApp[app].id;
-                    
-                    
-                    
-                    
-                
-              }, 
+                }
+
+                vApp.previous =  vApp[app].id;
+            }, 
               
-              old_initStudentScreen : function (msg, vtype){
+             
+              
+            old_initStudentScreen : function (msg, vtype){
                   
                 app = msg.st; 
                 
