@@ -64,10 +64,13 @@ if($virtualclass->closetime >time()){
     $fullurl = 'classroom.php?id='.$id;
                 $wh = "width='+window.screen.width-100 +',height='+window.screen.height-100+',"
                         . " toolbar=no,location=no,menubar=no,copyhistory=no,status=no,directories=no,scrollbars=yes,resizable=yes";
-                $extra = "window.open('".$fullurl."', '', '".$wh."'); return false;";
+                $extra = "window.open('".$fullurl."', 'virtualclass', '".$wh."'); return false;";
 
-    echo html_writer::empty_tag('input', array(
-            'type' => 'button', 'name' => "joinroom", 'value' => get_string('joinroom', 'virtualclass'), 'id' => 'vc', 'onclick'=>$extra));
+//    echo html_writer::empty_tag('input', array(
+//            'type' => 'button', 'name' => "joinroom", 'value' => get_string('joinroom', 'virtualclass'), 'id' => 'vc', 'onclick'=>$extra));
+        echo html_writer::start_tag('button', array('value' => get_string('joinroom', 'virtualclass'), 'id' => 'vc', 'onclick'=>$extra));
+            echo get_string('joinroom', 'virtualclass');
+        echo html_writer::end_tag('button');
 }else{
     echo $OUTPUT->heading(get_string('sessionclosed', 'virtualclass'));
 }

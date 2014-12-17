@@ -79,9 +79,10 @@ $completion->set_module_viewed($cm);
 
 // Checking moodle deugger is on or not.
 $info = 0;
-if($CFG->debug == 32767 && $CFG->debugdisplay == 1){
-    $info = 1;
-}
+//for now we disabling the packet container
+//if($CFG->debug == 32767 && $CFG->debugdisplay == 1){
+//    $info = 1;
+//}
 $whiteboard_path = $CFG->wwwroot . "/mod/virtualclass/bundle/virtualclass/";
 $sid = $USER->sesskey;
 
@@ -158,7 +159,7 @@ echo html_writer::start_tag('div', array('id' => 'audioWidget'));
 //                    $iconurl = new moodle_url('http://web.icq.com/whitepages/online', array('icq' => $user->icq, 'img' => '5'));
 //                    $statusicon = html_writer::tag('img', '', array('src' => $iconurl, 'class' => 'icon icon-post', 'alt' => get_string('status')));
                     $pressing_img = $whiteboard_path . "images/speakerpressing.png";
-                    echo html_writer::tag('img', '', array('id' => 'speakerPressingImg', 'src' => $pressing_img, 'width' => 40, 'height' => 40));
+                    echo html_writer::tag('img', '', array('id' => 'speakerPressingImg', 'src' => $pressing_img));
                     
                 echo html_writer::end_tag('a');
                 
@@ -176,8 +177,8 @@ echo html_writer::start_tag('div', array('id' => 'audioWidget'));
 //    }
     
         $pressonce_img = $whiteboard_path . "images/speakerpressonce.png";
-        echo html_writer::start_tag('a', array('id' => 'speakerPressonceAnch', 'classs' => 'tooltip', 'data-title' => 'press once'));
-             echo html_writer::tag('img', '', array('id' => 'speakerPressonceImg', 'src' => $pressonce_img, 'width' => 40, 'height' => 40));
+        echo html_writer::start_tag('a', array('id' => 'speakerPressonceAnch', 'class' => 'tooltip', 'data-title' => 'press once'));
+             echo html_writer::tag('img', '', array('id' => 'speakerPressonceImg', 'src' => $pressonce_img));
         echo html_writer::end_tag('a');
     echo html_writer::end_tag('div');
     
@@ -192,15 +193,15 @@ echo html_writer::start_tag('div', array('id' => 'audioWidget'));
     echo html_writer::start_tag('div', array('id' => 'audioTest', 'class' => 'audioTool'));
         $audioimg = $whiteboard_path . "images/audiotest.png";
         echo html_writer::start_tag('a', array('id' => 'audiotestAnch', 'classs' => 'tooltip', 'data-title' => 'Audio Test'));
-             echo html_writer::tag('img', '', array('id' => 'audiotestImg', 'src' => $audioimg, 'width' => 40, 'height' => 40));
+             echo html_writer::tag('img', '', array('id' => 'audiotestImg', 'src' => $audioimg));
         echo html_writer::end_tag('a');
     echo html_writer::end_tag('div');
     
     
     echo html_writer::start_tag('div', array('id' => 'silenceDetect', 'class' => 'audioTool'));
         $silencedetect = $whiteboard_path . "images/silencedetect.png";
-        echo html_writer::start_tag('a', array('id' => 'silenceDetectAnch', 'classs' => 'tooltip', 'data-title' => 'silence detection'));
-             echo html_writer::tag('img', '', array('id' => 'silencedetectImg', 'src' => $silencedetect, 'width' => 40, 'height' => 40));
+        echo html_writer::start_tag('a', array('id' => 'silenceDetectAnch', 'class' => 'tooltip', 'data-title' => 'silence detection'));
+             echo html_writer::tag('img', '', array('id' => 'silencedetectImg', 'src' => $silencedetect));
         echo html_writer::end_tag('a');
     echo html_writer::end_tag('div');
 
