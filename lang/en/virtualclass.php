@@ -47,3 +47,8 @@ $string['joinroom'] = 'Join virtual class room';
 $string['sessionclosed'] = 'This session has been closed :)';
 $string['virtualclass:view'] = 'View virtualclass';
 $string['virtualclass:addinstance'] = 'Add a new virtualclass';
+$string['pressalways'] = 'Press always to speak';
+$string['pressonce'] = 'Press once to speak';
+$string['audiotest'] = 'Audio Testing';
+$string['silencedetect'] = 'Silence Detection';
+
