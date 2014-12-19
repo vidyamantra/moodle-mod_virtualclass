@@ -8,7 +8,7 @@ You should have received a copy of the GNU General Public License along with thi
 
 Description
 
-Virtualclass activities are used to easy online learning software with whiteboard, screen sharing, audio, video and text chat which require advance booking. 
+Virtualclass activities are used to easy online learning process with whiteboard, screen sharing, audio, video and text chat which require advance booking. 
 
 Each activity is offered in one or more identical sessions.
 
