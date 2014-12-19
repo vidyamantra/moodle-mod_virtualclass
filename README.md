@@ -8,7 +8,7 @@ You should have received a copy of the GNU General Public License along with thi
 
 Description
 
-Virtualclass activities are used to schedule whiteboard session with screen sharing, audio, video and chat which require advance booking.
+Virtualclass activities are used to easy online learning software with whiteboard, screen sharing, audio, video and text chat which require advance booking. 
 
 Each activity is offered in one or more identical sessions.
 
@@ -19,7 +19,7 @@ Installation
 
 1- Unpack the "moodle-mod_virtualclass.zip" and rename that unzipped folder to "virtualclass" and place this folder into 'mod' directory of moodle. The file structure for virtualclass would be something like. [site-root]/mod/virtualclass
 
-Visit Settings > Site Administration > Notifications, you should find the module's tables successfully created
+Visit Settings > Site Administration > Notifications, You should find the module's tables successfully created
 
 Dependencies
 
@@ -34,10 +34,13 @@ Bugs/patches
 Feel free to send bug reports (and/or patches!)
 
 For technical detail
+
 Suman Bogati suman@vidyamantra.com
+
 Pinky Sharma pinky@vidyamantra.com
+
 Jai Gupta jai@vidyamantra.com
 
 For look and feel
-Fakrul Hasan 
-hasan@vidyamantra.com
+
+Fakrul Hasan hasan@vidyamantra.com
