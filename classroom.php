@@ -73,6 +73,13 @@ $PAGE->requires->css(new moodle_url($CFG->wwwroot . '/mod/virtualclass/bundle/vi
 $PAGE->requires->css(new moodle_url($CFG->wwwroot . '/mod/virtualclass/bundle/virtualclass/bundle/jquery/css/base/jquery-ui.css'));
 $PAGE->requires->css(new moodle_url($CFG->wwwroot . '/mod/virtualclass/bundle/virtualclass/css/jquery.ui.chatbox.css'));
 
+
+?>
+
+<link rel="chrome-webstore-item" href="https://chrome.google.com/webstore/detail/ijhofagnokdeoghaohcekchijfeffbjl">
+
+<?php
+
 // Mark viewed by user (if required)
 $completion = new completion_info($course);
 $completion->set_module_viewed($cm);
