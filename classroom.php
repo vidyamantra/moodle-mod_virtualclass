@@ -64,7 +64,7 @@ $PAGE->set_title(format_string($virtualclass->name));
 $PAGE->set_heading(format_string($course->fullname));
 $PAGE->set_context($context);
 
-$PAGE->set_pagelayout('embedded');
+$PAGE->set_pagelayout('popup');
 $PAGE->requires->jquery(true);
 $PAGE->requires->jquery_plugin('ui');
 $PAGE->requires->jquery_plugin('ui-css');
@@ -73,12 +73,10 @@ $PAGE->requires->css(new moodle_url($CFG->wwwroot . '/mod/virtualclass/bundle/vi
 $PAGE->requires->css(new moodle_url($CFG->wwwroot . '/mod/virtualclass/bundle/virtualclass/bundle/jquery/css/base/jquery-ui.css'));
 $PAGE->requires->css(new moodle_url($CFG->wwwroot . '/mod/virtualclass/bundle/virtualclass/css/jquery.ui.chatbox.css'));
 
-
 ?>
-
 <link rel="chrome-webstore-item" href="https://chrome.google.com/webstore/detail/ijhofagnokdeoghaohcekchijfeffbjl">
-
 <?php
+
 
 // Mark viewed by user (if required)
 $completion = new completion_info($course);
@@ -94,8 +92,8 @@ $whiteboard_path = $CFG->wwwroot . "/mod/virtualclass/bundle/virtualclass/";
 $sid = $USER->sesskey;
 
 $r = 's'; //default role
-if(has_capability('mod/virtualclass:addinstance', $context)){
-    if($USER->id == $virtualclass->moderatorid){
+if (has_capability('mod/virtualclass:addinstance', $context)) {
+    if ($USER->id == $virtualclass->moderatorid) {
         $r = 't';
     }
 }
@@ -137,14 +135,14 @@ require_once('bundle/virtualclass/build/js.debug.php');
 ////$PAGE->requires->js('/mod/virtualclass/bundle/virtualclass/build/chat.min.js');
 //$PAGE->requires->js('/mod/virtualclass/bundle/virtualclass/index.js');
 
-if($r == 't'){
-   $role  = 'teacher';
-}else if($r == 's'){
-   $role  = 'student'; 
+if ($r == 't') {
+    $role  = 'teacher';
+} else if ($r == 's') {
+    $role  = 'student';
 }
-echo html_writer::start_tag('div', array('id' => 'vAppCont','class' => "$role"));
-    echo html_writer::start_tag('div', array('id' => 'vAppWhiteboard','class' => 'vmApp'));
-        echo html_writer::start_tag('div', array('id' => 'vcanvas','class' => 'socketon '.$role.''));
+echo html_writer::start_tag('div', array('id' => 'vAppCont', 'class' => "$role"));
+    echo html_writer::start_tag('div', array('id' => 'vAppWhiteboard', 'class' => 'vmApp'));
+        echo html_writer::start_tag('div', array('id' => 'vcanvas', 'class' => 'socketon '.$role.''));
             echo html_writer::tag('div', '', array('id' => 'containerWb'));
                 echo html_writer::start_tag('div', array('id' => 'mainContainer'));
                     echo html_writer::tag('div', '', array('id' => 'packetContainer'));
@@ -154,10 +152,9 @@ echo html_writer::start_tag('div', array('id' => 'vAppCont','class' => "$role"))
         echo html_writer::end_tag('div');
     echo html_writer::end_tag('div');
 
-    
 echo html_writer::start_tag('div', array('id' => 'audioWidget'));
 
-    if($r == 's'){
+    if ($r == 's') {
         echo html_writer::start_tag('div', array('id' => 'speakerStudent', 'class' => 'active'));
 
             echo html_writer::start_tag('div', array('id' => 'speakerPressing', 'class' => 'audioTool' ));
@@ -167,14 +164,13 @@ echo html_writer::start_tag('div', array('id' => 'audioWidget'));
 //                    $statusicon = html_writer::tag('img', '', array('src' => $iconurl, 'class' => 'icon icon-post', 'alt' => get_string('status')));
                     $pressing_img = $whiteboard_path . "images/speakerpressing.png";
                     echo html_writer::tag('img', '', array('id' => 'speakerPressingImg', 'src' => $pressing_img));
-                    
+
                 echo html_writer::end_tag('a');
-                
-                
+
             echo html_writer::end_tag('div');
         echo html_writer::end_tag('div');
     }
-    
+
     echo html_writer::start_tag('div', array('id' => 'speakerPressOnce', 'class' => 'audioTool', 'data-audio-playing' => 'false'));
 
 //    if($r== 't'){
@@ -185,21 +181,20 @@ echo html_writer::start_tag('div', array('id' => 'audioWidget'));
         //echo  get_string('pressonce', 'virtualclass');
         
        // echo get_string('pressalways', 'virtualclass');
-        
+
         $pressonce_img = $whiteboard_path . "images/speakerpressonce.png";
         echo html_writer::start_tag('a', array('id' => 'speakerPressonceAnch', 'class' => 'tooltip', 'data-title' => get_string('pressonce', 'virtualclass') ));
              echo html_writer::tag('img', '', array('id' => 'speakerPressonceImg', 'src' => $pressonce_img));
         echo html_writer::end_tag('a');
     echo html_writer::end_tag('div');
-    
-    
+
 //    echo html_writer::start_tag('div', array('id' => 'speakerPressOnce', 'class' => 'audioTool'));
 //        $pressonce_img = $whiteboard_path . "images/speakerpressonce.png";
 //        echo html_writer::start_tag('a', array('id' => 'speakerPressonceAnch'));
 //             echo html_writer::tag('img', '', array('id' => 'speakerPressonceImg', 'src' => $pressonce_img, 'width' => 40, 'height' => 40));
 //        echo html_writer::end_tag('a');
 //    echo html_writer::end_tag('div');
-    
+
 //    echo html_writer::start_tag('div', array('id' => 'audioTest', 'class' => 'audioTool'));
 //        $audioimg = $whiteboard_path . "images/audiotest.png";
 //        echo html_writer::start_tag('a', array('id' => 'audiotestAnch', 'classs' => 'tooltip', 'data-title' => get_string('audiotest', 'virtualclass')));
@@ -207,15 +202,14 @@ echo html_writer::start_tag('div', array('id' => 'audioWidget'));
 //        echo html_writer::end_tag('a');
 //    echo html_writer::end_tag('div');
 //    
-    
+
     echo html_writer::start_tag('div', array('id' => 'audioTest', 'class' => 'audioTool'));
         $audioimg = $whiteboard_path . "images/audiotest.png";
         echo html_writer::start_tag('a', array('id' => 'audiotestAnch', 'class' => 'tooltip', 'data-title' => get_string('audiotest', 'virtualclass')));
              echo html_writer::tag('img', '', array('id' => 'audiotestImg', 'src' => $audioimg));
         echo html_writer::end_tag('a');
     echo html_writer::end_tag('div');
-    
-    
+
     echo html_writer::start_tag('div', array('id' => 'silenceDetect', 'class' => 'audioTool'));
         $silencedetect = $whiteboard_path . "images/silencedetect.png";
         echo html_writer::start_tag('a', array('id' => 'silenceDetectAnch', 'class' => 'tooltip', 'data-title' => get_string('silencedetect', 'virtualclass')));
@@ -224,7 +218,6 @@ echo html_writer::start_tag('div', array('id' => 'audioWidget'));
     echo html_writer::end_tag('div');
 
 echo html_writer::end_tag('div');
-
 
     echo html_writer::start_tag('div', array('id' => 'chatWidget'));
         echo html_writer::tag('div', '', array('id' => 'stickycontainer'));

@@ -28,27 +28,31 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$string['modulename'] = 'virtualclass';
-$string['modulenameplural'] = 'virtualclasss';
+$string['modulename'] = 'Virtualclass';
+$string['modulenameplural'] = 'Virtualclasss';
 $string['modulename_help'] = 'Use the virtualclass module for real-time online learning.  The virtualclass module allows you to participate in synchronous learning,which means that the teacher and students are logged into the virtual learning environment and interacting with each other at the same time.
 This module provide students with asynchronous communication tools, such as whiteboard and chat capabilities';
-$string['virtualclassfieldset'] = 'Custom example fieldset';
-$string['virtualclassname'] = 'virtualclass name';
-$string['virtualclassname_help'] = 'This is the content of the help tooltip associated with the virtualclassname field. Markdown syntax is supported.';
-$string['virtualclass'] = 'virtualclass';
+
+$string['audiotest'] = 'Audio Testing';
+$string['closetime'] = 'Sessions closed';
+$string['configactiontolocalrun'] = 'If you select \'Local\' SSL (https://) will be required to use Screen Sharing Features.';
+$string['joinroom'] = 'Join virtual class room';
+$string['liverun'] = 'Online - Use vidya.io server';
+$string['localrun'] = 'Local - Use Moodle Files';
+$string['opentime'] = 'Sessions open';
 $string['pluginadministration'] = 'virtualclass administration';
 $string['pluginname'] = 'virtualclass';
-$string['sessionsschedule'] = 'Schedule for sessions';
-$string['opentime'] = 'Sessions open';
-$string['closetime'] = 'Sessions closed';
-$string['selectteacher'] = 'Select teacher';
-$string['selectteacher_help'] = 'Select teacher as a moderator for virtual classroom';
-$string['joinroom'] = 'Join virtual class room';
-$string['sessionclosed'] = 'This session has been closed :)';
-$string['virtualclass:view'] = 'View virtualclass';
-$string['virtualclass:addinstance'] = 'Add a new virtualclass';
 $string['pressalways'] = 'Press always to speak';
 $string['pressonce'] = 'Press once to speak';
-$string['audiotest'] = 'Audio Testing';
 $string['silencedetect'] = 'Silence Detection';
-
+$string['selectteacher'] = 'Select teacher';
+$string['selectteacher_help'] = 'Select teacher as a moderator for virtual classroom';
+$string['sessionclosed'] = 'This session has been closed :)';
+$string['sessionsschedule'] = 'Schedule for sessions';
+$string['virtualclass'] = 'Virtualclass';
+$string['virtualclassfieldset'] = 'Custom example fieldset';
+$string['virtualclassname'] = 'virtualclass name';
+$string['virtualclassname_help'] = 'This is a real-time online class room which allows participates interaction with each other and provide asynchronous communication tools such as whiteboard, chat and screen sharing .';
+$string['virtualclass:addinstance'] = 'Add a new virtualclass';
+$string['virtualclass:view'] = 'View virtualclass';
+$string['wheretorunvirtualclass'] = 'From where to serve Virtualclass App';

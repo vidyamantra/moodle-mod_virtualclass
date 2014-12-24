@@ -27,6 +27,8 @@
 
 require_once(dirname(dirname(dirname(__FILE__))).'/config.php');
 require_once(dirname(__FILE__).'/lib.php');
+require_once(dirname(__FILE__).'/locallib.php');
+require_once('auth.php');
 
 $id = optional_param('id', 0, PARAM_INT); // Course_module ID, or
 $n  = optional_param('n', 0, PARAM_INT);  // ... virtualclass instance ID - it should be named as the first character of the module.
@@ -60,21 +62,48 @@ if ($virtualclass->intro) {
     echo $OUTPUT->box(format_module_intro('virtualclass', $virtualclass, $cm->id), 'generalbox mod_introbox', 'virtualclassintro');
 }
 
-if($virtualclass->closetime >time()){
-    $fullurl = 'classroom.php?id='.$id;
-                $wh = "width='+window.screen.width-100 +',height='+window.screen.height-100+',"
-                        . " toolbar=no,location=no,menubar=no,copyhistory=no,status=no,directories=no,scrollbars=yes,resizable=yes";
-                $extra = "window.open('".$fullurl."', 'virtualclass', '".$wh."'); return false;";
+// Check virtualclass is open.
+if ($virtualclass->closetime > time()) {
+    echo html_writer::script('', $CFG->wwwroot.'/mod/virtualclass/popup.js');
+    $popupname = 'Virtualclasspopup';
+    $popupwidth = 1200; //'window.screen.width-100';
+    $popupheight = 1200;//'window.screen.height-100';
+    $popupoptions = "toolbar=no,location=no,menubar=no,copyhistory=no,status=no,directories=no,scrollbars=yes,resizable=yes";
+    $room = $course->id . "_" . $cm->id;
 
-//    echo html_writer::empty_tag('input', array(
-//            'type' => 'button', 'name' => "joinroom", 'value' => get_string('joinroom', 'virtualclass'), 'id' => 'vc', 'onclick'=>$extra));
-        echo html_writer::start_tag('button', array('value' => get_string('joinroom', 'virtualclass'), 'id' => 'vc', 'onclick'=>$extra));
-            echo get_string('joinroom', 'virtualclass');
+    if ($CFG->virtualclass_serve) {
+
+        // Serve local files.
+        $url = new moodle_url($CFG->wwwroot.'/mod/virtualclass/classroom.php', array('id' => $id));
+        $vcpopup = js_writer::function_call('virtualclass_openpopup', Array($url->out(false),
+                                                       $popupname, $popupoptions,
+                                                       $popupwidth, $popupheight));
+
+        echo html_writer::start_tag('button', array('value' => get_string('joinroom', 'virtualclass'),
+                     'id' => 'vc', 'onclick' => $vcpopup));
+        echo get_string('joinroom', 'virtualclass');
         echo html_writer::end_tag('button');
-}else{
+    } else {
+        // Serve online at vidya.io.
+        $url = "https://l.vidya.io";  // Online url
+        $role = 's'; // Default role.
+        $info = false; // Debugging off.
+
+        if (has_capability('mod/virtualclass:addinstance', $context)) {
+            if ($USER->id == $virtualclass->moderatorid) {
+                $role = 't';
+            }
+        }
+        if ($CFG->debug == 32767 && $CFG->debugdisplay == 1) {
+            $info = true;
+        }
+        $form = virtualclass_online_server($url, $authusername, $authpassword, $role, $rid, $room,
+                    $popupoptions, $popupwidth, $popupheight);
+        echo $form;
+    }
+} else {
+    // Virtualclass closed.
     echo $OUTPUT->heading(get_string('sessionclosed', 'virtualclass'));
 }
-
-
 // Finish the page.
 echo $OUTPUT->footer();

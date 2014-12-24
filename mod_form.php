@@ -33,12 +33,11 @@ require_once($CFG->dirroot . '/mod/virtualclass/locallib.php');
  * Module instance settings form
  */
 class mod_virtualclass_mod_form extends moodleform_mod {
-
     /**
      * Defines forms elements
      */
     public function definition() {
-
+        global $CFG;
         $mform = $this->_form;
 
         // Adding the "general" fieldset, where all the common settings are showed.
@@ -59,19 +58,17 @@ class mod_virtualclass_mod_form extends moodleform_mod {
         $this->add_intro_editor();
 
         // Adding the rest of virtualclass settings
-        // Adding list of teachers
+        // Adding list of teachers.
         $teacheroptions = virtualclass_course_teacher_list();
-        if(empty($teacheroptions)){
+        if (empty($teacheroptions)) {
             $teacheroptions = "";
         }
-        $mform->addElement('select', 'moderatorid', get_string('selectteacher', 'virtualclass'),$teacheroptions);
+        $mform->addElement('select', 'moderatorid', get_string('selectteacher', 'virtualclass'), $teacheroptions);
         $mform->addHelpButton('moderatorid', 'selectteacher', 'virtualclass');
-        $mform->addRule('moderatorid', get_string('error'), 'required',null, 'client');
-        
-        
-        
+        $mform->addRule('moderatorid', get_string('error'), 'required', null, 'client');
+
         $mform->addElement('header', 'general', get_string('sessionsschedule', 'virtualclass'));
-        $mform->addElement('date_time_selector', 'opentime', get_string('opentime', 'virtualclass'), array('optional'=>true));
+        $mform->addElement('date_time_selector', 'opentime', get_string('opentime', 'virtualclass'), array('optional' => true));
         $mform->setDefault('timeavailable', 0);
         $mform->addElement('date_time_selector', 'closetime', get_string('closetime', 'virtualclass'), array('optional' => true));
         $mform->setDefault('timedue', 0);

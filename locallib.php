@@ -33,18 +33,54 @@ defined('MOODLE_INTERNAL') || die();
  * @param null
  * @return object
  */
-function virtualclass_course_teacher_list(){
+function virtualclass_course_teacher_list() {
     global $COURSE;
 
-    //if(empty($courseid)){
-        $courseid = $COURSE->id;
-    //}
+    $courseid = $COURSE->id;
+
     $context = context_course::instance($courseid);
     $heads = get_users_by_capability($context, 'moodle/course:update');
 
-    $teachers=array();
-    foreach($heads as $head){
-        $teachers[$head->id]= fullname($head);
+    $teachers = array();
+    foreach ($heads as $head) {
+        $teachers[$head->id] = fullname($head);
     }
-    return $teachers;   
+    return $teachers;
+}
+
+/*
+ * Create form and send sumbitted value to
+ * given url and open in popup
+ *
+ * @param string $url virtualclass online url
+ * @param string $authusername  authenticated user
+ * @param string $authpassword  authentication password
+ * @param string $role user role eight student or teacher
+ * @param string $rid  user authenticated path
+ * @param string $room  unique id
+ * @param $popupoptions string
+ * @param $popupwidth string
+ * @param $popupheight string
+ * @return string
+ */
+function virtualclass_online_server($url, $authusername, $authpassword, $role, $rid, $room,
+            $popupoptions, $popupwidth, $popupheight, $debug = false) {
+    global $USER;
+    $form = html_writer::start_tag('form', array('id' => 'overrideform', 'action' => $url, 'method' => 'post',
+        'onsubmit' => 'return virtualclass_online_popup(this)', 'data-popupoption' => $popupoptions,
+        'data-popupwidth' => $popupwidth, 'data-popupheight' => $popupheight));
+    $form .= html_writer::empty_tag('input', array('type' => 'hidden', 'name' => 'sesskey', 'value' => sesskey()));
+    $form .= html_writer::empty_tag('input', array('type' => 'hidden', 'name' => 'uid', 'value' => $USER->id));
+    $form .= html_writer::empty_tag('input', array('type' => 'hidden', 'name' => 'name', 'value' => $USER->username));
+    $form .= html_writer::empty_tag('input', array('type' => 'hidden', 'name' => 'role', 'value' => $role));
+    $form .= html_writer::empty_tag('input', array('type' => 'hidden', 'name' => 'room', 'value' => $room));
+    $form .= html_writer::empty_tag('input', array('type' => 'hidden', 'name' => 'sid', 'value' => $USER->sesskey));
+    $form .= html_writer::empty_tag('input', array('type' => 'hidden', 'name' => 'user', 'value' => $authusername));
+    $form .= html_writer::empty_tag('input', array('type' => 'hidden', 'name' => 'pass', 'value' => $authpassword));
+    $form .= html_writer::empty_tag('input', array('type' => 'hidden', 'name' => 'rid', 'value' => $rid));
+    $form .= html_writer::empty_tag('input', array('type' => 'hidden', 'name' => 'debug', 'value' => $debug));
+    $form .= html_writer::empty_tag('input', array('type' => 'submit', 'name' => 'submit',
+         'value' => get_string('joinroom', 'virtualclass')));
+    $form .= html_writer::end_tag('form');
+    return $form;
 }
