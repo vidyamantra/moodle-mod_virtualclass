@@ -12,50 +12,60 @@
     }
 //    window.postMessage({ type: 'isInstalled', id: 1 }, '*');
     var screenShare = function (config){
+        
            vApp.getSceenFirefox = function (){
                
         //if(window.navigator.userAgent.match('Firefox')){
 
             var ffver = parseInt(window.navigator.userAgent.match(/Firefox\/(.*)/)[1], 10);
             if (ffver >= 33) {
-                //constraints = (hasConstraints && constraints) || {
-                constraints = {
-                    video: {
-                        mozMediaSource: 'window',
-                        mediaSource: 'window'
+                    //constraints = (hasConstraints && constraints) || {
+                    constraints = {
+                        video: {
+                            mozMediaSource: 'window',
+                            mediaSource: 'window'
+                        }
                     }
-                }
 
-                vApp.adpt = new vApp.adapter();
-                navigator2 =  vApp.adpt.init(navigator)
+                    vApp.adpt = new vApp.adapter();
+                    navigator2 =  vApp.adpt.init(navigator)
 
-                navigator2.getUserMedia(constraints, function (stream, err) {
-                    //callback(err, stream);
-                    vApp.ss._init();   
-                    vApp.ss.initializeRecorder.call(vApp.ss, stream); 
+                    navigator2.getUserMedia(constraints, function (stream, err) {
+                        //callback(err, stream);
+                        vApp.ss._init();   
+                        vApp.ss.initializeRecorder.call(vApp.ss, stream); 
 
-                    // workaround for https://bugzilla.mozilla.org/show_bug.cgi?id=1045810
-                    if (typeof err == 'undefined') {
-                        var lastTime = stream.currentTime;
-                        var polly = window.setInterval(function () {
-                            if (!stream) window.clearInterval(polly);
-                            if (stream.currentTime == lastTime) {
-                                window.clearInterval(polly);
-                                if (stream.onended) {
-                                    stream.onended();
+                        // workaround for https://bugzilla.mozilla.org/show_bug.cgi?id=1045810
+                        if (typeof err == 'undefined') {
+                            var lastTime = stream.currentTime;
+                            var polly = window.setInterval(function () {
+                                if (!stream) window.clearInterval(polly);
+                                if (stream.currentTime == lastTime) {
+                                    window.clearInterval(polly);
+                                    if (stream.onended) {
+                                        stream.onended();
+                                    }
                                 }
+                                lastTime = stream.currentTime;
+                            }, 500);
+                        }
+                    },
+                    
+                    function (error){
+                        if(typeof error == 'string'){
+                            //PERMISSION_DENIED
+                            if(error === 'PERMISSION_DENIED'){
+                                //this url is need to be changed
+                                window.open("https://addons.mozilla.org/en-US/firefox/addon/talky-screensharing/").focus();
                             }
-                            lastTime = stream.currentTime;
-                        }, 500);
+                        }
                     }
-                },
-                function (error){
-                    alert('there is some ' + error);
-                }
                 );
             } else {
-                error = new Error('NavigatorUserMediaError');
-                error.name = 'EXTENSION_UNAVAILABLE'; // does not make much sense but...
+                alert("Not supported screen sharing");
+                
+//                error = new Error('NavigatorUserMediaError');
+//                error.name = 'EXTENSION_UNAVAILABLE'; // does not make much sense but...
             }
 
         //}
@@ -189,9 +199,9 @@
                     }else{
                         var url  = 'https://chrome.google.com/webstore/detail/' + 'ijhofagnokdeoghaohcekchijfeffbjl';   
                         chrome.webstore.install(url, function (){
-                           // window.postMessage({ type: 'getScreen', id: 1 }, '*');
-                            
-                            //window.location.reload();
+                            window.location.reload();
+                            //vApp.gObj.ext = true;
+//                            window.postMessage({ type: 'getScreen', id: 1 }, '*');
                         });
                     }
                 }else if(vApp.system.mybrowser.name == 'Firefox'){
@@ -225,8 +235,6 @@
                     vApp.wss._init();   
                     vApp.wss.initializeRecorder.call(vApp.wss, stream);   
                 }, function (e){
-                    alert(e);
-                    debugger;
                     vApp.wss.onError.call(vApp.ss, e);   
                 });
             
@@ -500,6 +508,7 @@
                 }
                 
                 function sendScreen(){
+//return true; // JAI
                     clearInterval(vApp.clear);
                     
 //                    clearInterval(vApp.clear);
@@ -584,7 +593,7 @@
                 for (var r=y; r<(h)+y; r+=1) {
                     for (var c=x; c<(w)+x; c+=1) {
                         var O = ((r*W) + c); 
-                            arr[i++] = d[O];
+                        arr[i++] = d[O];
                     }
                 }
                 return arr;
@@ -594,32 +603,33 @@
                 var localBandwidth = 0;
                 that.localtempCanvas.width = that.video.offsetWidth;
                 that.localtempCanvas.height = that.video.offsetHeight;
+                //can be problem for crash
                 that.localtempCont.drawImage(that.video, 0, 0, that.video.offsetWidth, that.video.offsetHeight);
                 var needFullScreen = 0;
                 
-                masterImgData = that.localtempCont.getImageData(0,0, that.video.offsetWidth, that.video.offsetHeight);
+                var masterImgData = that.localtempCont.getImageData(0,0, that.video.offsetWidth, that.video.offsetHeight);
                 masterImgData = that.dc.encodeRGB(masterImgData.data);
 
                 
                 for (sl=0; sl<(resA * resB); sl++) {
                     d = that.imageSlices[sl];
-                    
                     imgData = getImageDataCache(d.x, d.y, d.w, d.h, that.video.offsetWidth, that.video.offsetHeight, masterImgData);
                     
-
+                    //imgData = that.localtempCont.getImageData(d.x,d.y,d.w,d.h);
                     if(typeof that.prevImageSlices[sl] != 'undefined'){
                         matched = that.dc.matchWithPrevious(imgData, that.prevImageSlices[sl], d.w);
                         if(!matched){
                             that.prevImageSlices[sl] = imgData;
-                              encodedData = imgData;
+                          //  encodedData = imgData;
                             tempObj = {'si' : stringData, 'd' : d};
-                            addSliceToSingle(sendSliceData(encodedData, d, that.type));
+                            //addSliceToSingle(sendSliceData(encodedData, d, that.type));
+                            addSliceToSingle(sendSliceData(imgData, d, that.type));
                             that.latestScreen[sl] = tempObj; 
                         }
 
                     }else{
                         that.prevImageSlices[sl] = imgData;
-                        encodedData = imgData;
+                        //encodedData = imgData;
                         needFullScreen= 1;
                         tempObj = {'si' : stringData, 'd' : d};
                         that.latestScreen[sl] = tempObj; 
@@ -656,187 +666,7 @@
                 //console.log ('Bandwidth '+ localBandwidth+'Kbps' + 'New Time ' + localBandwidth)
                 pscreenIntervalTime = screenIntervalTime;
             }
-            
-//            function sendDataImageSlices_old (type){
-//                    var localBandwidth = 0;
-//                    that.localtempCanvas.width = that.video.offsetWidth;
-//                    that.localtempCanvas.height = that.video.offsetHeight;
-//                    that.localtempCont.drawImage(that.video, 0, 0, that.video.offsetWidth, that.video.offsetHeight);
-//                    var needFullScreen = 0;
-//                    for (sl=0; sl<(resA * resB); sl++) {
-//                        d = that.imageSlices[sl];
-//                        imgData = that.localtempCont.getImageData(d.x,d.y,d.w,d.h);
-//                        
-//                        if(typeof that.prevImageSlices[sl] != 'undefined'){
-//                            matched = that.dc.matchWithPrevious(imgData.data, that.prevImageSlices[sl], d.w);
-//                            if(!matched){
-//                                that.prevImageSlices[sl] = imgData.data;
-//                                encodedData = that.dc.encodeRGB(imgData.data);
-//                                
-//                                //stringData = vApp.vutil.ab2str(encodedData);
-//                                tempObj = {'si' : stringData, 'd' : d};
-////                              sendobj.push(tempObj);   
-//                                //io.sendBinary(sendSliceData(encodedData, d));
-//                                addSliceToSingle(sendSliceData(encodedData, d, that.type));
-//                                that.latestScreen[sl] = tempObj; 
-//                            }
-//                            
-//                        }else{
-//                            that.prevImageSlices[sl] = imgData.data;
-//                            encodedData = that.dc.encodeRGB(imgData.data);
-//                            needFullScreen= 1;
-//                            
-////                            stringData = vApp.vutil.ab2str(encodedData);
-//                            tempObj = {'si' : stringData, 'd' : d};
-////                            sendobj.push(tempObj); 
-//
-//                           // io.sendBinary(encodedData);
-//                            that.latestScreen[sl] = tempObj; 
-//                        }
-//                    }
-//                    
-//                    if (needFullScreen == 1) { //sending full screen here
-//                        //alert(that.type);
-//                        var createdImg =  vApp.getDataFullScreen(that.type);
-//                        io.sendBinary(createdImg);
-//                        
-//                        var localBandwidth = (createdImg.length/128); // In Kbps
-//                        needFullScreen = 0;
-//                    } else if (typeof maserSlice != 'undefined') {
-//                        io.sendBinary(maserSlice);
-//                        var localBandwidth = (maserSlice.length/128); // In Kbps
-//                        delete maserSlice;
-//                        
-//                    }
-//                    // Calculate Bandwidth in Kbps
-//                    // Shape Bandwidth
-//                    if (localBandwidth <= 300) {
-//                        screenIntervalTime = 300;
-//                    }else if (localBandwidth >= 10000) {
-//                        screenIntervalTime=localBandwidth/2;
-//                    } 
-//                    else{
-//                        screenIntervalTime=localBandwidth;
-//                    }
-//                    // Avoid Sharp Curve
-//                    if ((pscreenIntervalTime * 4) < screenIntervalTime ) {
-//                        screenIntervalTime = pscreenIntervalTime * 4;
-//                    }
-//                    //console.log ('Bandwidth '+ localBandwidth+'Kbps' + 'New Time ' + localBandwidth)
-//                    pscreenIntervalTime = screenIntervalTime;
-//                }
-                
-//                function oldMyFunction2(){
-//                    clearInterval(vApp.clear);
-//                    
-//                    vresize = false;
-//                    if (changeonresize == 1) {
-//                        if(typeof that.localtempCont.width != 'undefined'){ //todo check if required
-//                          //  that.localtempCont.clearRect(0, 0, that.localtempCont.width, that.localtempCont.height);
-//                            that.localtempCont.clearRect(0, 0, that.localtempCanvas.width, that.localtempCanvas.height);
-//                        }
-//                        
-//                        vresize = true;
-//                        that.prevImageSlices = [];
-//                        resA = Math.round(that.localtempCanvas.height/12);
-//                        resB = Math.round(that.localtempCanvas.width/12);
-//                        that.imageSlices = that.dc.getImageSlices(resA, resB, that);
-////                            changeonresize = 0;
-//                    }
-//
-//                    that.localtempCanvas.width = that.video.offsetWidth;
-//                    that.localtempCanvas.height = that.video.offsetHeight;
-//                    that.localtempCont.drawImage(that.video, 0, 0, that.video.offsetWidth, that.video.offsetHeight);
-//
-//                    sendobj = [];
-//                    
-//                    for (sl=0; sl<(resA * resB); sl++) {
-//                        d = that.imageSlices[sl];
-//
-//                        imgData = that.localtempCont.getImageData(d.x,d.y,d.w,d.h);
-//
-//                        if(typeof that.prevImageSlices[sl] != 'undefined'){
-//                             matched = that.dc.matchWithPrevious(imgData.data, that.prevImageSlices[sl], d.w);
-////                                if(!matched || ( sl >= ((uniqcount*5)-4) && sl <= (uniqcount*5) )){
-//                            if(!matched){
-//                                that.prevImageSlices[sl] = imgData.data;
-//                                encodedData = that.dc.encodeRGB(imgData.data);
-//                                stringData = vApp.vutil.ab2str(encodedData);
-//                                tempObj = {'si' : stringData, 'd' : d};
-//                                sendobj.push(tempObj);    
-//                                that.latestScreen[sl] = tempObj; 
-//                            }
-//                        }else{
-//                            that.prevImageSlices[sl] = imgData.data;
-//                            encodedData = that.dc.encodeRGB(imgData.data);
-//                            stringData = vApp.vutil.ab2str(encodedData);
-//                            tempObj = {'si' : stringData, 'd' : d};
-//                            sendobj.push(tempObj);    
-//                            that.latestScreen[sl] = tempObj; 
-//                        }
-//                    }
-//
-//                    uniqcount++;
-//                    if (uniqmax == uniqcount) {
-//                        uniqcount=0;
-//                    }
-//
-//                    if(sl ==  resA * resB){
-//                        if(sendobj.length > 0){
-//                            //var encodedString = LZString.compressToBase64(JSON.stringify(sendobj));
-//                            var encodedString = JSON.stringify(sendobj);
-//                            
-//                            console.log('sent images '  + sendobj.length);
-//                            var contDimension = that.getContainerDimension();
-//                            var madeTime = new Date().getTime();
-//                            if (changeonresize == 1) {
-//                                
-//                                if(typeof prvVWidth != 'undefined' && typeof prvVHeight != 'undefined'){
-//                                    var imgObj = {'si' : encodedString, 'st' : that.type, d : {w:prvVWidth, h:prvVHeight}, vc : {w:contDimension.width, h:2000}};
-//                                }else{
-//                                    var imgObj = {'si' : encodedString, 'st' : that.type, d : {w:that.video.offsetWidth, h:that.video.offsetHeight}, vc : {w:contDimension.width, h:contDimension.height}};
-//                                }
-//                                
-//                                changeonresize=0;
-//                                console.log("resize is performing");
-//                            } else {
-//                                var imgObj = {'si' : encodedString, 'st' : that.type};
-//                                console.log("simple action");
-//                            }
-//                            
-//                            // Calculate Bandwidth in Kbps
-//                            var localBandwidth = ((encodedString.length/128) / (screenIntervalTime/1000))
-//                            // Shape Bandwidth
-//                            if (localBandwidth <= 300) {
-//                                screenIntervalTime = 300;
-//                            }else if (localBandwidth >= 10000) {
-//                                screenIntervalTime=localBandwidth/2;
-//                            } 
-//                            else{
-//                                screenIntervalTime=localBandwidth;
-//                            }
-//                            // Avoid Sharp Curve
-//                            if ((pscreenIntervalTime * 4) < screenIntervalTime ) {
-//                                screenIntervalTime = pscreenIntervalTime * 4;
-//                            }
-//                            pscreenIntervalTime = screenIntervalTime;
-////                            console.log('Bandwidth '+localBandwidth+ ' Interval '+screenIntervalTime);
-//                            vApp.storage.wholeStore(imgObj);
-//                            vApp.wb.utility.beforeSend(imgObj);                 
-//                            sendobj=[];
-//                        }
-//                    }
-//                    
-//                   vApp.clear = setInterval(sendScreen, screenIntervalTime);
-//                   console.log('image is sending');
-//                }
-                
-              //  alert('ssss')
-                
-			  // vApp.clear = setInterval(myFunction2, 300);
-
                 vApp.clear = setInterval(sendScreen, screenIntervalTime);
-                
             },
             
             getContainerDimension : function (){
