@@ -69,9 +69,12 @@ class mod_virtualclass_mod_form extends moodleform_mod {
 
         $mform->addElement('header', 'general', get_string('sessionsschedule', 'virtualclass'));
         $mform->addElement('date_time_selector', 'opentime', get_string('opentime', 'virtualclass'), array('optional' => true));
-        $mform->setDefault('timeavailable', 0);
+        //$mform->setDefault('timeavailable', 0);
+        $mform->addRule('opentime', null, 'required', null, 'client');
+        
         $mform->addElement('date_time_selector', 'closetime', get_string('closetime', 'virtualclass'), array('optional' => true));
-        $mform->setDefault('timedue', 0);
+        //$mform->setDefault('timedue', 0);
+        $mform->addRule('closetime', null, 'required', null, 'client');
 
         // Add standard elements, common to all modules.
         $this->standard_coursemodule_elements();
@@ -79,4 +82,25 @@ class mod_virtualclass_mod_form extends moodleform_mod {
         // Add standard buttons, common to all modules.
         $this->add_action_buttons();
     }
+    
+    
+    
+        public function validation($data, $files) {
+            $errors = parent::validation($data, $files);
+    
+            // Check open and close times are consistent.
+            if ($data['opentime'] != 0 && $data['closetime'] != 0 &&
+                    $data['closetime'] < $data['opentime']) {
+                $errors['closetime'] = get_string('closebeforeopen', 'virtualclass');
+            }
+            if ($data['opentime'] != 0 && $data['closetime'] == 0) {
+                $errors['closetime'] = get_string('closenotset', 'virtualclass');
+            }
+            if ($data['opentime'] != 0 && $data['closetime'] != 0 &&
+                    $data['closetime'] == $data['opentime']) {
+                $errors['closetime'] = get_string('closesameopen', 'virtualclass');
+            }
+            return $errors;
+        }
+
 }

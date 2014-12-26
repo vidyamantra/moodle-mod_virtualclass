@@ -56,7 +56,7 @@ $PAGE->set_context($context);
 
 // Output starts here.
 echo $OUTPUT->header();
-
+echo $OUTPUT->heading($virtualclass->name);
 // Conditions to show the intro can change to look for own settings or whatever.
 if ($virtualclass->intro) {
     echo $OUTPUT->box(format_module_intro('virtualclass', $virtualclass, $cm->id), 'generalbox mod_introbox', 'virtualclassintro');
