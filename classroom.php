@@ -61,9 +61,10 @@ $event->trigger();
 $PAGE->set_url('/mod/virtualclass/view.php', array('id' => $cm->id));
 $PAGE->set_popup_notification_allowed(false); // No popup notifications in virtual classroom
 $PAGE->set_title(format_string($virtualclass->name));
-$PAGE->set_heading(format_string($course->fullname));
+//$PAGE->set_heading(format_string($course->fullname));
 $PAGE->set_context($context);
 
+//$PAGE->set_pagelayout('embedded');
 $PAGE->set_pagelayout('popup');
 $PAGE->requires->jquery(true);
 $PAGE->requires->jquery_plugin('ui');

@@ -66,8 +66,8 @@ if ($virtualclass->intro) {
 if ($virtualclass->closetime > time()) {
     echo html_writer::script('', $CFG->wwwroot.'/mod/virtualclass/popup.js');
     $popupname = 'Virtualclasspopup';
-    $popupwidth = 1200; //'window.screen.width-100';
-    $popupheight = 1200;//'window.screen.height-100';
+    $popupwidth = 'window.screen.width';
+    $popupheight = 'window.screen.height';
     $popupoptions = "toolbar=no,location=no,menubar=no,copyhistory=no,status=no,directories=no,scrollbars=yes,resizable=yes";
     $room = $course->id . "_" . $cm->id;
 
