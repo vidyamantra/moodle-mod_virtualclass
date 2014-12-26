@@ -241,6 +241,8 @@
                             //vApp.gObj.video.audio.attachAudioPressOnce();
                             that.clickOnceSpeaker(this);
                         }else if(this.id == 'audioTest'){
+                            vApp.lang.getString(msg);
+                            
                             var playSound = confirm ("Please say some words for recording the Audio");
                                 if(playSound){
                                   that.testInit();
