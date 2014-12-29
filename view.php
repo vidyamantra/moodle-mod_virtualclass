@@ -54,9 +54,16 @@ $PAGE->set_title(format_string($virtualclass->name));
 $PAGE->set_heading(format_string($course->fullname));
 $PAGE->set_context($context);
 
+$a = new stdClass();
+$a->open = userdate($virtualclass->opentime);
+$a->close = userdate($virtualclass->closetime);
+$user = $DB->get_record('user', array('id' => $virtualclass->moderatorid));
+
 // Output starts here.
 echo $OUTPUT->header();
 echo $OUTPUT->heading($virtualclass->name);
+echo html_writer::tag('div', get_string('virtualclasstiming', 'mod_virtualclass', $a));
+echo html_writer::tag('div', get_string('teachername', 'mod_virtualclass', $user));
 // Conditions to show the intro can change to look for own settings or whatever.
 if ($virtualclass->intro) {
     echo $OUTPUT->box(format_module_intro('virtualclass', $virtualclass, $cm->id), 'generalbox mod_introbox', 'virtualclassintro');
