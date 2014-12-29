@@ -70,7 +70,7 @@ if ($virtualclass->intro) {
 }
 
 // Check virtualclass is open.
-if ($virtualclass->closetime > time()) {
+if ($virtualclass->closetime > time() && $virtualclass->opentime <= time()) {
     echo html_writer::script('', $CFG->wwwroot.'/mod/virtualclass/popup.js');
     $popupname = 'Virtualclasspopup';
     $popupwidth = 'window.screen.width';
