@@ -84,3 +84,57 @@ function virtualclass_online_server($url, $authusername, $authpassword, $role, $
     $form .= html_writer::end_tag('form');
     return $form;
 }
+
+/**
+ * Update the calendar entries for this virtualclass.
+ *
+ * @param object $virtualclass - Required to pass this in because it might
+ *                              not exist in the database yet.
+ * @return bool
+ */
+
+function update_calendar($virtualclass) {
+    global $DB, $CFG;
+    require_once($CFG->dirroot.'/calendar/lib.php');
+
+    if ($virtualclass->closetime && $virtualclass->closetime > time()) {
+        $event = new stdClass();
+
+        $params = array('modulename'=>'virtualclass', 'instance'=>$virtualclass->id);
+        $event->id = $DB->get_field('event', 'id', $params);
+        $event->name = $virtualclass->name;
+        $event->timestart = $virtualclass->opentime;
+
+        // Convert the links to pluginfile. It is a bit hacky but at this stage the files
+        // might not have been saved in the module area yet.
+        $intro = $virtualclass->intro;
+        if ($draftid = file_get_submitted_draft_itemid('introeditor')) {
+            $intro = file_rewrite_urls_to_pluginfile($intro, $draftid);
+        }
+
+        // We need to remove the links to files as the calendar is not ready
+        // to support module events with file areas.
+        $intro = strip_pluginfile_content($intro);
+        $event->description = array(
+            'text' => $intro,
+            'format' => $virtualclass->introformat
+        );
+
+        if ($event->id) {
+            $calendarevent = calendar_event::load($event->id);
+            $calendarevent->update($event);
+        } else {
+            unset($event->id);
+            $event->courseid    = $virtualclass->course;
+            $event->groupid     = 0;
+            $event->userid      = 0;
+            $event->modulename  = 'virtualclass';
+            $event->instance    = $virtualclass->id;
+            $event->eventtype   = 'open';
+            $event->timeduration = 0;
+            calendar_event::create($event);
+        }
+    } else {
+        $DB->delete_records('event', array('modulename'=>'virtualclass', 'instance'=>$virtualclass->id));
+    }
+}

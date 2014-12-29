@@ -78,10 +78,11 @@ function virtualclass_add_instance(stdClass $virtualclass, mod_virtualclass_mod_
     global $DB;
 
     $virtualclass->timecreated = time();
-
-    // You may have to add extra stuff in here.
-
-    return $DB->insert_record('virtualclass', $virtualclass);
+    $vclass = $DB->insert_record('virtualclass', $virtualclass);
+    $virtualclass->id = $vclass;
+    update_calendar($virtualclass);
+    return $vclass;
+    
 }
 
 /**
@@ -101,9 +102,9 @@ function virtualclass_update_instance(stdClass $virtualclass, mod_virtualclass_m
     $virtualclass->timemodified = time();
     $virtualclass->id = $virtualclass->instance;
 
-    // You may have to add extra stuff in here.
-
-    return $DB->update_record('virtualclass', $virtualclass);
+    $status = $DB->update_record('virtualclass', $virtualclass);
+    update_calendar($virtualclass);
+    return $status;
 }
 
 /**
