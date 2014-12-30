@@ -1,0 +1,1285 @@
+* {
+	margin : 0;
+	padding : 0;
+}
+html, body {
+	width : 100%;
+	height : 100%;
+	font-family : "Verdana", sans-serif;
+}
+a, canvas {
+	outline : none;
+}
+.clear {
+	clear : both;
+}
+body {
+	margin : 0;
+	padding : 0;
+}
+#conControler {
+	clear : both;
+}
+#vAppCont {
+	height : 100%;
+}
+#page-mod-onetoone-whiteboard #divForReloadMsgAnchor {
+	margin-left : 10px;
+}
+#divForReloadMsg {
+	border : #8eb9ce solid 1px;
+	width : auto;
+	float : left;
+	background : #ddeef6;
+	border-radius : 5px;
+	padding : 15px;
+	line-height : 120%;
+	letter-spacing : 0.3px;
+	margin : 15px 0;
+}
+#serverErrorCont, #divForReloadMsg {
+	padding : 10px;
+	width : auto;
+	float : left;
+	margin-left : 35%;
+	border-radius : 5px;
+	padding : 15px;
+	line-height : 120%;
+	letter-spacing : 0.3px;
+	width : auto;
+	font-size : 12px;
+}
+#vAppOptionsCont {
+	width : 35px;
+	float : left;
+}
+#vAppOptionsCont .appOptions {
+	padding-bottom : 17px;
+}
+#vAppOptionsCont .appOptions.active a img {
+	border : #006CA6 solid 1px;
+	padding : 2px;
+	border-radius : 3px;
+}
+#vAppOptionsCont:first-child, #vAppOptionsCont {
+	background-color : #dfdfdf;
+	position : absolute;
+	top : 90px;
+	border : #aaa solid 1px;
+	padding : 10px 4px 0 9px;
+	border-bottom-right-radius : 10px;
+	border-top-right-radius : 10px;
+	box-shadow : 0 0 5px #666;
+	z-index : 100;
+}
+#vAppOptionsCont {
+	clear : both;
+}
+#vAppWhiteboardCont {
+	height : 100%;
+	width : 100%;
+}
+#vAppWhiteboard, #vAppCont {
+	float : left;
+}
+#vcanvas {
+	float : left;
+	border : #ccc solid 1px;
+}
+#vcanvas.student #videoContainer {
+	top : -237px;
+}
+#videoMinMize, #videoMaxMize {
+	position : absolute;
+}
+#vcanvas.student #videoMinMize, #videoMinMize {
+	background-image : url('../images/min.png') !important;
+	background-position : left top;
+	background-repeat : no-repeat;
+}
+#vcanvas.student #videoMaxMize, #videoMaxMize {
+	background-image : url('../images/max.png') !important;
+	background-position : left top;
+	background-repeat : no-repeat;
+}
+#vcanvas.student #videos #videoMinMize, #vcanvas.student #videos #videoMaxMize {
+	height : 16px;
+	position : absolute;
+	top : 2px;
+	width : 16px;
+	right : -1px;
+}
+#vcanvas.student #videos #videoMinMize, #videoMinMize {
+	border-left : none;
+	border-bottom : none;
+	height : 16px;
+	position : absolute;
+	right : -1px;
+	width : 16px;
+}
+#vcanvas.student #videos #videoMaxMize, #videoMaxMize {
+	border-left : 1px solid #CCCCCC;
+	border-top : 1px solid #ccc;
+	border-right : none;
+	height : 16px;
+	right : 0;
+	top : -33px;
+	width : 16px;
+}
+#vcanvas.student #videos {
+	border-bottom : 1px solid #ccc;
+}
+#vcanvas.student #informationCont {
+	display : none;
+}
+#containerWb {
+	margin : 0;
+	padding : 0;
+}
+#commandToolsWrapper #t_line a img[title]:hover:after {
+	content : attr(title);
+	padding : 4px 8px;
+	color : #333;
+	position : absolute;
+	left : 0;
+	top : 100%;
+	white-space : nowrap;
+	border-radius : 5px;
+	box-shadow : 0 0 4px #222;
+}
+#commandToolsWrapper {
+	background : #f3f3f3;
+	background-image : url('../images/nav_bg.png') !important;
+	background-position : left 5%;
+	background-repeat : repeat-x;
+	padding-bottom : 0;
+	border-bottom : 1px solid #aaa;
+	padding-left : 1%;
+	height : 44px;
+	box-shadow : 0 0 5px #aaa;
+}
+#commandToolsWrapper #t_line a, #commandToolsWrapper #t_rectangle a, #commandToolsWrapper #t_freeDrawing a, #commandToolsWrapper #t_oval a, #commandToolsWrapper #t_triangle a, #commandToolsWrapper #t_text a, #commandToolsWrapper #t_replay a, #commandToolsWrapper #t_activeall a, #commandToolsWrapper #t_clearall a, #commandToolsWrapper #t_connectionoff a, #commandToolsWrapper #t_assign a {
+	background-image : url(../images/border-img.png);
+	background-position : right top;
+	background-repeat : no-repeat;
+}
+#commandToolsWrapper #t_assign.controlCmd a {
+	background-image : none;
+	padding-right : 15px;
+}
+.socketon.teacher #commandToolsWrapper #t_assign.controlCmd a, #commandToolsWrapper #t_connectionoff a, .con.controlCmd, .controlCmd.coff {
+	background-image : url(../images/border-img.png);
+	background-position : left center;
+	background-repeat : no-repeat;
+}
+#commandToolsWrapper, #dataInfoHeading {
+	padding-left : 1%;
+	width : 99%;
+}
+#commandToolsWrapper #t_line a, #commandToolsWrapper #t_rectangle a, #commandToolsWrapper #t_freeDrawing a, #commandToolsWrapper #t_oval a, #commandToolsWrapper #t_triangle a, #commandToolsWrapper #t_text a, #commandToolsWrapper #t_replay a, #commandToolsWrapper #t_activeall a, #commandToolsWrapper #t_clearall a, #commandToolsWrapper #t_connectionoff a, #commandToolsWrapper #t_assign a {
+	background-image : url(../images/border-img.png);
+	background-position : right top;
+	background-repeat : no-repeat;
+}
+#canvasWrapper {
+	float : left;
+	margin : 0;
+	padding : 0;
+	margin-top : 0;
+}
+#canvasWrapper #canvas {
+	outline : none;
+}
+#commandToolsWrapper a {
+	float : left;
+	padding : 9px 15px;
+}
+#canvasWrapper #canvas {
+	outline : none;
+}
+#canvasWrapper {
+	float : left;
+	margin : 0;
+	padding : 0;
+	margin-top : 0;
+}
+#canvasWrapper #canvas {
+	outline : none;
+}
+#canvasDrawMsgContFirefox {
+	left : 510px;
+	position : absolute;
+	z-index : 100;
+}
+.msgBoxCanvasimg {
+	clear : both;
+}
+#canvasDrawMsgContFirefox {
+	left : 510px;
+	position : absolute;
+	z-index : 100;
+}
+#commandToolsWrapper a {
+	padding : 9px 15px;
+	float : left;
+}
+#canvasWrapper {
+	float : left;
+	margin : 0;
+	padding : 0;
+	margin-top : 0;
+}
+#canvas {
+	border : black solid 1px;
+	display : block;
+	border : none;
+}
+.numbers {
+	float : right;
+}
+#sentMsgInfo {
+	border : #ccc solid 1px;
+	margin-top : 10px;
+	margin-bottom : 10px;
+	margin-right : 10px;
+	padding : 5px;
+	min-height : 62px;
+	text-align : left;
+}
+#rcvdMsgInfo {
+	margin-top : 10px;
+	border : #ccc solid 1px;
+	margin-right : 10px;
+	padding : 5px;
+	min-height : 62px;
+	text-align : left;
+}
+#videos {
+	width : 930px;
+	margin-top : 20px;
+	padding : 15px;
+	clear : both;
+}
+#localVideo {
+	border : #CCCCCC solid 1px;
+	width : 30%;
+}
+#remoteVideo {
+	border : #CCCCCC solid 1px;
+	width : 100%;
+}
+#remoteVideo2 {
+	border : green solid 3px;
+	width : 30%;
+}
+#chat_div .ui-memblist-usr:after {
+	content : ".";
+	display : block;
+	height : 0;
+	clear : both;
+	visibility : hidden;
+}
+#chat_div .ui-memblist-usr.teacher {
+	padding-top : 0;
+	background-color : #f1f1f1;
+	border-top: 1px solid #d5d5d5;
+	border-bottom: 1px solid #d5d5d5;
+	padding-left : 5px;
+}
+div.ui-memblist-usr video {
+	width : 60px;
+	height : 50px;
+	margin : 0;
+	outline : 1px solid #5A5757;
+	margin-left : 2px;
+}
+div.ui-memblist-usr .userVideos {
+	width : 60px;
+	height : 45px;
+	margin : 3px 0 0 2px;
+	outline : 1px solid #5A5757;
+}
+#graphCanvas {
+	top : -5px !important;
+}
+div.ui-memblist-usr video, div.ui-memblist-usr .userVideos {
+	margin-top : 6px;
+}
+#chat_div .ui-memblist-usr:first-child {
+	margin-top : 0;
+}
+div.ui-memblist-usr video, div.ui-memblist-usr .userVideos {
+	border : #eee solid 3px;
+	box-shadow : 0 0 1px #333;
+	border-radius : 5px;
+	outline : none;
+	margin-bottom : 5px;
+}
+#chat_div .ui-memblist-usr span {
+	top : 7px;
+	text-transform : uppercase;
+	font-weight : bold;
+	position : relative;
+}
+#chat_div.ui-memblist-log {
+	height : auto !important;
+}
+.msgBoxWebRtc p, .msgBoxCanvas p {
+	position : relative;
+	background : #ffffff;
+	border : #ccc solid 1px;
+}
+.msgBoxWebRtc p:after, .msgBoxCanvas p:after, .msgBoxWebRtc p:before, .msgBoxCanvas p:before {
+	bottom : 100%;
+	left : 24%;
+	border : transparent solid;
+	content : " ";
+	height : 0;
+	width : 0;
+	position : absolute;
+}
+.msgBoxWebRtc p:after, .msgBoxCanvas p:after {
+	border-color : rgba(255, 255, 255, 0);
+	border-bottom-color : #ffffff;
+	border-width : 11px;
+	margin-left : -10px;
+}
+.msgBoxWebRtc p:before, .msgBoxCanvas p:before {
+	border-color : rgba(170, 170, 170, 0);
+	border-bottom-color : #aaaaaa;
+	border-width : 12px;
+	margin-left : -11px;
+}
+#chormeWebrtcCont p:after, #chormeWebrtcCont p:before {
+	left : 93%;
+}
+.msgBoxWebRtc {
+	width : 350px;
+}
+.msgBoxWebRtc p, .msgBoxCanvas p {
+	border : #ddd solid 2px;
+	padding : 5px;
+}
+.msgBoxCanvas p {
+	margin-top : 25px;
+}
+#chormeWebrtcCont {
+	position : absolute;
+	right : 2%;
+	top : 0%;
+}
+#chormeWebrtcContimg {
+	height : 15px;
+}
+#chormeWebrtcCont p {
+	padding : 12px;
+	z-index : 100;
+}
+#fireFoxWebrtcCont {
+	position : absolute;
+	left : 160px;
+	top : 173px;
+	z-index : 100;
+}
+.msgBoxCanvas {
+	width : 350px;
+}
+.msgBoxCanvasimg {
+	clear : both;
+}
+#canvasDrawMsgContFirefox {
+	left : 510px;
+	position : absolute;
+	z-index : 100;
+}
+#canvasDrawMsgContChrome {
+	position : absolute;
+	left : 270px;
+}
+#canvasDrawArea {
+	clear : both;
+	position : relative;
+	left : 40%;
+	bottom : 400px;
+	font-size : 50px;
+	color : #ddd;
+}
+#canvasDrawArea p {
+	color : rgb(197, 161, 161);
+}
+a[title]:hover:after {
+	content : attr(title);
+	padding : 4px 8px;
+	color : rgba(0, 0, 0, 0.5);
+	position : absolute;
+	left : 0;
+	top : 100%;
+	white-space : nowrap;
+	z-index : 2;
+	border-radius : 5px;
+	background : rgba(0, 0, 0, 0.5);
+}
+.error {
+	border : #ddd solid 2px;
+	width : 50%;
+	padding : 10px;
+	margin-left : 10%;
+	margin-top : 2%;
+}
+#commandToolsWrapper #t_line a img[title]:hover:after {
+	content : attr(title);
+	padding : 4px 8px;
+	color : #333;
+	position : absolute;
+	left : 0;
+	top : 100%;
+	white-space : nowrap;
+	border-radius : 5px;
+	box-shadow : 0 0 4px #222;
+}
+#vcanvas {
+	float : left;
+	border : #ccc solid 1px;
+}
+#commandToolsWrapper {
+	background : #f3f3f3;
+	background-image : url('../images/nav_bg.png') !important;
+	background-position : left 5%;
+	background-repeat : repeat-x;
+	padding-bottom : 0;
+	border-bottom : 1px solid #aaa;
+	padding-left : 1%;
+	height : 44px;
+	box-shadow : 0 0 5px #aaa;
+}
+#commandToolsWrapper #t_line a, #commandToolsWrapper #t_rectangle a, #commandToolsWrapper #t_freeDrawing a, #commandToolsWrapper #t_oval a, #commandToolsWrapper #t_triangle a, #commandToolsWrapper #t_text a, #commandToolsWrapper #t_replay a, #commandToolsWrapper #t_activeall a, #commandToolsWrapper #t_clearall a, #commandToolsWrapper #t_connectionoff a, #commandToolsWrapper #t_assign a {
+	background-image : url(../images/border-img.png);
+	background-position : right top;
+	background-repeat : no-repeat;
+}
+
+
+
+
+#commandToolsWrapper #t_assign.controlCmd a {
+	background-image : none;
+	padding-right : 15px;
+}
+.socketon.teacher #commandToolsWrapper #t_assign.controlCmd a, #commandToolsWrapper #t_connectionoff a, .con.controlCmd, .controlCmd.coff {
+	background-image : url(../images/border-img.png);
+	background-position : left center;
+	background-repeat : no-repeat;
+}
+#commandToolsWrapper #t_connectionoff a, #commandToolsWrapper #t_connectionon a {
+	padding-top : 5px;
+}
+#commandToolsWrapper #t_assign a {
+	padding-top : 2px;
+}
+#canvasWrapper #canvas {
+	outline : none;
+}
+#informationCont h4 {
+	margin-top : 5px;
+}
+#videos {
+	margin : 0;
+	padding : 0;
+}
+#videos #remoteVideo {
+	margin-top : 10px;
+	margin-left : 25px;
+	margin-bottom : 5px;
+	height : 180px;
+}
+#videos #localVideo {
+	margin-left : 198px;
+	margin-top : 8px;
+	height : 180px;
+	margin-bottom : 5px;
+	padding : 2px;
+}
+.selfClear:after {
+	content : ".";
+	display : block;
+	height : 0;
+	clear : both;
+	visibility : hidden;
+}
+.selfClear {
+	display : inline-block;
+}
+.msgBoxWebRtc p, .msgBoxCanvas p {
+	background-color : #fff !important;
+	box-shadow : 0 0 6px rgba(0, 0, 0, 0.2) !important;
+	border : #ccc solid 1px !important;
+	font-size : 12px;
+	padding : 15px;
+	border-radius : 5px;
+	font-weight : 500;
+}
+.tooltip {
+	display : inline;
+	position : relative;
+}
+.tooltip:hover {
+	color : #c00;
+	text-decoration : none;
+}
+.tooltip:hover:after {
+	background : #fff;
+	border : #ccc solid 1px;
+	border-radius : 0.5em;
+	bottom : 1.35em;
+	color : #fff;
+	content : attr(data-title);
+	display : block;
+	left : 1em;
+	padding : 0.3em 1em;
+	position : absolute;
+	white-space : nowrap;
+	z-index : 98;
+	color : #000;
+	box-shadow : 0 1px 2px rgba(0, 0, 0, 0.2);
+	font-size : 12px;
+}
+#audioWidget .Tool .tooltip:hover:after, #audioWidget .audioTool .tooltip:hover:after {
+	padding : 0.7em 1em;
+	right : 30px;
+	left : auto;
+	bottom : -1em;
+}
+#vAppOptionsCont .appOptions .tooltip:hover:after {
+	padding : 0.7em 1em;
+	right : auto;
+	left : 35px;
+	bottom : -1em;
+}
+#containerWb #commandToolsWrapper .tool .tooltip:hover:after {
+	bottom : -1.8em;
+	padding : 0.6em 1em;
+}
+#virtualWindow {
+	border : #ED6B83 dashed 1px;
+	border-left : none;
+	position : absolute;
+}
+#packetContainer {
+	width : 50%;
+	float : left;
+	box-sizing : border-box;
+}
+#packetContainer #dataInformation, #packetContainer #sendPackCont, #packetContainer #receivePackCont {
+	float : left;
+	width : 32%;
+	border : #ccc solid 1px;
+	margin-top : 15px;
+	margin-bottom : 15px;
+}
+#packetContainer #dataInformation, #packetContainer #sendPackCont {
+	border-right : none;
+}
+#sentPacketsLabel, #sendPackPsCont, #totSendPackCont, #receivedPacketsLabel, #receivePackPsCont, #totReceivedPackCont, #blankDiv, #perSecData, #totalDataLabel {
+	padding : 7px;
+}
+#receivedPacketsLabel, #receivePackPsCont, #sentPacketsLabel, #sentPacketsLabel, #sendPackPsCont, #blankDiv, #perSecData {
+	border-bottom : 1px solid #ccc;
+	color : #595A5D;
+}
+#errorWebSocket, #errorWebRtc, #errorCanvas, #errorPeerConnect {
+	background-color : #F2DEDE;
+	border-color : #FDB9C3;
+	color : #B94A48;
+	font-size : 14px;
+	border-radius : 5px;
+	border-width : 1px;
+}
+#errorWebSocketPara a, #errorWebRtcPara a, #errorCanvasPara a {
+	color : #B94A48;
+	font-weight : 600;
+	font-size : 13px;
+	text-decoration : none;
+}
+#sentPacketsLabel span, #receivedPacketsLabel span {
+	margin-left : 15px;
+}
+#totalDataLabel, #sentPacket, #informationCont {
+	color : #595A5D;
+}
+#informationCont #sentMsgInfoContainer {
+	width : 50%;
+	float : left;
+	text-align : center;
+}
+#informationCont #receivedMsgInfoContainer {
+	width : 50%;
+	float : left;
+	text-align : center;
+}
+#dataInformation {
+	margin-left : 10px;
+}
+#topContainer {
+	height : 200px;
+}
+#leftContainer {
+	width : 200px;
+	float : left;
+}
+#packetContainer, #informationCont {
+	font-size : 13px;
+}
+#informationCont {
+	float : left;
+	width : 50%;
+}
+#dataInfoHeading {
+	width : 915px;
+	text-align : center;
+}
+#informationCont {
+	margin-top : 11px;
+}
+#containerWb {
+	margin : 0;
+	padding : 0;
+}
+#t_assign.controlCmd a {
+	padding-left : 0;
+	padding-right : 0;
+}
+.socketon #t_assign.controlCmd a {
+	padding-left : 12px;
+	padding-right : 14px;
+}
+#vcanvas {
+	margin-left : 0;
+}
+#commandToolsWrapper, #dataInfoHeading {
+	padding-left : 1%;
+	width : 99%;
+}
+#videos {
+	width : auto;
+	position : relative;
+}
+#videos #localVideo {
+	height : auto;
+	margin : 0;
+	position : absolute;
+	right : 3px;
+	margin-top : 48%;
+	width : 35%;
+	z-index : 100;
+}
+#videos #remoteVideo {
+	margin-left : 0;
+	margin-top : 0;
+	right : -9px;
+	padding : 2px;
+}
+#videos {
+	position : relative;
+	top : 0;
+}
+#videos #remoteVideo {
+	height : auto;
+	position : absolute;
+	min-height : auto;
+}
+#remoteVideo {
+	width : 100%;
+}
+#vcanvas.student #videos {
+	top : 16px;
+}
+.dynDiv_resizeDiv_tl {
+	padding-bottom : 5px;
+	padding-right : 5px;
+}
+#vcanvas.student #videoMinMize, #videoMinMize {
+	height : 16px;
+	right : 2px;
+	width : 16px;
+	z-index : 100;
+}
+.dynDiv_resizeDiv_tl, .dynDiv_resizeDiv_tr, .dynDiv_resizeDiv_bl, .dynDiv_resizeDiv_br {
+	background-color : #fff !important;
+	background-image : url('../images/resize.png') !important;
+	background-position : left top;
+	background-repeat : no-repeat;
+	width : 10px;
+	height : 10px;
+	background : #faa;
+	border : #000 solid 1px;
+	position : absolute;
+}
+.dynDiv_resizeDiv_tl {
+	border : none medium;
+	left : 6px;
+	top : 3px;
+	z-index : 100;
+}
+#videoContainer {
+	background : transparent;
+	width : 285px;
+	height : 220px;
+	position : absolute;
+	right : 0;
+	bottom : 0;
+	overflow : hidden;
+}
+#videoMinMize, #videoMaxMize {
+	position : absolute;
+}
+#vcanvas.student #videoContainer {
+	top : -237px;
+}
+#videoMinMize, #videoMaxMize {
+	position : absolute;
+}
+#vcanvas.student #videoMinMize, #videoMinMize {
+	background-image : url('../images/min.png') !important;
+	background-position : left top;
+	background-repeat : no-repeat;
+}
+#vcanvas.student #videoMaxMize, #videoMaxMize {
+	background-image : url('../images/max.png') !important;
+	background-position : left top;
+	background-repeat : no-repeat;
+}
+#vcanvas.student #videos #videoMinMize, #vcanvas.student #videos #videoMaxMize {
+	height : 16px;
+	position : absolute;
+	top : 2px;
+	width : 16px;
+	right : -1px;
+}
+#vcanvas.student #videos #videoMinMize, #videoMinMize {
+	border-left : none;
+	border-bottom : none;
+	height : 16px;
+	position : absolute;
+	right : -1px;
+	width : 16px;
+}
+#vcanvas.student #videos #videoMaxMize, #videoMaxMize {
+	border-left : 1px solid #CCCCCC;
+	border-top : 1px solid #ccc;
+	border-right : none;
+	height : 16px;
+	right : 0;
+	top : -33px;
+	width : 16px;
+}
+.socketon.teacher #videoMaxMize {
+	top : -17px;
+}
+.controlCmd {
+	float : right;
+}
+#videoContainer {
+	bottom : 45px;
+}
+.controlCmd.coff, .con.controlCmd {
+	padding-left : 20px;
+}
+.con.controlCmd a {
+	border : #79aa26 solid 1px;
+	padding-left : 4px !important;
+	padding-right : 4px !important;
+	border-radius : 2px;
+}
+.con {
+	margin-right : 20px;
+	float : right;
+}
+.controlCmd.coff {
+	margin-right : 10px;
+}
+#serverErrorCont {
+	border : #9E1333 solid 1px;
+	background : #F2DFE3;
+}
+#vAppWhiteboardCont {
+	height : 100%;
+	width : 100%;
+}
+#widgetRightSide {
+	float : left;
+	width : 260px;
+	border : #ccc solid 1px;
+	border-left : none;
+}
+.userVideo {
+	width : 75px;
+	height : 56px;
+}
+#tempVideo {
+	display : none;
+}
+video, canvas, #allVideosCont {
+	float : left;
+}
+video, canvas {
+	margin : 3px;
+	margin-bottom : 2px;
+}
+.videoWrapper {
+	z-index : 50;
+	position : relative;
+	clear : both;
+}
+.videoSubWrapper {
+	z-index : 1000;
+}
+.videoSubWrapper[data-uname]:hover:after {
+	content : attr(data-uname);
+	padding : 2px 5px 2px 5px;
+	color : rgba(48, 39, 2, 1);
+	position : absolute;
+	margin-left : -40px;
+	top : 60%;
+	white-space : nowrap;
+	border-radius : 15px;
+	background : rgba(240, 245, 240, 0.6);
+	font-size : 80%;
+}
+#allVideosCont {
+	position : relative;
+}
+#commonChatBoard {
+	clear : both;
+	width : 100%;
+	height : 92%;
+}
+#textInputBox {
+	width : 100%;
+	height : 5%;
+	padding : 5px 3px 5px 3px;
+	resize : none;
+	border : #ccc solid 1px;
+	border-radius : 3px;
+}
+.userName {
+	font-weight : bold;
+}
+#chatBox {
+	font-size : 80%;
+	border-top : 1px solid #ccc;
+}
+#chatBox .userMsg {
+	letter-spacing : 0.03em;
+	word-break : break-all;
+	white-space : pre-wrap;
+	word-break : break-all;
+	overflow-wrap : break-word;
+}
+#chatBox {
+	padding : 5px;
+}
+#chatBox #commonChatBoard {
+	overflow-y : auto;
+}
+#chatContainer {
+	width : 100%;
+	margin-top : 10px;
+	clear : both;
+	margin-top : 5px;
+}
+#mainContainer {
+	clear : both;
+}
+#vAppOptionsCont {
+	width : 35px;
+	float : left;
+}
+#vAppOptionsCont .appOptions {
+	padding-bottom : 17px;
+}
+#vAppOptionsCont:first-child, #vAppOptionsCont {
+	background-color : #dfdfdf;
+	position : absolute;
+	top : 120px;
+	border : #aaa solid 1px;
+	padding : 10px 4px 0 9px;
+	border-bottom-right-radius : 10px;
+	border-top-right-radius : 10px;
+	box-shadow : 0 0 5px #666;
+	z-index : 100;
+}
+#vAppScreenShare, #vAppWholeScreenShare {
+	float : left;
+	border : #ccc solid 1px;
+	height : 100%;
+}
+.vmApp {
+	border-right : none;
+}
+.Local {
+	margin : 4px 7px 0 7px;
+}
+#vAppScreenShareLocalTempVideo, #vAppwholescreenShareLocalTempVideo {
+	display : none;
+}
+#commonChatBoardLabel {
+	position : relative;
+	width : 140px;
+	color : #ccc;
+	font-size : 24px;
+	opacity : 0.800000011920928955078125;
+	left : 50px;
+	top : -55%;
+}
+#commonChatBoardLabel #firstWord {
+	margin-left : 8%;
+	font-size : 20px;
+}
+::-webkit-input-placeholder, :-moz-placeholder {
+opacity : 0.800000011920928955078125 !important;
+}
+#textInputBox {
+	padding-top : 11px;
+	padding-left : 8px;
+}
+#toggleContainer {
+	font-weight : bold;
+	color : #686464;
+	width : 7px;
+	border : #ccc solid 1px;
+	padding-left : 4px;
+	padding-right : 4px;
+	cursor : pointer;
+}
+#toggleContainer.display {
+	position : relative;
+	top : 25px;
+	left : 10px;
+}
+#toggleContainer.hide {
+	margin-left : 4px;
+	padding-right : 6px;
+}
+#vAppWhiteboard, #vAppCont {
+	float : left;
+}
+canvas {
+	padding : 0;
+	margin : 0;
+}
+#vAppOptionsCont {
+	clear : both;
+}
+#commonChatBoard span {
+	line-height : 125%;
+}
+#chat_div .ui-memblist-usr {
+	margin-top : 3px;
+	margin-bottom : 3px;
+}
+div.ui-memblist-usr video {
+	width : 60px;
+	height : 50px;
+	margin : 0;
+	outline : 1px solid #5A5757;
+	margin-left : 2px;
+}
+div.ui-memblist-usr .userVideos {
+	width : 60px;
+	height : 45px;
+	margin : 3px 0 0 2px;
+	outline : 1px solid #5A5757;
+}
+#graphCanvas {
+	top : -5px !important;
+}
+div.ui-memblist-usr video, div.ui-memblist-usr .userVideos {
+	margin-top : 5px;
+}
+#chat_div {
+	padding-bottom : 5px;
+	min-height : 150px;
+}
+#chatWidget {
+	clear : both;
+}
+#audioWidget {
+	background-color : #dfdfdf;
+	border : #aaaaaa solid 1px;
+	border-bottom-left-radius : 10px;
+	border-top-left-radius : 10px;
+	box-shadow : 0 0 5px #666;
+	position : absolute;
+	width : 35px;
+	cursor : pointer;
+	float : right;
+	height : auto;
+	right : 3px;
+	padding-left : 15px;
+	top : 65px;
+	padding-top : 13px;
+	padding-bottom : 13px;
+	padding-right : 5px;
+}
+#audioWidget .Tool .tooltip img {
+	border : green solid 1px;
+	padding : 2px;
+	padding-right : 0;
+	border-radius : 5px;
+	margin-left : -4px;
+}
+#audioWidget #speakerPressOnce .speakerPressonceAnch img {
+	margin-bottom : 10px;
+}
+#audioWidget #speakerPressOnce .speakerPressonceAnch a img {
+	margin-left : -2px;
+}
+.student #vcanvas {
+	border-top-width : 5px;
+	border-top-color : #aaa;
+}
+#speakerStudent #speakerPressing a:hover img {
+	opacity : 0.5;
+}
+#vcanvas.student #containerWb {
+	background-image : url('../images/nav_bg.png') !important;
+}
+#closebtn {
+	width : 35px;
+}
+#vAppOptionsCont {
+	top : 200px;
+}
+.ui-dialog-header span:first-child {
+	background : url('../images/user.png') 6% center no-repeat;
+	font-size : 14px;
+	padding-left : 30px;
+}
+.ui-widget-header .ui-icon {
+	background-image : url(images/ui-icons_222222_256x240.png);
+}
+div.ui-memblist-usr video, div.ui-memblist-usr .userVideos {
+	border : #eee solid 3px;
+	outline : none;
+	margin-bottom : 5px;
+}
+#chat_div .ui-memblist-usr span {
+	text-transform : uppercase;
+	font-weight : bold;
+}
+#chat_div.ui-memblist-log {
+	height : auto !important;
+}
+.vmchat_bar_button .inner_bt #usertab_text, .vmchat_room_bt .inner_bt #chatroom_text {
+	font-weight : normal;
+}
+.vmchat_room_bt .inner_bt #chatroom_text {
+	padding-left : 25px;
+}
+.maximize {
+	height : 38px;
+}
+#stickybar.minimize {
+	width : 50px;
+}
+.ui-icon-closethick {
+	background-position : -96px -128px !important;
+}
+.ui-chatbox {
+	width : 231px !important;
+	margin-left : -1px;
+}
+.ui-tabs .ui-tabs-nav li.ui-state-active {
+	background-image : none;
+	background-color : transparent;
+	border-top : 1px solid #aaa !important;
+}
+#stickycontainer #user_list .inner_bt #usertab_text, .vmchat_room_bt .inner_bt #chatroom_text {
+	background : url('../images/arrow-up.png') 75% 43% no-repeat;
+}
+.ui-corner-all.ui-chatbox-icon .ui-icon-close {
+	margin-top : 7px;
+	margin-right : 8px;
+}
+.ui-memblist-usr a img {
+	margin-top : 4px;
+	float : left;
+	background-color : #eee;
+	padding : 8px 12px;
+	border-radius : 3px;
+	border : #ddd solid 1px;
+	margin-bottom : 4px;
+	margin-left : 2px;
+}
+
+#memlist .ui-memblist-content .ui-memblist-log .ui-memblist-usr .controls .controleCont a.toolTip img, .controls a.audEnableSign img{
+	background-color: transparent;
+	margin-left: 1px;
+	margin-right: 0px;
+	height: 16px !important;
+	width: 16px !important;
+	min-height: 0 !important;
+	margin-top: 4px;
+	float: left;
+	padding: 2px 2px;
+	border-radius: 3px;
+	border: #ddd solid 1px;
+	margin-bottom: 4px;
+	border: none;
+}
+
+
+#memlist .ui-memblist-content .ui-memblist-log .ui-memblist-usr .controls .controleCont a.tooltip:hover:after{
+	bottom: -45px;
+	left: -15px;
+}
+ #memlist .ui-memblist-content .ui-memblist-log .ui-memblist-usr .controls  a.tooltip:hover:after{
+	 bottom: 10px;
+	 left: -50px;
+	 font-size: 11px;
+	 padding-left: 4px;
+	 padding-right: 4px;
+	 
+ }
+
+
+
+#vAppScreenShare, #vAppWholeScreenShare {
+    margin-left : 55px;
+}
+/*.ui-widget-content .controls {
+	clear : both;
+}*/
+.ui-widget-content .controls img {
+	margin-left : 4px;
+	margin-right : 4px;
+	height : 16px !important;
+	width : 16px !important;
+	min-height : 0 !important;
+}
+.ui-widget-content .controls {
+	width : 165px;
+	position : relative;
+}
+#speakerPressing {
+	width : 100%;
+	margin-bottom : 15px;
+}
+#speakerPressOnce {
+	width : 100%;
+	height : 100%;
+}
+/*#speakerPressOnce.deactive {
+	border : red solid 1px;
+}*/
+#chat_div .controleCont {
+	margin-top : 7px;
+	float : left;
+}
+.audioTransmit {
+	border : green solid 15px;
+	float : left;
+	width : 15px;
+	height : 15px;
+}
+.audEnableSign {
+	width : 12px;
+	height : 12px;
+/*	background-image : url('../images/online.png');*/
+	float : left;
+	margin-left : 4px;
+}
+#audioWidget #speakerPressOnce, #audioWidget #audioTest, #audioWidget #audioTest {
+	margin-bottom : 15px;
+}
+#vAppCont.student #audioWidget .audioTool a#speakerPressonceAnch img, #vAppCont.student #audioWidget .audioTool a#speakerPressingAnch img{margin-left: -5px;padding : 1px;padding-left : 2px; border : transparent solid 1px;}
+#vAppCont.teacher #audioWidget .active a img, #vAppCont.teacher #audioWidget .deactive a img, #vAppCont.student #audioWidget .audioTool.active a img, #vAppCont.student #audioWidget .audioTool.deactive a img {
+	border : #006CA6 solid 1px !important;
+	padding : 1px;
+	border-radius : 4px;
+	padding-right : 0;
+	padding-left : 2px;
+	margin-left: -3px;
+}
+
+#vAppCont.teacher #audioWidget .active a img, #vAppCont.teacher #audioWidget .deactive a img, #vAppCont.student #audioWidget .audioTool.active a img, #vAppCont.student #audioWidget .audioTool.deactive a img {
+    border : #41AA45 solid 1px !important;
+
+}
+ 
+#vAppCont.teacher #audioWidget .deactive a img, #vAppCont.student #audioWidget .audioTool.deactive a img {
+	border : #ec1109 solid 1px !important;
+	margin-left: -3px;
+}
+
+
+
+
+.ui-memblist-usr.student .controls .controleCont img.assignImg.block, .ui-memblist-usr.student .controls .controleCont img.audioImg.block, .ui-memblist-usr.student .controls .controleCont img.chatImg.block {
+	opacity : 0.4000000059604644775390625;
+	background-color : transparent;
+	border : none;
+	padding : 0;
+	margin-bottom : 0;
+}
+.controls .controleCont img.audioImg.block {
+	margin-bottom : 0;
+}
+#chat_div .ui-memblist-usr.teacher a span:first-letter {
+	color : green !important;
+}
+.ui-memblist-usr a span {
+	margin-left : 10px;
+}
+
+
+
+/* added by suman */
+
+#vAppScreenShare{
+    width : 99%;
+}
+
+#vAppCont{
+    width : 100%;
+}
+
+#t_reclaim{
+/*    width : 104%;*/
+}
+
+/* this should be write above */
+.student #vAppScreenShare, .student #vAppWholeScreenShare {
+    margin-left : 5px;
+}
+
+.teacher #vAppScreenShare, .teacher #vAppWholeScreenShare{
+    margin-left : 55px;
+}
+
+
+#vAppScreenShare{
+/*    height : auto;*/
+}
+
+
+#vAppCont {
+    height : 99%;
+}
+
+#commandToolsWrapper .tool.active a {
+	border-bottom : 1.5px solid #006CA6;
+	background-image: url(../images/border-img.png), url(../images/arrow-top.png) !important;
+	background-position: right top, center bottom !important;
+	
+}
+.controls a.audEnableSign img{
+	margin-left: -2px;
+}
+
+
+#chat_div .mySelf, #audioTest.audioIsTesting{
+    pointer-events : none !important;
+    opacity : 0.6;
+}
+
