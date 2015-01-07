@@ -71,7 +71,6 @@ jQuery.cachedScript = function( url, options ) {
     
     
     $(document).ready(function(){
-       
         window.earlierWidth = window.innerWidth;
         window.earlierHeight = window.innerHeight;
         window.wbUser = wbUser;
@@ -83,9 +82,17 @@ jQuery.cachedScript = function( url, options ) {
         window.vApp = vApp; //make available to vApp object to each file
         
         var appIs = "Whiteboard";
-        
+        vApp.gObj.sessionClear = false;
+        vApp.prvCurrUsersSame();
         vApp.init(wbUser.role, appIs);
+//         if(vApp.gObj.sessionClear){
+//            localStorage.clear(); //clear all when user/room is changed
+//         }
         
+//        if(typeof sessionClear != 'undefined' && sessionClear){
+//            vApp.storage.config.endSession();
+//        }
+//        
 // important
 //        if(localStorage.getItem('teacherId') != null){
 //            if(document.getElementById('speakerStudent') != null){
@@ -129,7 +136,7 @@ jQuery.cachedScript = function( url, options ) {
             window.vApp.wb.view.displayServerError('serverErrorCont', e.message);
             
             if(typeof e.message != 'object'){
-                display_error(e.message);
+                display_error(e.message.stack);
             }
             
         });
@@ -669,13 +676,14 @@ jQuery.cachedScript = function( url, options ) {
 
          /* Hide box when click on user tab */
          $("#tabs").on("click", "li a", function(){
-             var tabid = $( this ).closest( "li" ).attr( "id").substring(5);
-             $("#" + tabid).chatbox('toggleContentbox');
-             if(localStorage.getItem(tabid) == 'hidden'){
-                 localStorage.removeItem(tabid);
-             }else{
-                 localStorage.setItem(tabid, 'hidden');
-             }
+            var tabid = $( this ).closest( "li" ).attr( "id").substring(5);
+            $("#" + tabid).chatbox('toggleContentbox');
+            if(localStorage.getItem(tabid) == 'hidden'){
+               localStorage.removeItem(tabid);
+            }else{
+               localStorage.setItem(tabid, 'hidden');
+            }
+             
          });
 
          // new message alert
@@ -733,6 +741,7 @@ jQuery.cachedScript = function( url, options ) {
          
         /*** chat start from here ***/
         
+        //TODO this should be into relative place
         //this file have to be convert into function   
          var session = {
              audio: true,
@@ -747,21 +756,14 @@ jQuery.cachedScript = function( url, options ) {
 
          var encMode = "alaw"; 
          
-//        setTimeout(
-//            function (){
-//                window.postMessage({ type: 'isInstalled', id: 1 }, '*');
-//            },
-//            500
-//        );
-        
-        //window.postMessage({ type: 'isInstalled', id: 1 }, '*');
         setTimeout(
             function (){
                 window.postMessage({ type: 'isInstalled', id: 1 }, '*');
             },
             500
         );
+
+        vApp.vutil.attachClickOutSideCanvas();
         
-        //window.postMessage({ type: 'getScreen', id: pending }, '*');
    });
 //});

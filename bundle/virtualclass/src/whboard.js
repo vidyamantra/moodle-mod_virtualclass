@@ -113,9 +113,6 @@
                         window.addEventListener('resize', 
                             function (){
                                 if(vApp.currApp == 'Whiteboard'){
-//                                    alert('sss');
-//                                    debugger;
-                                    //alert(vApp.currApp);
                                     vApp.wb.utility.lockCanvas();
                                 }
                             }
@@ -132,22 +129,10 @@
                     
                     this.stHasTeacher = vApp.vutil.chkValueInLocalStorage('teacherId');
                     
-                    // 24
-//                    vApp.wb.utility.setUserStatus(this.stHasTeacher, storageHasReclaim);
-
                     if(vApp.vutil.chkValueInLocalStorage('reclaim')){
-//
-//                        var cmdToolsWrapper = document.getElementById(vApp.wb.commandToolsWrapperId);
-//                        if(cmdToolsWrapper != null){
-//                            while(cmdToolsWrapper.hasChildNodes()){
-//                                cmdToolsWrapper.removeChild(cmdToolsWrapper.lastChild);
-//                            }
-//                        }
-//                        
                         var cmdToolsWrapper = vApp.wb.createCommandWrapper();
                         vApp.wb.utility.createReclaimButton(cmdToolsWrapper);
                         vApp.gObj.uRole = 's';
-                        
                     }
                     if(this.stHasTeacher){
                         vApp.gObj.uRole = 't';
@@ -180,15 +165,6 @@
                         return true;
                     }
 
-//                    var cmdToolsWrapper = document.createElement('div');
-//                    cmdToolsWrapper.id = vApp.wb.commandToolsWrapperId;
-//                    var canvasElem = document.getElementById(vcan.canvasWrapperId);
-//                    if (canvasElem != null) {
-//                        document.getElementById('containerWb').insertBefore(cmdToolsWrapper, canvasElem);
-//                    } else {
-//                        document.getElementById('containerWb').appendChild(cmdToolsWrapper);
-//                    }
-                    
                     var cmdToolsWrapper = this.createCommandWrapper();
                     vApp.wb.createDiv('t_rectangle',  'rectangle', cmdToolsWrapper, 'tool');
                     vApp.wb.createDiv('t_line', 'line', cmdToolsWrapper, 'tool');
@@ -198,8 +174,6 @@
                     vApp.wb.createDiv('t_text',  'text', cmdToolsWrapper, 'tool');
                     vApp.wb.createDiv('t_activeall', 'activeAll', cmdToolsWrapper, 'tool');
                     vApp.wb.createDiv('t_clearall', 'clearAll',  cmdToolsWrapper, 'tool');
-
-                  //  vApp.wb.createDiv('t_replay', 'replay', cmdToolsWrapper, 'tool');
 
                     vApp.wb.socketOn = parseInt(wbUser.socketOn);
                     if (vApp.wb.socketOn == 1) {
@@ -236,16 +210,6 @@
                         lDiv.className = cmdClass;
                     }
                     
-//                    if(localStorage.getItem('activeTool') !=  null){
-                        
-//                        var activeTool = localStorage.getItem('activeTool')
-//                        if(activeTool == toolId){
-//                            lDiv.className = lDiv.className + " active";
-//                        }
-//                    }
-                    
-                    
-
                     var imgTag = document.createElement('img');
                     imgTag.alt = text;
                     if(typeof window.whiteboardPath != 'undefined'){
@@ -268,8 +232,6 @@
                     }else{
                         cmdToolsWrapper.appendChild(lDiv);
                     }
-                    //var canvasElem = document.getElementById(vcan.canvasWrapperId);
-
                 },
                 /**
                  * this funciton does create the canvas
@@ -290,16 +252,6 @@
                  * @param expects the mouse down event.
                  */
                 objInit: function(evt) {
-                    
-//                    var classes;
-//                    if(vApp.wb.hasOwnProperty('prvTool')){
-//                        classes = vApp.wb.utility.removeClassFromElement(vApp.wb.prvTool,  "active");
-//                        document.getElementById(vApp.wb.prvTool).className = classes;
-//                    }else{
-//                        classes =  this.parentNode.className; 
-//                    }
-//                    this.parentNode.className = classes + " active";
-                    
                     if(vApp.gObj.uRole == 't'){
                         vApp.wb.utility.makeActiveTool(this.parentNode.id);
                     }
@@ -341,16 +293,8 @@
                  * @param id expects the  id of container which contains all the commands of div
                  */
                 attachToolFunction: function(id, alreadyCreated) {
-                    //console.log('suman bogati my name');
-//                    vcan.canvasWrapperId = 'canvasWrapper';
-
                     vApp.wb.createCommand(alreadyCreated);
                     if (typeof alreadyCreated == 'undefined') {
-                        
-//                        if (document.getElementById('canvas') == null) {
-//                            vApp.wb.createCanvas();
-//                        }
-                        
                         var orginalTeacherId = vApp.vutil.chkValueInLocalStorage('orginalTeacherId');
                         vApp.wb.dataInfo = parseInt(wbUser.dataInfo);
                         if (orginalTeacherId && vApp.wb.dataInfo == 1) {
@@ -410,11 +354,8 @@
                             vcan.setValInMain('id', 0);
                         }
                         if (typeof myfunc != 'undefined') {
-                            //alert('via socket');
-                            
                             vApp.wb.t_replayInit(repMode, myfunc);
                         } else {
-                            //alert('via click');
                             vApp.wb.t_replayInit(repMode);
                         }
                     }
@@ -434,8 +375,6 @@
                     }
 
                     if (cmd == 't_assign') {
-                   //     vApp.wb.utility.assignRole();
-                        
                         var toolHeight = localStorage.getItem('toolHeight');
                         if (toolHeight != null) {
                               vApp.wb.utility.beforeSend({'assignRole': true, 'toolHeight': toolHeight, 'socket': vApp.wb.socketOn});
@@ -446,13 +385,7 @@
 
                     if (cmd == 't_reclaim') {
                         vApp.wb.utility._reclaimRole();
-                        
-//                        vApp.wb.utility.reclaimRole();
-//                        vApp.wb.utility.sendRequest('reclaimRole', true);
                     }
-                    
-                    
-
                     if (cmd != 't_activeall' && cmd != 't_replay' && cmd != 't_clearallInit' && cmd != 't_assign'
                             && cmd != 't_reclaim') {
                         vApp.wb.tool = new vApp.wb.tool_obj(cmd)
@@ -471,8 +404,8 @@
                     if (cmd != 't_freeDrawing') {
                         vApp.wb.obj.freeDrawObj = "";
                     }
-
-                    if (cmd != 't_text') {
+ 
+                    if (cmd != 't_text' && !vApp.vutil.exitTextWrapper()){
                         vApp.wb.obj.drawTextObj = "";
                     }
 
@@ -487,6 +420,7 @@
                         //vApp.wb.vcan.main.mcanvas = vApp.wb.canvas; //TODO this should be control because it is used inside the
 
                     } else if (cmd == 't_text') {
+                     //   vApp.vutil.attachClickOutSideCanvas();
                         vApp.wb.obj.drawTextObj = new vApp.wb.readyTextObj();
                         vApp.wb.obj.drawTextObj.init("canvasWrapper");
                     }
@@ -503,37 +437,8 @@
                     //vApp.wb.replay = vApp.wb._replay();
                     if(repMode == 'fromFile'){
                         vApp.gObj.chat.removeAllChat();
-                        
-//                        if(vAppObj.gObj.chat.isAvailable()){
-//                            vAppObj.gObj.chat.removeAllChat();
-//                        }
-                        
                         vApp.wb.recordAudio = true;
-                        //var audioRepTime = vApp.wb.recordStarted - vApp.wb.pageEnteredTime;
-                        
-//                        console.log("audioRepTime " + audioRepTime);
                         vApp.recorder.init();
-                        
-//                        var obj = vApp.recorder.objs[0];
-//                        var repTime = obj.mt - vApp.wb.pageEnteredTime;
-//                     
-//                        setTimeout(
-//                            function (){
-//                                vApp.recorder.renderObj();
-//                            },
-//                            repTime
-//                        );
-//                        
-//                        setTimeout(
-//                            function (){
-//                                if(typeof vApp.gObj.video != 'undefined'){
-//                                    //vApp.gObj.video.audio.replay(0, 0);
-//                                    vApp.gObj.video.audio.replayInit();
-//                                }
-//                            },
-//                            audioRepTime
-//                        );
-                
                     }else{
                         vApp.wb.replay = vApp.wb._replay();
                         if (typeof myfunc != 'undefined') {
@@ -547,7 +452,5 @@
                 }
             };
     }
-    
     window.whiteboard = whiteboard;
-    
 })(window, document);

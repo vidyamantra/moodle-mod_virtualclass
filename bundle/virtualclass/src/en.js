@@ -56,12 +56,21 @@
             'screenshare' : 'Screen Share', 
             'sessionend' : "Session End",
             'audioTest' : "Kindly speak some words for audio testing",
-            'chatEnable' : "Enable the chat", 
-            'chatDisable' : "Disable the chat",
-            'assignEnable' : "Assign role as teacher", 
-            'assignDisable' : "Reclaim teacher role",
-            'audioEnable' : "Enable the audio", 
-            'audioDisable' : "Disable the audio"
+            'chatEnable' : "Enable chat", 
+            'chatDisable' : "Disable chat",
+            'assignEnable' : "Reclaim role", 
+            'assignDisable' : "Assign teacher role",
+            'audioEnable' : "Enable audio", 
+            'audioDisable' : "Disable audio",
+            'minCommonChat' : "Minimize the Common Chat",
+            'maxCommonChat' : "Maximize the Common Chat",
+            'miniuserbox' : "Minimize User Box",
+            'maxuserbox' : "Expand User Box",
+            'miniUserList' : "Minimize User List",
+            'maxUserList' : "Maxmize User List"
+           
+            
+            
 //            'silenceDetectEnable' : "Silence detect enable",
 //            'silenceDetectDisable' : "Silence detect disable"
         };

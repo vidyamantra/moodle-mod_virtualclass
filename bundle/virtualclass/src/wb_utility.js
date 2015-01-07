@@ -348,21 +348,11 @@
                             localStorage.removeItem('reclaim');
                         }
 
-//                        window.vApp.wb.attachToolFunction(vcan.cmdWrapperDiv, true);
-//                        if(vApp.wb.hasOwnProperty('canvasDisable') || vApp.wb.canvasDisable){
-//                            vApp.wb.utility.toolWrapperDisable();
-//                        }
                         localStorage.removeItem('studentId');
                         localStorage.setItem('teacherId', studentId);
-                        //vApp.wb.utility.makeCanvasEnable();
                         
                         vApp.gObj.uRole = 't';
                         
-//                        alert('hi brother');
-//                        debugger;
-
-                        //vApp.user.assignRole(vApp.gObj.uRole, "Whiteboard");
-                        //alert(vApp.currApp);
                         vApp.user.assignRole(vApp.gObj.uRole, vApp.currApp);
                         vcan.utility.canvasCalcOffset(vcan.main.canid);
                         
@@ -392,64 +382,24 @@
                         localStorage.setItem('studentId', tid);
                          
                         vApp.wb.utility.uniqueArrOfObjsToStudent();
-//                        if (!vApp.vutil.chkValueInLocalStorage('orginalTeacherId')) {
-//                            var canvasWrapper = document.getElementById("vcanvas");
-//                            canvasWrapper.className = canvasWrapper.className.replace(/\bteacher\b/, ' ');
-//                            canvasWrapper.className = 'student';
-//                        }
-//                        if (localStorage.getItem('orginialTeacherId') == null) {
-//                            vApp.wb.utility.setCommandToolHeights(toolHeight, 'decrement');
-//                        }
-//
-//                        localStorage.setItem('canvasDrwMsg', true);
 
                     }
                 },
-//                reclaimRoleOld: function() {
-//                    vApp.wb.tool = "";
-//                    if (vcan.main.action == 'move') {
-//                        vApp.wb.utility.deActiveFrmDragDrop();
-//                    }
-//                    vApp.wb.utility.removeToolBox();
-//                    
-//                    //window.vApp.wb.attachToolFunction(vcan.cmdWrapperDiv, true);
-//                    localStorage.teacherId = localStorage.orginalTeacherId;
-//                    if (typeof localStorage.reclaim != 'undefined') {
-//                        localStorage.removeItem('reclaim');
-//                    }
-//                    //vApp.wb.utility.makeCanvasEnable();
-//                    vApp.gObj.uRole = 't';
-//                    vApp.user.assignRole(vApp.gObj.uRole, "Whiteboard");
-//                    vcan.utility.canvasCalcOffset(vcan.main.canid);
-//                    
-//                    vApp.wb.utility.uniqueArrOfObjsToTeacher();
-//                    var canvasWrapper = document.getElementById("vcanvas");
-//                    canvasWrapper.className = canvasWrapper.className.replace(/\bstudent\b/, ' ');
-//                    canvasWrapper.className = 'teacher';
-//                    localStorage.canvasDrwMsg = true;
-//                },
-                
                 
                 reclaimRole : function (){
                     vApp.wb.response.assignRole(vApp.gObj.uid , vApp.gObj.uid, true);
                 },
-                
-
-                
                 dispQueuePacket: function(result) {
                     if ((localStorage.getItem('teacherId') != null) ||
                             (localStorage.getItem('orginalTeacherId') != null && vApp.vutil.chkValueInLocalStorage('reclaim'))) {
                         vApp.wb.utility.toolWrapperEnable();
 							
                     }
-                    //vApp.wb.utility.isUserConnected(vApp.wb.clientLen);
-                    
                     vApp.wb.drawMode = false;
                     //if (localStorage.getItem('teacherId') != null && vApp.wb.user.connected) {
                     if (localStorage.getItem('teacherId') != null) {
-                        //alert('hello brother');
                         vApp.wb.utility.makeCanvasEnable();
-						vApp.wb.utility.enableAppsBar();
+                        vApp.wb.utility.enableAppsBar();
                     }
                     if (vApp.wb.gObj.packQueue.length > 0) {
                         window.vApp.wb.vcan.main.replayObjs = vApp.wb.gObj.packQueue;
@@ -470,15 +420,12 @@
                     }
                 },
                 makeCanvasDisable: function() {
-//                    alert('canva disable');
-//                    debugger;
                     var canvasElement = vcan.main.canvas;
                     canvasElement.style.position = 'relative';
-                    //sept17
                     canvasElement.style.pointerEvents = "none";
-                    //canvasElement.style.pointerEvents = "visible";
                 },
                 makeCanvasEnable: function() {
+                    
                     if (localStorage.getItem('teacherId') != null) {
                         if(!vApp.wb.hasOwnProperty('canvasDisable') || !vApp.wb.canvasDisable){
                             var canvasElement = vcan.main.canvas;
@@ -514,7 +461,6 @@
                     }
                 },
                 uniqueArrOfObjsToTeacher: function() {
-                //    alert('toTEacher');
                     vcan.main.replayObjs = [];
                     var tempRepObjs = "";
                     for (var i = 0; i < vApp.wb.gObj.replayObjs.length; i++) {
@@ -535,7 +481,8 @@
                     var wbrtcMsg = vApp.vutil.chkValueInLocalStorage('wbrtcMsg');
                     var canvasDrwMsg = vApp.vutil.chkValueInLocalStorage('canvasDrwMsg');
                     var toolHeight = vApp.vutil.chkValueInLocalStorage('toolHeight');
-
+                    var prvUser = JSON.parse(vApp.vutil.chkValueInLocalStorage('prvUser'));
+        
                     localStorage.clear();
                     vApp.recorder.items = [];
                     
@@ -546,10 +493,10 @@
 //                    vApp.gObj.video.audio.an = -1;
                     vApp.gObj.video.audio.rec = '';
                     vApp.gObj.video.audio.audioNodes = [];
-                   // vApp.gObj.video.audio.tempAudArr = [];
                     
-                    vApp.gObj.video.audio.initAudioNode();
-                    
+                    if(typeof prvUser == 'object'){
+                        localStorage.setItem('prvUser', JSON.stringify(prvUser))
+                    }
                     if (teacherId) {
                         localStorage.setItem('teacherId', teacherId);
                     }
@@ -594,28 +541,12 @@
                     }
                     localStorage.setItem('orginalTeacherId', vApp.gObj.uid);
                 },
-//                isSystemCompatible: function() {
-//                    
-//                    if (window.vApp.error.length > 0) {
-//                        for (var i = 0; i < window.vApp.error.length; i++) {
-//                            var error = window.vApp.error[i];
-//                            if (error.hasOwnProperty('msg')) {
-//                                vApp.wb.view.displayMessage(error.msg, error.id, error.className);
-//                            }
-//                        }
-//                    }
-//                },
-                //initDefaultInfo: function(e, role) {
                 initDefaultInfo: function(role) {
-//                    alert('ss');
-//                    debugger;
+//                    if(vApp.gObj.sessionClear){
+//                       localStorage.clear();
+//                    }
                     
-//                    var clientNum = e.message.checkUser.e.clientLen;
-//                    var newuser = e.message.checkUser.e.newUser;
                     if (role == 't') {
-                        
-                       
-                        
                         if (localStorage.getItem('orginalTeacherId') == null) {
                             //vApp.wb.utility.setOrginalTeacherContent(e);
                             vApp.wb.utility.setOrginalTeacherContent();
@@ -624,28 +555,15 @@
                         //} else if (role == 's' && newuser == null) {
                     }else if (role == 's') {
                         vcan.studentId = wbUser.id;
-                        if (localStorage.getItem('studentId') == null) {
+                        
+//                        alert('suman bogati');
+//                        debugger;
+                        
+                        if (localStorage.getItem('studentId') == null && localStorage.getItem('teacherId') == null) {
                             localStorage.setItem('studentId', wbUser.id);
                         }
                     }
 
-//                    if (clientNum == 1) {
-//                        vApp.gObj.video.init();
-//                        vApp.gObj.video.isInitiator = true;
-//                        vcan.oneExecuted = false;
-//                    } else if (clientNum >= 2 && newuser == null) {
-//                        console.log("browser number " + clientNum);
-//    //                    if (clientNum > 2) {
-//    //                        alert("there may be the problem because of user is more than 2");
-//    //                    }
-//
-//                        //
-//                        //vApp.wb.utility.beforeSend({'videoInt': true});
-//                        //vApp.wb.utility.beforeSend({'isChannelReady': true, 'memberAdded': true});
-//                        vcan.oneExecuted = false;
-//                        vApp.gObj.video.init();
-//                    }
-//                    
                     vApp.gObj.video.init();
                     vApp.gObj.video.isInitiator = true;
                     vcan.oneExecuted = false;
@@ -743,12 +661,6 @@
                     elem.setAttribute('class', classes);
                 },
                 
-//                isUserConnected: function(userLength) {
-//                    if (userLength > 1 && localStorage.getItem('otherRole')) {
-//                        vApp.wb.user.connected = true;
-//                    }
-//                },
-                
                 setStyleUserConnetion: function(currClass, newClass, whoIs) {
                     var cdiv = document.getElementsByClassName(currClass)[0];
                     if (cdiv != null){
@@ -809,28 +721,18 @@
                         }
                     }
                 },
+                
+                //important TODO have to think tabout this function
                 //makeUserAvailable: function(browerLength) {
                 makeUserAvailable: function() {
-                    //vApp.wb.utility.isUserConnected(browerLength);
-                    
-                    //if (vApp.wb.user.connected) {
-                        if (localStorage.getItem('repObjs') == null) {
-                            vApp.wb.utility.toolWrapperEnable();
-                            if (vcan.main.canvas != null) {
-                                vApp.wb.utility.makeCanvasEnable();
-                            }
+                    if (localStorage.getItem('repObjs') == null) {
+                        vApp.wb.utility.toolWrapperEnable();
+                        if (vcan.main.canvas != null) {
+                            vApp.wb.utility.makeCanvasEnable();
                         }
-                        
-                        //vApp.wb.utility.setStyleUserConnetion('coff', 'con');
-                        
-                    //}
+                    }
                 },
                 displayCanvas: function() {
-                    //alert('create canvas');
-//                    alert('suman bogati attach tool function');
-//                    debugger;
-                    //20
-                    //window.vApp.wb.attachToolFunction(vcan.cmdWrapperDiv);
                     vcan.canvasWrapperId = 'canvasWrapper';
                     if (document.getElementById('canvas') == null) {
                         vApp.wb.createCanvas();
@@ -846,15 +748,7 @@
                     if (localStorage.getItem('teacherId') != null) {
                         vApp.wb.utility.makeCanvasDisable();
                     }
-
                     var res = vApp.system.measureResoultion({'width': window.outerWidth, 'height': window.innerHeight});
-
-//                    var toolHeight = vApp.wb.utility.getWideValueAppliedByCss('commandToolsWrapper');
-//                    if (toolHeight != false) {
-//                        vApp.wb.utility.beforeSend({'virtualWindow': {'shareBrowserWidth': true, 'browserRes': res, 'toolHeight': toolHeight, 'role': wbUser.role}});
-//                    } else {
-//                        vApp.wb.utility.beforeSend({'virtualWindow': {'shareBrowserWidth': true, 'browserRes': res, 'role': wbUser.role}});
-//                    }
                 },
                 alreadyExistToolBar: function() {
                     var rectDiv = document.getElementById('t_rectangle');
@@ -873,52 +767,61 @@
                         return false;
                     }
                 },
-                toolWrapperDisable: function() {
-                    var commandToolWrapper = document.getElementById('commandToolsWrapper');
-                    if (commandToolWrapper != null) {
-                        commandToolWrapper.style.pointerEvents = "none";
+               
+                //toolWrapperDisable and toolWrapperEnable should be merged into one function
+                toolWrapperDisable: function(innerAnchors) {
+                    //TODO commandToolsWrapper should be come as parameter
+                    var commandToolWrapper = document.getElementById('commandToolsWrapper');  
+                    if(commandToolWrapper != null){
+                        if(typeof innerAnchors != 'undefined'){
+                            var allAnchors = commandToolWrapper.getElementsByTagName('a');
+                            for(var i=0; i<allAnchors.length; i++){
+                                allAnchors[i].style.pointerEvents = "none";
+                            }
+                        }else{
+                            var commandToolWrapper = document.getElementById('commandToolsWrapper');
+                            if (commandToolWrapper != null) {
+                                commandToolWrapper.style.pointerEvents = "none";
+                            }
+                        }
                     }
                 },
+                
                 //change the name with toolBoxEnable
-                toolWrapperEnable: function() {
-                    
-//                    var reclaimButton = vApp.vutil.chkValueInLocalStorage('reclaim');
-//                    if(reclaimButton){
-//                        
-//                    }else{
-//                        var commandToolWrapper = document.getElementById('commandToolsWrapper');
-//
-//                    }
-                    //alert('suman bgoati');
+                toolWrapperEnable: function(innerAnchors) {
                     var commandToolWrapper = document.getElementById('commandToolsWrapper');
-                    if (commandToolWrapper != null) {
-                        commandToolWrapper.style.pointerEvents = "visible";
+                    if(commandToolWrapper != null){
+                        if(typeof innerAnchors != 'undefined'){
+                            var allAnchors = commandToolWrapper.getElementsByTagName('a');
+                            for(var i=0; i<allAnchors.length; i++){
+                                allAnchors[i].style.pointerEvents = "visible";
+                            }
+                        }else{
+                            if (commandToolWrapper != null) {
+                                commandToolWrapper.style.pointerEvents = "visible";
+                            }
+                        }
                     }
                 },
+                
                 replayFromLocalStroage : function(allRepObjs) {
                     if (typeof (Storage) !== "undefined") {
-                        //    alert(vApp.storage.reclaim);
-                            if(vApp.storage.reclaim === false){
-                                vApp.wb.utility.disableAppsBar();
-                            }
-                        	
-							vApp.wb.vcan.main.replayObjs = allRepObjs;
-                            vApp.wb.utility.clearAll(false, 'dontClear');
-                            vApp.wb.gObj.replayObjs = vApp.wb.gObj.replayObjs.concat(allRepObjs);
-                            
-                            if (allRepObjs.length > 0) {
-                                //vApp.wb.utility.makeCanvasDisable();
-                                //vApp.wb.utility.lockCanvas();
-                                
-                                vApp.wb.utility.makeCanvasDisable()
-                                vApp.wb.utility.toolWrapperDisable();
-                                
-                                vApp.wb.uid = allRepObjs[allRepObjs.length - 1].uid;
-                                vApp.wb.gObj.rcvdPackId = vApp.wb.uid;
-                                vApp.wb.toolInit('t_replay', 'fromBrowser', true, vApp.wb.utility.dispQueuePacket);
-                            }
-                          
-                    }
+                        if(vApp.storage.reclaim === false){
+                            vApp.wb.utility.disableAppsBar();
+                        }
+                        vApp.wb.vcan.main.replayObjs = allRepObjs;
+                        vApp.wb.utility.clearAll(false, 'dontClear');
+                        vApp.wb.gObj.replayObjs = vApp.wb.gObj.replayObjs.concat(allRepObjs);
+
+                        if (allRepObjs.length > 0) {
+                            vApp.wb.utility.makeCanvasDisable()
+                            vApp.wb.utility.toolWrapperDisable();
+
+                            vApp.wb.uid = allRepObjs[allRepObjs.length - 1].uid;
+                            vApp.wb.gObj.rcvdPackId = vApp.wb.uid;
+                            vApp.wb.toolInit('t_replay', 'fromBrowser', true, vApp.wb.utility.dispQueuePacket);
+                        }
+                   }
                 },
                 
                 setUserStatus: function(storageHasTeacher, storageHasReclaim) {
@@ -958,11 +861,12 @@
                         }
                     }
                 },
-                canvasEnabelWhenRefresh: function() {
-                    if (localStorage.getItem('teacherId') != null) {
-                        vApp.wb.utility.makeCanvasEnable();
-                    }
-                },
+//important can be critical
+//                canvasEnabelWhenRefresh: function() {
+//                    if (localStorage.getItem('teacherId') != null) {
+//                        vApp.wb.utility.makeCanvasEnable();
+//                    }
+//                },
                 arrayContainsSameValue: function(val, ids) {
                     for (var i = 0; i < ids.length; i++) {
                         if (ids[i] !== val) {
@@ -1019,21 +923,10 @@
                     var sendmsg = new Int8Array(msg.length + scode.length);
                     sendmsg.set(scode);
                     sendmsg.set(msg, scode.length); // First element is status code (101)
-//                    var jobj = JSON.stringify(msg);
-//                        vApp.wb.sentPackets = vApp.wb.sentPackets + jobj.length;
                         if (io.sock.readyState == 1) {
                             if(vApp.gObj.audMouseDown){
                                 io.sendBinary(sendmsg);
                             }
-                            
-//                            if (vApp.gObj.uRole == 't') {
-//                                io.sendBinary(sendmsg);
-//                            }else{
-//                                if(vApp.gObj.hasOwnProperty('audMouseDown') && vApp.gObj.audMouseDown == true){
-//                                    io.sendBinary(sendmsg);
-//                                } 
-//                            }
-                        
                         }
                 },
                 /**
@@ -1044,14 +937,7 @@
                 beforeSend : function (msg){
                     
                     if (msg.hasOwnProperty('createArrow')) {
-                          var jobj = JSON.stringify(msg);
-                        
-//                        if (typeof optimizObj == 'undefined') {
-//                            optimizObj = optimization(); //new operand should be attached with optimization()
-//                        } else {
-//                            optimizObj.sendPacketWithOptimization(jobj, io.sock.readyState, 100);
-//                        }
-                        
+                        var jobj = JSON.stringify(msg);
                         vApp.wb.vcan.optimize.sendPacketWithOptimization(jobj, io.sock.readyState, 100);
                     } else {
                         
@@ -1136,8 +1022,6 @@
                 }, 
                 
                 removeClassFromElement : function (prvTool, className){
-//                    alert('sss');
-//                    debugger;
                     if(prvTool != "t_reclaim"){
                         var prvTool = document.getElementById(prvTool).className;    
                         var classes = prvTool.split(" ");
@@ -1153,33 +1037,6 @@
                             return retClass[0];
                         }
                     }
-                    
-                    
-                    
-                    
-                    
-//                    alert(allToolDivs.length);
-                    
-//                    for(i=0; i<allToolDivs.length; i++){
-//                        var strClasses = allToolDivs[i].className;
-//                        
-//                        var classes = allToolDivs[i].className.split(" ");
-//                        
-//                        retClass = [];
-//                        for(var j=0; j<classes.length; j++){
-//                            if(className != classes[j]){
-//                                retClass.push(classes[j]);
-//                            }else{
-//                               return retClass.join(" ");
-//                            }
-//                        }
-//                    }
-//                    
-//                    if(retClass.length > 1){
-//                        return retClass.join(" ");    
-//                    }else{
-//                        return retClass[0];
-//                    }
                 },
                 
                 makeActiveTool : function (byReload){
@@ -1204,31 +1061,28 @@
                     
                     
                 },
-                
+                //todo, this shoudl be into user file
                 _reclaimRole : function (){
                     vApp.wb.utility.reclaimRole();
                     vApp.wb.utility.sendRequest('reclaimRole', true);
-                    vApp.user.control.addClassToAssign('enable');
+                    vApp.user.control.changeAttrToAssign('enable');
                 },
 				
-				disableAppsBar : function (){
-					var appBarCont = document.getElementById('vAppOptionsCont');
+                disableAppsBar : function (){
+                    var appBarCont = document.getElementById('vAppOptionsCont');
                     if(appBarCont !=  null){
                         appBarCont.style.pointerEvents = "none";
                     }
-				},
+                },
 				
-				enableAppsBar : function (){
+                enableAppsBar : function (){
                     var appBarCont = document.getElementById('vAppOptionsCont');
                     if(appBarCont != null){
                         appBarCont.style.pointerEvents = "visible";
                     }
-				}
-	        };
+                }
+            };
         }
         window.utility = utility;  
-        
-        
     }
-    
 )(window);
