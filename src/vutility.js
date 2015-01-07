@@ -45,19 +45,6 @@
                return bufView;
             },
             
-//            ab2str : function (buf) {
-//                return String.fromCharCode.apply(null, new Int8Array(buf));
-//            },
-//            
-//            str2ab : function (str) {
-//                var buf = new ArrayBuffer(str.length); // 2 bytes for each char
-//                var bufView = new Int8Array(buf);
-//                for (var i=0, strLen=str.length; i<strLen; i++) {
-//                  bufView[i] = str.charCodeAt(i);
-//                }
-//                return bufView;
-//            },
-
             sidebarHeightInit : function (){
                 var sidebar = document.getElementById("widgetRightSide");
                 sidebar.style.height = (window.innerHeight) + "px";
@@ -89,16 +76,8 @@
                 }
                 
                 var appCont = document.getElementById(appId);
-                
-                //rightsidebar
-                //var rightOffSet = document.getElementById(vApp.rWidgetConfig.id).offsetWidth;
-               // var rightOffSet = 20;
-                
-                //var rightOffSet = 20;
-                //alert(vApp.wb.utility.getElementRightOffSet);
                 var rightOffSet = 5;
                 
-               // var extraWidth = 25;
                 var extraWidth = 0;
                 var leftSideBar = document.getElementById("vAppOptionsCont");
                 
@@ -130,8 +109,6 @@
                 var screenShareLocalWidth = screenShareLocal.offsetWidth;
                 var toBeLeft  = screenShareWidth-screenShareLocalWidth;
 
-                //screenShareLocal.style.marginLeft = (toBeLeft/2) + "px";
-
                 var screenShareLocalVideo = document.getElementById(sId+"LocalVideo");
                 var screenShareLocalVideoWidth = screenShareLocalVideo.offsetWidth;
 
@@ -152,20 +129,6 @@
             
             
             initInstallChromeExt : function(error){
-//                if(error.name == 'EXTENSION_UNAVAILABLE'){
-//                    
-//                    var reloadId = "screenShareReload";
-//                    var cmdToolsWrapper = document.getElementById("vAppOptionsCont");
-//                    vApp.html.createDiv("screenShareReloadTool", "reload_ss", cmdToolsWrapper, "appOptions", "vAppScreenShareTool");
-//                    var reloadTool = document.getElementById("screenShareReloadTool").getElementsByTagName('a')[0];
-//                    reloadTool.onclick = function (){
-//                        window.location.reload();
-//                    }
-//                    
-//                    window.open('https://chrome.google.com/webstore/detail/ijhofagnokdeoghaohcekchijfeffbjl', '_blank', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=1200,height=600, top=250, left = 100');
-//                    
-//                }
-
                 if(error.name == 'EXTENSION_UNAVAILABLE'){
                     console.log('ask for inline installation');
                     //alert('ss' + chrome);
@@ -192,15 +155,6 @@
                 var toBeRemove = document.getElementById(id);
                 toBeRemove.parentNode.removeChild(toBeRemove)
             },
-            
-//            addTempVideo : function (id, width, height){
-//                var tempVid = document.createElement('canvas');
-//                tempVid.id = id;
-//                tempVid.style.width = width;
-//                tempVid.style.height = height;
-//                toBeRemove.parentNode.removeChild(toBeRemove)
-//            },
-            
             
              createLocalTempVideo : function (mainCont, localTemp){
                 if(typeof mainCont == "string" || typeof mainCont == "String"){
@@ -265,10 +219,35 @@
             createSlienceDetect : function (){
                 var appOptCont = document.getElementById('vAppOptionsCont');
                 vApp.html.createDiv("vAppSlienceDetectTool", "silencedetect", appOptCont, 'appOptions');
-                //vAppWholeScreenShareTool()
-                //vApp.html.createDiv()
+            },
+            
+            clickOutSideCanvas : function (){
+                if(this.exitTextWrapper()){
+                    vApp.wb.obj.drawTextObj.textUtility(vApp.wb.gObj.spx, vApp.wb.gObj.spy);
+                }
+            },
+            
+            exitTextWrapper : function (){
+                var textBoxContainer = document.getElementsByClassName('textBoxContainer');
+                return textBoxContainer.length > 0 ? true : false;
+            },
+            
+            attachClickOutSideCanvas :function(){
+                _attachClickOutSideCanvas('commandToolsWrapper');
+                _attachClickOutSideCanvas('vAppOptionsCont');
+                _attachClickOutSideCanvas('audioWidget');
+                _attachClickOutSideCanvas('chatWidget');
+
+                function _attachClickOutSideCanvas(id){
+                    var elem = document.getElementById(id);
+                    if(elem != null){
+                        elem.onclick = function (){vApp.vutil.clickOutSideCanvas();};
+                    }
+                  
+                }
             }
         }
+        
         window.vutil = vutil;
         window.onbeforeunload = function() {
             //if(typeof window.wholeStoreData != 'undefined'){
@@ -283,7 +262,8 @@
             vApp.wb.utility.userIds = [];
             
             vApp.gObj.video.audio.studentNotSpeak();
-            
+            vApp.vutil.clickOutSideCanvas();
+             
             cthis.sendMessage('bye');
             io.disconnect();
         }

@@ -5,7 +5,6 @@
 (
     function(window) {
         var vcan = window.vcan;
-
         /**
          * @Class defined text for drawing text
          *  methods initilized for creating line object

@@ -4,34 +4,30 @@
   */
 (
     function(window) {
-
-     repMode = false;
-     var io = window.io;
-
-
-
-    function convertFloat32ToInt16(buffer) {
-        l = buffer.length;
-        buf = new Int16Array(l);
-        while (l--) {
-          buf[l] = Math.min(1, buffer[l])*0x7FFF;
+        repMode = false;
+        var io = window.io;
+        function convertFloat32ToInt16(buffer) {
+            l = buffer.length;
+            buf = new Int16Array(l);
+            while (l--) {
+              buf[l] = Math.min(1, buffer[l])*0x7FFF;
+            }
+            return buf;
         }
-        return buf;
-    }
-      var responseErorr = function() {
-        console.log("this error is come when the create and answer is occurring");
-      }
+        var responseErorr = function() {
+            console.log("this error is come when the create and answer is occurring");
+        }
       
-      var ar = 0;
-      var audioWasSent = 0;
-      var preAudioSamp = 0;
-      var preAvg=0
-      var curAvg=0;
-      var minthreshold=65535;
-      var maxthreshold=0;
-      var audiotime=0;
+        var ar = 0;
+        var audioWasSent = 0;
+        var preAudioSamp = 0;
+        var preAvg=0
+        var curAvg=0;
+        var minthreshold=65535;
+        var maxthreshold=0;
+        var audiotime=0;
 
-      var  media = function() {
+        var  media = function() {
             return {
                 isChannelReady: '',
                 isInitiator: false,
@@ -67,27 +63,11 @@
                    
                    Html5Audio : {audioContext : new AudioContext()},
                    init : function (){
-                          if(vApp.gObj.uRole == 't'){
-                               vApp.gObj.audMouseDown = true;    
-                              // var tag = document.getElementById('speakerPressOnce');
-                               this.clickOnceSpeaker('speakerPressOnce');
-                               
-                               //vApp.gObj.video.audio.audioToolInit.call(tag);
-                               
-                          }  
-                          
-                        
-//                        this.audioStreamArr = [];
-//                        this.tempAudioStreamArr =  [];
-//                        this.recordingLength = 0;
-//                        this.bufferSize = 0;
-//                        this.encMode = "alaw";
-//                        this.recordAudio = false;
-//                        this.resampler = new Resampler(44100, 8000, 1, 4096);
-//                        this.rec = '';
-//                        this.an = -1;
-//                        this.audioNodes = [];
-//                        this.tempAudArr = [];
+                        if(vApp.gObj.uRole == 't'){
+                            vApp.gObj.audMouseDown = true; 
+                            //can be critical
+                            //this.clickOnceSpeaker('speakerPressOnce');
+                        }  
 
                         this.graph = {
                             height : 56, 
@@ -99,8 +79,6 @@
                                 if(vApp.gObj.uRole == 't'){
                                     var avg = this.height - (this.height*this.average)/100;   
                                     this._display(cvideo.tempVidCont, avg);
-                                    
-                                    //this._display(cthis.audio.graph.cvCont, avg);
                                 }
                             },
                             
@@ -130,18 +108,7 @@
                         };
                         
                         this.attachFunctionsToAudioWidget();
-                        
-//                        if(vApp.gObj.uRole == 's'  && localStorage.getItem('orginalTeacherId') == null){
-//                              //can be critical
-//                        //    this.attachSpeakToStudent();
-//                            //this.makeIconNotDraggable('speakerPressingImg', "speaker2.svg");
-//                        }
-                        
-                       // this.attachAudioPressOnce();
-                        //this.makeIconNotDraggable('speakerPressOnceImg', "speaker.png");
                     },
-                    
-                    
                     
                     slienceDetection : function (send, leftSix){
                         var vol = 0;
@@ -149,7 +116,6 @@
                         var rate=0;
 
                         for (i=0;i<leftSix.length;i++) {
-//                                alert(leftSix[i]);
                             var a = Math.abs(leftSix[i]);
                             if (vol < a) { vol = a; }
                             sum=sum+a;
@@ -227,10 +193,8 @@
                             }
                             
                             if (allAudTools[i].id != 'speakerPressing'){
-                                //alert('suman bogati');
                                 allAudTools[i].addEventListener('click', that.audioToolInit);
                             }
-                                
                         }
                     },
                     
@@ -238,12 +202,8 @@
                     audioToolInit : function (){
                         var that = vApp.gObj.video.audio;
                         if(this.id == 'speakerPressOnce'){
-                            //vApp.gObj.video.audio.attachAudioPressOnce();
                             that.clickOnceSpeaker(this.id);
                         }else if(this.id == 'audioTest'){
-//                            vApp.lang.getString('audioTest');
-//                            var playSound = confirm (vApp.lang.getString('audioTest'));
-                            
                             if(confirm (vApp.lang.getString('audioTest'))){
                               that.testInit(this.id);
                             }
@@ -254,17 +214,13 @@
                             if(that.sd){
                                that.sd = false; 
                                this.className = this.className + " sdDisable";
-//                               a.setAttribute('data-title', vApp.lang.getString('silenceDetectDisable'));
                                img.src = window.whiteboardPath+"images/silencedetectdisable.png";
                                
                             }else{
                                that.sd = true;
                                this.className = this.className + " sdEnable";
-                               //this.setAttribute('data-title', vApp.lang.getString('silenceDetectEnable'));
-//                               a.setAttribute('data-title', vApp.lang.getString('silenceDetectEnable'));
                                var img = this.getElementsByTagName('img')[0];
                                img.src = window.whiteboardPath+"images/silencedetectenable.png";
-                               
                             }
                         }
                     },
@@ -272,8 +228,8 @@
                     attachSpeakToStudent : function (id){
                         var that = this;
                         var speakerStudent  = document.getElementById(id);
-                        speakerStudent.addEventListener('mousedown', this.studentSpeak.bind(that,speakerStudent));
-                        speakerStudent.addEventListener('mouseup', this.studentNotSpeak.bind(that, speakerStudent));
+                        speakerStudent.addEventListener('mousedown', function (){ that.studentSpeak(speakerStudent)});
+                        speakerStudent.addEventListener('mouseup', function (){  that.studentNotSpeak(speakerStudent)});
                     },
                     
                     attachAudioPressOnce : function (){
@@ -284,15 +240,14 @@
                     },
                     
                     clickOnceSpeaker : function (id, alwaysDisable){
+//                        alert('suman bogati');
+//                        debugger;
                         var tag = document.getElementById(id);
                         if(tag.getAttribute('data-audio-playing') == 'false' && typeof alwaysDisable == 'undefined'){
                             this.studentSpeak();
                             tag.setAttribute('data-audio-playing', "true");
                             tag.className =   "audioTool active";
-//                            vApp.wb.utility.beforeSend({'sad': true});
-
                         }else {
-//                            vApp.wb.utility.beforeSend({'sad': false});
                             this.studentNotSpeak();
                             tag.setAttribute('data-audio-playing', "false");
                             tag.className = "audioTool deactive";
@@ -303,26 +258,18 @@
                         if(typeof elem != 'undefined'){
                             elem.classList.remove('deactive');
                             elem.classList.add('active');
-              
                         }
-                        
                         vApp.gObj.audMouseDown = true;
                         vApp.wb.utility.beforeSend({'sad': true});
                     },
                     
                     studentNotSpeak : function (elem){
-//                        alert('suman bogati');
-//                        debugger;
                         if(vApp.gObj.hasOwnProperty('audMouseDown') &&  vApp.gObj.audMouseDown){
                             if(typeof elem != 'undefined'){
                                 elem.classList.remove('active');
                                 elem.classList.add('deactive');
-                                
-//                                elem.parentNode.remove('active');
-//                                elem.parentNode.remove('deactive');
                             }
                             
-//                            this.clickOnceSpeaker("speakerPressOnce");
                             var tag = document.getElementById("speakerPressOnce");
                             tag.setAttribute('data-audio-playing', "false");
                             tag.className = "audioTool deactive";
@@ -369,14 +316,9 @@
 
                             if(this.sd){
                                 this.slienceDetection(send, leftSix);
-                                //console.log('with silence detection');
                             }else{
-                                //console.log('without silence detection');
                                 vApp.wb.utility.audioSend(send);
-
-                                //this.slienceDetection(send);
                             }
-                            // Detect Volume and send if required
                         }
                     },
                     
@@ -384,13 +326,6 @@
                         var encoded = G711.encode(leftSix, {
                             alaw: this.encMode == "alaw" ? true : false
                         });  
-                        
-                        //localStorage.audioStream = JSON.stringify(encoded);
-                        
-//                        if(){
-//                            
-//                        }
-                        //vApp.storage.audioStore(JSON.stringify(encoded));
                         return encoded;
                     },
                     
@@ -412,7 +347,6 @@
                         var totTestTime = 5000;
                           
                         that.testAudio = setTimeout(function (){
-                            
                             console.log("set time out is invoking");
                             that.playRecordedAudio();
                         }, totTestTime);
@@ -431,12 +365,7 @@
                             alaw: this.encMode == "alaw" ? true : false
                         });  
                         
-                        // vApp.gObj.video.audio.play(encoded, 0 , 0)
                         vApp.gObj.audioForTest.push(encoded);
-                        
-                        
-                       
-                        //vApp.gObj.video.audio.playTestAudio(encoded, 0 , 0)
                     },
                     
                     playRecordedAudio : function (){
@@ -455,16 +384,12 @@
                         }
                         
                         var samples = this.mergeBuffers(this.myaudioNodes);
-                        
-                        
                         vApp.gObj.video.audio.playTestAudio(samples, 0 , 0);
                        
                     },
                     
                     playTestAudio : function (receivedAudio, inHowLong, offset){
                         var samples = receivedAudio;   
-                        
-                        //var samples =     receivedAudio;
                         var when = this.Html5Audio.audioContext.currentTime + inHowLong;
 
                         var newBuffer = this.Html5Audio.audioContext.createBuffer(1, samples.length, 8000);
@@ -472,11 +397,8 @@
 
                         var newSource = this.Html5Audio.audioContext.createBufferSource();
                         newSource.buffer = newBuffer;
-
                         newSource.connect(this.Html5Audio.audioContext.destination);
-                        
                         newSource.start(when, offset);
-                        
                     },
                     
                     calcAverage : function (){
@@ -508,11 +430,7 @@
                     },
                     
                     play : function (receivedAudio, inHowLong, offset){
-                        
-//                        var audioString = LZString.decompressFromBase64(receivedAudio);
-//                        var clip = this.str2ab(audioString);
                         var clip = receivedAudio;
-
                         var samples = G711.decode(clip, {
                             alaw: this.encMode == "alaw" ? true : false,
                             floating_point : true,
@@ -582,7 +500,6 @@
                              });
                              
                              this.audioNodes.push(new Float32Array(samples));
-                             
                              this.recordingLength += 16384;
                         }
                         
@@ -609,7 +526,7 @@
                             
                         cthis.audio.rec = context.createScriptProcessor(cthis.audio.bufferSize, 1, 1);
               
-                        cthis.audio.initAudioNode();
+                     //   cthis.audio.initAudioNode();
                         // NOTE, WARNING
                         // THIS SHOULD BE DISPLAY
                         // below code should be enable
@@ -620,18 +537,18 @@
                         cthis.audio.rec.connect(context.destination);
                     },
                     
-                    initAudioNode : function (){
-                        var ctTime = new Date().getTime();
-//                        cthis.audio.an++;
-//                        localStorage.setItem('an', cthis.audio.an);
-                        
-//                        cthis.audio.audioNodes[cthis.audio.an] = {mt : ctTime, adArr : []};
-//                        cthis.audio.tempAudArr[cthis.audio.an] = {mt : ctTime, adArr : []};
-                        
-//                        cthis.audio.audioNodes = [];
-//                        cthis.audio.tempAudArr = [];
-                        
-                    },
+//                    initAudioNode : function (){
+//                        var ctTime = new Date().getTime();
+////                        cthis.audio.an++;
+////                        localStorage.setItem('an', cthis.audio.an);
+//                        
+////                        cthis.audio.audioNodes[cthis.audio.an] = {mt : ctTime, adArr : []};
+////                        cthis.audio.tempAudArr[cthis.audio.an] = {mt : ctTime, adArr : []};
+//                        
+////                        cthis.audio.audioNodes = [];
+////                        cthis.audio.tempAudArr = [];
+//                        
+//                    },
                     
                     updateInfo : function (){
                         this.audioStreamArr = [];
@@ -651,16 +568,11 @@
                     remoteVidCont : "", 
                     maxHeight : 250,
                     
-                    init : function (){
-//                        cthis.video.tempVid = document.getElementById('tempVideo');
-//                        cthis.video.tempVid.width = cthis.video.width;
-//                        cthis.video.tempVid.height = cthis.video.height;
-//                        cthis.video.tempVidCont = cthis.video.tempVid.getContext('2d');  
+                    init : function (){  
                         this.videoCont = document.getElementById("allVideosCont");
                         if(this.videoCont !=  null){
                             this.videoCont.style.maxHeight = this.maxHeight + "px";
                         }
-                        
                     },
                     
                     calcDimension : function (){
@@ -677,19 +589,12 @@
                     
                     //createVideo
                     createElement : function (user){
-//                        alert('sss');
-//                        debugger;
-//                        alert('suman bogati');
-//                        debugger;
                         var videoWrapper = document.createElement('div');
                         videoWrapper.className = "videoWrapper";
 
                         var videoSubWrapper = document.createElement('div');
                         videoSubWrapper.className = "videoSubWrapper";
                         videoSubWrapper.id = "user" + user.id;
-                        
-//                        videoSubWrapper.setAttribute("data-uname", user.name);
-                        
                         videoWrapper.appendChild(videoSubWrapper);
                                         
                         vidId = user.id;
@@ -699,42 +604,11 @@
                         video.width = this.width;
                         video.height = this.height;
                         
-                        
-                        
                         var videoCont = this.videoCont;
                         videoSubWrapper.appendChild(video);
                         
-//                        if(typeof videoCont == 'undefined'){
-//                            var videoCont = document.getElementById("allVideosCont");
-//                        }
-
-//                        if(typeof videoCont == 'undefined'){
-//                            var videoCont = document.getElementById("allVideosCont");
-//                        }
-
                         videoCont =  videoWrapper;
                         cthis.video.imageReplaceWithVideo(user.id, videoCont);
-                         
-//                        if(user.hasOwnProperty('role') && user.role == 't'){
-//                            videoCont.insertBefore(videoWrapper, videoCont.firstChild);
-//                        }else{
-//                            videoCont.appendChild(videoWrapper);
-//                        }
-                        
-                        
-//                        var prvContHeight = videoCont.offsetHeight;
-//                        var newContHeight = videoCont.offsetHeight;
-//
-//                        if(newContHeight != prvContHeight){
-//                            if(typeof cthis != 'undefined'){
-//                                cthis.video.updateHightInSideBar(newContHeight);
-//                            }
-//                        }
-//                        
-//                        if(videoCont.style.overflowY != 'undefined' && videoCont.style.overflowY != "scroll"){
-//                            videoCont.style.overflowY = "scroll";
-//                            document.getElementById(vApp.gObj.chat.mainChatBoxId).style.borderTop = "3px solid #bbb";
-//                        }
                     },
                     
                     updateHightInSideBar : function (videoHeight){
@@ -750,19 +624,11 @@
                         if(vApp.gObj.video.hasOwnProperty('smallVid')){
                             clearInterval(vApp.gObj.video.smallVid);
                         }
-                        
-//                        alert('sss');
-//                        debugger;
-//                        alert("send function");
                         var cvideo = this;
                         var frame;
                         randomTime = Math.floor(Math.random() * (15000 - 5000 + 1)) + 5000;
-                        var TotalMembers = -1;
-//                        if(typeof vApp.gObj.video.smallVid != 'undefined'){
-//                            clearInterval(vApp.gObj.video.smallVid);
-//                        }
-                      //  intervalTime = (5000 * vApp.gObj.totalUser.length) + randomTime;	
-                        //TODO this name should be change
+                        var totalMembers = -1;
+                        
                         function sendSmallVideo (){
                                 
                                 
@@ -845,13 +711,11 @@
                             
                             clearInterval(vApp.gObj.video.smallVid);
                             
-                            
-                            
                             var d = 2000+ (vApp.gObj.totalUser.length * 2500);
-                            if (TotalMembers != vApp.gObj.totalUser) {
-                                TotalMembers = vApp.gObj.totalUser.length;
+                            if (totalMembers != vApp.gObj.totalUser) {
+                                totalMembers = vApp.gObj.totalUser.length;
                                 var p = vApp.gObj.totalUser.indexOf(vApp.gObj.uId);
-                                var td = d/TotalMembers;
+                                var td = d/totalMembers;
                                 var md =  p*td;
                                 vApp.gObj.video.smallVid =  setInterval(sendSmallVideo, (d + md));
                                 //console.log("send time " + (d + md) + new Date().getSeconds());
@@ -859,12 +723,8 @@
                                 vApp.gObj.video.smallVid =  setInterval(sendSmallVideo, d);
                                 //console.log("send time " + d + new Date().getSeconds());
                             }
-                            
-
                         }
 
-
-                
                         vApp.gObj.video.smallVid =  setInterval(sendSmallVideo, 300);
 
                         function breakintobytes (val,l) {
@@ -883,23 +743,11 @@
                      },
 
                      playWithoutSlice : function(uid,msg){
-                    
-//                        var frames = msg.videoByImage;
-//                        var img = new Image();
-//                        img.src = frames;
-
                         this.remoteVid = document.getElementById("video" + uid);
-                        //canvas2 = document.getElementById("video" + msg.videoId);
                         this.remoteVidCont =  this.remoteVid.getContext('2d');
 
                         var imgData = vApp.dirtyCorner.decodeRGB(msg, this.remoteVidCont,  this.remoteVid);
                         this.remoteVidCont.putImageData(imgData, 0, 0);
-                    
-//                        var vthis = this;
-//                        
-//                        img.onload = function (){
-//                            vthis.remoteVidCont.drawImage(this, 0, 0);
-//                        }
                       },
                     
                     justForDemo : function (){
@@ -951,15 +799,7 @@
                     
                     
                     createVideoElement : function (){
-                        //var vApp.gObj.uid = 
-                        
                         var vTag = "video";
-                        
-//                        if(vApp.gObj.uRole == 't'){
-//                            var vTag = "video";
-//                        }else{
-//                            var vTag = "canvas";
-//                        }
                         
                         var parElement = document.createElement('div');
                         parElement.className = 'videoWrapper';
@@ -981,21 +821,17 @@
                     imageReplaceWithVideo : function (id, vidCont){
                         var chatUser = document.getElementById("ml" + id);
                         var childTag = chatUser.getElementsByTagName('a')[0];
-                        //if(childTag.href == '#' + vApp.gObj.uid){
-                            var imgTag = childTag.getElementsByTagName('img')[0];
-                            childTag.replaceChild(vidCont, imgTag);
-                        //}    
+                        var imgTag = childTag.getElementsByTagName('img')[0];
+                        childTag.replaceChild(vidCont, imgTag);
                     },
                     
                     insertTempVideo : function (beforeInsert){
                         var tempVideo = document.createElement('canvas');
-                            tempVideo.id = 'tempVideo';
-                            beforeInsert.parentNode.insertBefore(tempVideo, beforeInsert);
+                        tempVideo.id = 'tempVideo';
+                        beforeInsert.parentNode.insertBefore(tempVideo, beforeInsert);
                     }, 
                     
                     tempVideoInit : function (){
-//                        alert('sss');
-//                        debugger;
                         cthis.video.tempVid = document.getElementById('tempVideo');
                         cthis.video.tempVid.width = cthis.video.width;
                         cthis.video.tempVid.height = cthis.video.height;
@@ -1004,12 +840,8 @@
                 },
                 
                 init: function(vbool) {
-                    
                     cthis = this; //TODO there should be done work for cthis
                     vcan.oneExecuted = true;
-                    
-                    //var audio =  (vApp.gObj.uRole == 't') ?  true : false;
-                 //   var audio =  (vApp.gObj.uRole == 't') ?  true : false;
                     var audio =  true;
                     var session = {
                         audio : audio,
@@ -1031,9 +863,6 @@
                 },
                 
                 handleUserMedia : function(stream){
-//                    alert('this stream');
-//                    debugger;
-                    
                     cthis.video.tempStream = stream;
                     cthis.audio.init();
                     var userDiv = document.getElementById("ml" + vApp.gObj.uid);
@@ -1043,84 +872,51 @@
                             cthis._handleUserMedia(vApp.gObj.uid);
                         }
                     }
-                    
-               //     var usrList = cthis.createDemoUserList();
-                    //memberUpdate({message : usrList});
-                    
                 },
                 
                 addUserRole : function (id, role){
                     var userDiv = document.getElementById("ml" + id);
                     userDiv.setAttribute("data-role", role);
-                   
-//                    var earlierClass = userDiv.className;
-//                    if(role == 's'){
-//                        
-//                        userDiv.setAttribute('class', earlierClass +' student');
-//                    }else{
-//                        userDiv.setAttribute('class', earlierClass +' teacher');
-//                    }
                     var userType = (role == 's') ? 'student' : 'teacher';
                     userDiv.classList.add(userType);
-
                 },
                 
-                
-               
-                //equivalent to initializeRecorder
                 _handleUserMedia: function(userid) {
-                    //if(typeof userMedia == 'undefined'){
-                        var userMainDiv = document.getElementById(userid);
-    //                    cthis.video.tempStream = stream;
-    //                    cthis.audio.init();
-                        var  stream = cthis.video.tempStream ;
+                    var userMainDiv = document.getElementById(userid);
+                    var  stream = cthis.video.tempStream ;
 
-                        var userDiv = document.getElementById("ml" + vApp.gObj.uid);
-                        if(userDiv !=  null){
-                           userDiv.classList.add("mySelf");
-                           
-                           //userDiv.className = userDiv.className;
-                           //userDiv.classList.add("me");
-                           //userDiv.style.pointerEvents = "none";
+                    var userDiv = document.getElementById("ml" + vApp.gObj.uid);
+                    if(userDiv !=  null){
+                       userDiv.classList.add("mySelf");
+                    }
+
+                    if(typeof stream != 'undefined'){
+                        var vidContainer = cthis.video.createVideoElement();
+
+                        cthis.video.imageReplaceWithVideo(id, vidContainer);
+                        cthis.video.insertTempVideo(vidContainer);
+                        cthis.video.tempVideoInit();
+
+                        cthis.video.myVideo = document.getElementById("video"+ vApp.gObj.uid);
+                        vApp.adpt.attachMediaStream(cthis.video.myVideo, stream);
+                        cthis.video.myVideo.muted = true;
+                        //todo this should be removed    
+                        stream.ontimeupdate = function () {
+                            console.log("raja" + stream.currentTime);
+                        };
+
+                        if(vApp.jId == vApp.gObj.uid){
+                            cthis.stream = stream;
+                            cthis.audio.manuPulateStream();
+                            cthis.audio.graph.canvasForVideo();
                         }
-
-                        if(typeof stream != 'undefined'){
-                            var vidContainer = cthis.video.createVideoElement();
-
-                            cthis.video.imageReplaceWithVideo(id, vidContainer);
-                            cthis.video.insertTempVideo(vidContainer);
-                            cthis.video.tempVideoInit();
-
-                            cthis.video.myVideo = document.getElementById("video"+ vApp.gObj.uid);
-            //                    alert(vApp.gObj.uid + 'bogati');
-                            vApp.adpt.attachMediaStream(cthis.video.myVideo, stream);
-                            cthis.video.myVideo.muted = true;
-                            //cthis.video.myVideo.play();
-
-                            stream.ontimeupdate = function () {
-                                console.log("raja" + stream.currentTime);
-                            };
-
-                          //  if(vApp.gObj.uRole == 't'){
-                            
-                            //Audio contet reaches at maxmimum level
-                            if(vApp.jId == vApp.gObj.uid){
-                           //     alert('hi brother');
-                                cthis.stream = stream;
-                                cthis.audio.manuPulateStream();
-                                cthis.audio.graph.canvasForVideo();
-                            }
-                                
-                                
-                           // }
-
-                            cthis.video.myVideo.onloadedmetadata = function (){
-                                cthis.video.startToStream();
-                            }
+                        cthis.video.myVideo.onloadedmetadata = function (){
+                            cthis.video.startToStream();
                         }
-                        
-                        userMedia = true;
-                    //}
+                    }
+
+                    userMedia = true;
+                    
                 },
                 
                 updateVidContHeight : function (){
@@ -1139,12 +935,7 @@
                             name : "Student " + i,
                             userid : 100 + i
                         }
-                        
-//                        alert('sss')
-//                        debugger;
-                        
                         memberUpdate({message : [dummyUser]});
-                        //dumUserArr.push(dummyUser);
                     }
                     return dumUserArr;
                 },
@@ -1158,11 +949,6 @@
                 dispAllVideo : function (id){
                     setTimeout(
                         function (){
-//                            
-//                            var allVideos = document.getElementById(id).getElementsByTagName("video");
-//                            for(var i=0; i<allVideos.length; i++){
-//                                allVideos[i].play();
-//                            }
                             var chatCont = document.getElementById(id);
                             if(chatCont != null){
                                 var allVideos = chatCont.getElementsByTagName("video");
@@ -1173,14 +959,6 @@
                         },
                         1040
                     );
-                    
-//                    var chatCont = document.getElementById(id);
-//                    if(chatCont != null){
-//                        var allVideos = chatCont.getElementsByTagName("video");
-//                        for(var i=0; i<allVideos.length; i++){
-//                            allVideos[i].play();
-//                        }
-//                    }
                 },
 			    
                 sendMessage: function(message) {
@@ -1208,7 +986,5 @@
             }
             
         };
-  
     window.media = media;
-    
 })(window);
