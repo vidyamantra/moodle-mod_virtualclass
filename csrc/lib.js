@@ -281,8 +281,8 @@ function displaycomChatHistory(){
 */
 function displayChatHistory(){
     //Private chat data populated on page referesh
-    if (localStorage.getItem(sid) != null){
-        var data = JSON.parse(localStorage.getItem(sid));
+    if (localStorage.getItem(wbUser.sid) != null){
+        var data = JSON.parse(localStorage.getItem(wbUser.sid));
         $.each(data, function(id, msgarr) {
             counter++;
             idList.push(id);
@@ -320,4 +320,11 @@ function display_error(msg){
     $( "<div id = 'dialog' title = 'VmChat Error:'></div>" ).prependTo( "#stickybar" );
     $("#dialog").html(msg);
     $('#dialog').dialog();
+}
+
+
+function clearAllChatBox(){
+    $(".ui-icon-closethick").trigger("click");
+    $("#chatrm .ui-icon-minusthick").trigger("click");
+    //  alert("suman bogati chat lib.js");
 }
