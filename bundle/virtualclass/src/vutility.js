@@ -79,11 +79,15 @@
                 var rightOffSet = 5;
                 
                 var extraWidth = 0;
-                var leftSideBar = document.getElementById("vAppOptionsCont");
                 
-                if(leftSideBar != null){
-                    var offset = vcan.utility.getElementOffset(leftSideBar);
-                    leftSideBarWidth = leftSideBar.offsetWidth + offset.x;
+                if(vApp.currApp == 'ScreenShare'){
+                    var leftSideBar = document.getElementById("vAppOptionsCont");
+                    if(leftSideBar != null){
+                        var offset = vcan.utility.getElementOffset(leftSideBar);
+                        leftSideBarWidth = leftSideBar.offsetWidth + offset.x;
+                    }else{
+                        leftSideBarWidth = 0;
+                    }
                 }else{
                     leftSideBarWidth = 0;
                 }
@@ -243,8 +247,66 @@
                     if(elem != null){
                         elem.onclick = function (){vApp.vutil.clickOutSideCanvas();};
                     }
-                  
                 }
+            },
+            
+            dimensionMatch : function (wbc, ssc){
+                var wbcWidth  = document.getElementById(wbc).offsetWidth;
+                var optionsContWidth = document.getElementById("vAppOptionsCont").offsetWidth;
+                var sscWidth = document.getElementById(ssc).offsetWidth + optionsContWidth;
+                return (sscWidth == wbcWidth) ? true : false;
+            },
+            
+             disableAppsBar : function (){
+                var appBarCont = document.getElementById('vAppOptionsCont');
+                if(appBarCont !=  null){
+                    appBarCont.style.pointerEvents = "none";
+                }
+            },
+            
+            isMiniFileIncluded :  function (src){
+                var filePatt = new RegExp(src+".js$");
+                var scripts = document.getElementsByTagName("script");
+                for(var i = 0; i < scripts.length; i++) {
+                    if(filePatt.test(scripts[i].src)){
+                        return true;
+                    }
+                }
+                return false;
+            },
+            
+            clearAllChat : function (){
+                sessionStorage.clear('chatroom'); //all 
+                //vmstorage.length = 0; //global variable should 
+                //window.vmstorage = {};
+//                for (var key in vmstorage) {
+//                    delete vmstorage[key];
+//                }
+//                idList.length = 0; //empty idList array
+//                vmstorage = {};
+
+                idList.length = 0;
+                clearAllChatBox();
+                
+             //   delete vmstorage[tabid]
+                var allChat = document.getElementById("chatWidget").getElementsByClassName('ui-chatbox-msg');
+                if(allChat.length > 0){
+                    while(allChat[0] != null ){
+                        allChat[0].parentNode.removeChild(allChat[0]);
+                    }
+                }
+                
+//                var cl = allChat.length;
+//                (function (totLength){
+//                    for(var i=0; i < totLength; i++){
+//                        allChat[i].parentNode.removeChild(allChat[i]);
+//                    }
+//                }(cl));
+                
+                
+            //    for(var x=0, len=myArray.length; x < len; x++){}
+                
+                
             }
         }
         
@@ -257,13 +319,18 @@
                 //vApp.storage.wholeStore(JSON.stringify(obj), "put");
                 vApp.storage.wholeStore(obj, "put");
             }
-
+            
             localStorage.removeItem('otherRole');
             vApp.wb.utility.userIds = [];
             
             vApp.gObj.video.audio.studentNotSpeak();
             vApp.vutil.clickOutSideCanvas();
-             
+            
+            //var data = JSON.stringify(vmstorage);
+            localStorage.setItem(wbUser.sid, JSON.stringify(vmstorage));
+
+//            var data = JSON.stringify(vmstorage);
+         //   localStorage.setItem(wbUser.sid, JSON.stringify(vmstorage))
             cthis.sendMessage('bye');
             io.disconnect();
         }
