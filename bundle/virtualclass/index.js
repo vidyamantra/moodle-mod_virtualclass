@@ -60,7 +60,6 @@ $.uiBackCompat = false;
             if(vApp.gObj.displayError){
                 vApp.wb.view.removeElement('serverErrorCont');
                 vApp.wb.view.displayServerError('serverErrorCont', e.message.stack);
-
                 if(typeof e.message != 'object'){
                     display_error(e.message.stack);
                 }
@@ -196,21 +195,16 @@ $.uiBackCompat = false;
             
         $(document).on("newmessage", function(e){
             vApp.wb.view.removeElement('serverErrorCont');
-//            if(e.message.hasOwnProperty('delItem')){
-//                if(vcan.main.currObj != ""){
-//                     vApp.wb.utility.removeSelectedItem(vcan.main.currObj);
-//                     console.log("remove select Item");
-//                }
-//               
-//
-//                return;
-//            }else
+
             if(e.message.hasOwnProperty('sad')){
-                if(vApp.gObj.uRole == 't'){
+                
+//                if(vApp.gObj.uRole == 't'){
+                if(localStorage.getItem('orginalTeacherId') != null){
                     if(e.message.sad){
                         var user =  vApp.user.control.updateUser(e.fromUser.userid, 'ad', true);
                         vApp.user.control.audioSign(user, "create");
                     }else{
+                        
                         var user =  vApp.user.control.updateUser(e.fromUser.userid, 'ad', false);
                         vApp.user.control.audioSign(user, 'remove');
                     }

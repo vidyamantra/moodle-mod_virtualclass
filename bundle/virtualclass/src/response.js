@@ -9,17 +9,20 @@
                 if (formUserId != id) {
                     vApp.user.control._assign(id, 'notsent');
                     vApp.user.displayStudentSpeaker(true);
+                    if(localStorage.getItem('aId') != null){
+                        localStorage.removeItem('aId');
+                    }
                 }
             },
             assignRole: function(fromUserId, id, reclaim) {
                  
-	        if (fromUserId != id || typeof reclaim != 'undefined') {
+                if (fromUserId != id || typeof reclaim != 'undefined') {
                     vApp.wb.utility.assignRole(id);
                     vApp.wb.utility.uniqueArrOfObjsToTeacher();
                     
                     //create assing button only to student 
                     if(localStorage.getItem('orginalTeacherId') == null){
-                       
+                        vApp.vutil.removeSessionTool();   //
                         var divContainer =   document.getElementById("ml" + fromUserId);
                         var controls = ['assign'];
                         var divControl = vApp.user.createControl(fromUserId, controls);
