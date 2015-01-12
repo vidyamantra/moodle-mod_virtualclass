@@ -8,25 +8,23 @@
             return {
                 //TODO function name should be change
                 assignRole : function (role, app){
-                     if(role == 't'){
-                         
-                          vApp.html.optionsWithWrapper();
-                          vApp.attachFunction();
-                          
-                          var vAppOptionsContWidth = document.getElementById("vAppOptionsCont").offsetWidth;
-                          window.vApp.wb.attachToolFunction(vcan.cmdWrapperDiv, true);
+                    if(role == 't'){
+                        vApp.html.optionsWithWrapper();
+                        vApp.attachFunction();
 
-                          if(app == 'Whiteboard' && vApp.gObj.uRole == 't'){
-                              if(vApp.hasOwnProperty('prevApp')){
-                                  vApp.vutil.makeActiveApp("vApp" + app, vApp.prevApp);
-                              } else{
-                                  vApp.vutil.makeActiveApp("vApp" + app);
-                              }
+                        var vAppOptionsContWidth = document.getElementById("vAppOptionsCont").offsetWidth;
+                        window.vApp.wb.attachToolFunction(vcan.cmdWrapperDiv, true);
 
-                              vApp.wb.utility.makeCanvasEnable();
-                          }
+                        if(app == 'Whiteboard' && vApp.gObj.uRole == 't'){
+                            if(vApp.hasOwnProperty('prevApp')){
+                                vApp.vutil.makeActiveApp("vApp" + app, vApp.prevApp);
+                            } else{
+                                vApp.vutil.makeActiveApp("vApp" + app);
+                            }
 
-                     }
+                            vApp.wb.utility.makeCanvasEnable();
+                        }
+                    }
                 },
 
                 teacherIsAlreadyExist : function (){
@@ -265,7 +263,9 @@
                         
                         if(localStorage.getItem('orginalTeacherId') == null){
                             var controlContainer = document.getElementById('chat_div').getElementsByClassName('controls')[0];
-                            controlContainer.parentNode.removeChild(controlContainer);
+                            //if(controlContainer != null){
+                                controlContainer.parentNode.removeChild(controlContainer);
+                            //}
                         }
                     },
                     
@@ -391,9 +391,6 @@
                                 //important
                                 var audEnableSign = document.createElement('div');
                                 audEnableSign.id = user.id + "AudEnableSign";
-                                
-                                
-                                
                                 var audEnableImg = document.createElement('img');
                                 imgName = "audioenable";
                                 audEnableImg.id = user.id + imgName + "Img";
@@ -411,8 +408,8 @@
                                 document.getElementById(user.id + "ControlContainer").appendChild(audEnableSign);
                             }
                         }else {
-                            var audioSign =  document.getElementById(user.id + "AudEnableSign");
-                            audioSign.parentNode.removeChild(audioSign);
+                            var audioEnableTag =  document.getElementById(user.id + "AudEnableSign");
+                            audioEnableTag.parentNode.removeChild(audioEnableTag);
                         }
                     },
                     
