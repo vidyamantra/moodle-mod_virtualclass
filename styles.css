@@ -1,3 +1,17 @@
 .text-center{
 	text-align:left;
 }
+
+
+
+/*    Css Archaius, AARDVARK, ESSENTIAL, Elision28, easyeducation28, Aardvark, Elegant28 theme*/
+
+#page-mod-virtualclass-view.pagelayout-popup #page.main-content{max-width: none; width: auto !important;}
+#page-mod-virtualclass-view.pagelayout-popup #page-header{margin-bottom: 0px;}
+#page-mod-virtualclass-view.pagelayout-popup #page{margin-top: 0px;}
+#page-mod-virtualclass-view.pagelayout-popup #page #page-content{margin-top: 0px;}
+#page-mod-virtualclass-view.pagelayout-popup #page #page-content h1{display: none;}
+#page #page-content #region-main{padding: 0;}
+#page-mod-virtualclass-view.pagelayout-popup #header-container, #page-mod-virtualclass-view.pagelayout-popup #page #page-navbar{display: none;}
+#page-mod-virtualclass-view.pagelayout-popup #page #page-content{width: auto; padding: px;}
+#page-mod-virtualclass-view.pagelayout-popup #back-to-top{display: none;}
