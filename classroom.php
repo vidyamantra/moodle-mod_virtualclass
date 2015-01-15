@@ -78,7 +78,6 @@ $PAGE->requires->css(new moodle_url($CFG->wwwroot . '/mod/virtualclass/bundle/vi
 <link rel="chrome-webstore-item" href="https://chrome.google.com/webstore/detail/ijhofagnokdeoghaohcekchijfeffbjl">
 <?php
 
-
 // Mark viewed by user (if required)
 $completion = new completion_info($course);
 $completion->set_module_viewed($cm);
@@ -102,17 +101,6 @@ if (has_capability('mod/virtualclass:addinstance', $context)) {
 // Output starts here.
 echo $OUTPUT->header();
 ?>
-<?php 
-
-//$PAGE->requires->js('/mod/virtualclass/bundle/virtualclass/bundle/io/src/iolib.js');
-//$PAGE->requires->js('/mod/virtualclass/bundle/virtualclass/build/wb.min.js');
-////$PAGE->requires->js('/mod/virtualclass/bundle/virtualclass/build/chat.min.js');
-//$PAGE->requires->js('/mod/virtualclass/bundle/virtualclass/index.js');
-
-
-?>
-
-
 <script type="text/javascript">
     <?php //echo "name='".$USER->username."';"; ?>
     <?php //echo "id='".$USER->id."';"; ?>
@@ -128,7 +116,7 @@ echo $OUTPUT->header();
              
             $src = 'bundle/virtualclass/images/quality-support.png';
         }
-        echo "wbUser.imageurl='".$src."';"; ?>
+        echo "wbUser.imageurl='".$src."';";
     ?>
         
     <?php echo "wbUser.name='".$USER->firstname."';"; ?>
