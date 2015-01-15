@@ -45,12 +45,12 @@ if(empty($rid) or strlen($rid) > 32){
 //setcookie('auth_pass', $authpassword, 0, '/');
 //setcookie('path', $rid, 0, '/');
 
-if ($USER->id) {
-    $userpicture = moodle_url::make_pluginfile_url(context_user::instance($USER->id)->id, 'user', 'icon', null, '/', 'f2');
-    $src = $userpicture->out(false);
-}else{
-    $src = 'bundle/virtualclass/images/quality-support.png';
-}
+//if ($USER->id) {
+//    $userpicture = moodle_url::make_pluginfile_url(context_user::instance($USER->id)->id, 'user', 'icon', null, '/', 'f2');
+//    $src = $userpicture->out(false);
+//}else{
+//    $src = 'bundle/virtualclass/images/quality-support.png';
+//}
 ?>
 <script type="text/javascript">
     <?php 
@@ -67,6 +67,6 @@ if ($USER->id) {
 //    echo "auth_pass='".$_COOKIE['auth_pass']."';"; 
 //    echo "path='".$_COOKIE['path']."';";
     
-    echo "imageurl='".$src."';";
+   // echo "imageurl='".$src."';";
     ?>
 </script>

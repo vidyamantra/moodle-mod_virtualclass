@@ -111,13 +111,26 @@ echo $OUTPUT->header();
 
 
 ?>
-<script type="text/javascript">
-    <?php echo "name='".$USER->username."';"; ?>
-    <?php echo "id='".$USER->id."';"; ?>
-    <?php echo "sid='".$sid."';";?>
-    <?php echo "fname='".$USER->firstname."';"; ?>
-    <?php echo "lname='".$USER->lastname."';"; ?>
 
+
+<script type="text/javascript">
+    <?php //echo "name='".$USER->username."';"; ?>
+    <?php //echo "id='".$USER->id."';"; ?>
+    <?php //echo "sid='".$sid."';";?>
+    <?php //echo "fname='".$USER->firstname."';"; ?>
+    <?php //echo "lname='".$USER->lastname."';"; ?>
+    
+    <?php 
+        if ($USER->id) {
+            $userpicture = moodle_url::make_pluginfile_url(context_user::instance($USER->id)->id, 'user', 'icon', null, '/', 'f2');
+            $src = $userpicture->out(false);
+        }else{
+             
+            $src = 'bundle/virtualclass/images/quality-support.png';
+        }
+        echo "wbUser.imageurl='".$src."';"; ?>
+    ?>
+        
     <?php echo "wbUser.name='".$USER->firstname."';"; ?>
     <?php echo "wbUser.id='".$USER->id."';"; ?>
     <?php echo "wbUser.socketOn='$info';"; ?>
@@ -125,6 +138,8 @@ echo $OUTPUT->header();
     <?php echo "wbUser.room='" . $course->id . "_" . $cm->id."';"; ?>
     <?php echo "wbUser.sid='".$sid."';"; ?>
     <?php echo "wbUser.role='".$r."';"; ?>
+    <?php echo "wbUser.fname='".$USER->firstname."';"; ?>
+    <?php echo "wbUser.lname='".$USER->lastname."';"; ?>
 
     window.whiteboardPath =  '<?php echo $whiteboard_path; ?>';
     if (!!window.Worker) {
@@ -159,6 +174,8 @@ echo html_writer::start_tag('div', array('id' => 'vAppCont', 'class' => "$role")
 echo html_writer::start_tag('div', array('id' => 'audioWidget'));
 
     if ($r == 's') {
+        $dap = "false";
+        $classes = "audioTool deactive";
         echo html_writer::start_tag('div', array('id' => 'speakerStudent'));
 
             echo html_writer::start_tag('div', array('id' => 'speakerPressing', 'class' => 'audioTool deactive' ));
@@ -173,20 +190,13 @@ echo html_writer::start_tag('div', array('id' => 'audioWidget'));
 
             echo html_writer::end_tag('div');
         echo html_writer::end_tag('div');
+    }else{
+          $classes = "audioTool active";
+          $dap = "true";
     }
-
-    echo html_writer::start_tag('div', array('id' => 'speakerPressOnce', 'class' => 'audioTool deactive', 'data-audio-playing' => 'false'));
-
-//    if($r== 't'){
-//        echo html_writer::start_tag('div', array('id' => 'speakerPressOnce', 'class' => 'audioTool active', 'data-audio-playing' => 'true'));
-//    }else{
-//        echo html_writer::start_tag('div', array('id' => 'speakerPressOnce', 'class' => 'audioTool', 'data-audio-playing' => 'false'));
-//    }
-        //echo  get_string('pressonce', 'virtualclass');
-        
-       // echo get_string('pressalways', 'virtualclass');
-
-        $pressonce_img = $whiteboard_path . "images/speakerpressonce.png";
+    
+    $pressonce_img = $whiteboard_path . "images/speakerpressonce.png";
+    echo html_writer::start_tag('div', array('id' => 'speakerPressOnce', 'class' => $classes, 'data-audio-playing' => $dap));
         echo html_writer::start_tag('a', array('id' => 'speakerPressonceAnch', 'class' => 'tooltip', 'data-title' => get_string('pressonce', 'virtualclass') ));
              echo html_writer::tag('img', '', array('id' => 'speakerPressonceImg', 'src' => $pressonce_img));
         echo html_writer::end_tag('a');
