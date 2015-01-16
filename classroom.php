@@ -136,11 +136,13 @@ echo $OUTPUT->header();
 </script>
  
 <?php
-require_once('bundle/virtualclass/build/js.debug.php');
-//$PAGE->requires->js('/mod/virtualclass/bundle/virtualclass/bundle/io/src/iolib.js');
-//$PAGE->requires->js('/mod/virtualclass/bundle/virtualclass/build/wb.min.js');
-////$PAGE->requires->js('/mod/virtualclass/bundle/virtualclass/build/chat.min.js');
-//$PAGE->requires->js('/mod/virtualclass/bundle/virtualclass/index.js');
+//require_once('bundle/virtualclass/build/js.debug.php');
+
+$PAGE->requires->js('/mod/virtualclass/bundle/virtualclass/bundle/io/src/iolib.js');
+$PAGE->requires->js('/mod/virtualclass/bundle/virtualclass/build/wb.min.js');
+
+//$PAGE->requires->js('/mod/virtualclass/bundle/virtualclass/build/chat.min.js');
+$PAGE->requires->js('/mod/virtualclass/bundle/virtualclass/index.js');
 
 if ($r == 't') {
     $role  = 'teacher';
