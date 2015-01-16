@@ -41,10 +41,10 @@ For technical detail
 
 Suman Bogati suman@vidyamantra.com
 
-Pinky Sharma pinky@vidyamantra.com
+Pinky Sharma 
 
 Jai Gupta jai@vidyamantra.com
 
 For look and feel
 
-Fakrul Hasan hasan@vidyamantra.com
+Fakrul Hasan 
