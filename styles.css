@@ -15,3 +15,11 @@
 #page-mod-virtualclass-view.pagelayout-popup #header-container, #page-mod-virtualclass-view.pagelayout-popup #page #page-navbar{display: none;}
 #page-mod-virtualclass-view.pagelayout-popup #page #page-content{width: auto; padding: px;}
 #page-mod-virtualclass-view.pagelayout-popup #back-to-top{display: none;}
+::-webkit-scrollbar, ::-webkit-scrollbar-track, ::-webkit-scrollbar-track-piece, ::-webkit-scrollbar-thumb, ::-webkit-scrollbar-corner{
+	background-color: transparent !important; 
+}
+
+#page-mod-virtualclass-view #page.container-fluid #page-header{display: none !important; margin: 0 !important;}
+
+#page-mod-virtualclass-view #page.container-fluid{max-width: none !important;}
+.close.tooltip:hover:after, .open.tooltip:hover:after{bottom: 2.2em;}
