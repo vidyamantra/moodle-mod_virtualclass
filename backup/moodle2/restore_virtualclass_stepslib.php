@@ -1,5 +1,4 @@
 <?php
-
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -37,8 +36,7 @@ class restore_virtualclass_activity_structure_step extends restore_activity_stru
         $userinfo = $this->get_setting_value('userinfo');
 
         $paths[] = new restore_path_element('virtualclass', '/activity/virtualclass');
-        
-        // Return the paths wrapped into standard activity structure
+        // Return the paths wrapped into standard activity structure.
         return $this->prepare_activity_structure($paths);
     }
 
@@ -48,23 +46,21 @@ class restore_virtualclass_activity_structure_step extends restore_activity_stru
         $data = (object)$data;
         $oldid = $data->id;
         $data->course = $this->get_courseid();
-             
         $data->moderatorid = $this->get_mappingid('user', $data->moderatorid);
-
         $data->opentime = $this->apply_date_offset($data->opentime);
         $data->closetime = $this->apply_date_offset($data->closetime);
         $data->timecreated = $this->apply_date_offset($data->timecreated);
         $data->timemodified = $this->apply_date_offset($data->timemodified);
 
-        // insert the virtualclass record
+        // Insert the virtualclass record.
         $newitemid = $DB->insert_record('virtualclass', $data);
-        // immediately after inserting "activity" record, call this
+        // Immediately after inserting "activity" record, call this.
         $this->apply_activity_instance($newitemid);
     }
 
 
     protected function after_execute() {
-        // Add virtualclass related files, no need to match by itemname (just internally handled context)
+        // Add virtualclass related files, no need to match by itemname (just internally handled context).
         $this->add_related_files('mod_virtualclass', 'intro', null);
     }
 }

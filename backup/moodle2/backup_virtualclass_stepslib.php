@@ -1,5 +1,4 @@
 <?php
-
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -32,7 +31,6 @@
 class backup_virtualclass_activity_structure_step extends backup_activity_structure_step {
 
     protected function define_structure() {
-
         // To know if we are including userinfo
         $userinfo = $this->get_setting_value('userinfo');
 
@@ -41,19 +39,15 @@ class backup_virtualclass_activity_structure_step extends backup_activity_struct
             'name', 'intro', 'introformat', 'moderatorid',
             'opentime', 'closetime', 'timecreated',
             'timemodified'));
-
-
         // Define sources
         $virtualclass->set_source_table('virtualclass', array('id' => backup::VAR_ACTIVITYID));
+        // Define id annotations.
+        // $answer->annotate_ids('user', 'userid');
 
-
-        // Define id annotations
-        //$answer->annotate_ids('user', 'userid');
-
-        // Define file annotations
+        // Define file annotations.
         $virtualclass->annotate_files('mod_virtualclass', 'intro', null); // This file area hasn't itemid
 
-        // Return the root element (virtualclass), wrapped into standard activity structure
+        // Return the root element (virtualclass), wrapped into standard activity structure.
         return $this->prepare_activity_structure($virtualclass);
     }
 }

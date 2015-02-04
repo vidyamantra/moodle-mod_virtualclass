@@ -99,8 +99,7 @@ function update_calendar($virtualclass) {
 
     if ($virtualclass->closetime && $virtualclass->closetime > time()) {
         $event = new stdClass();
-
-        $params = array('modulename'=>'virtualclass', 'instance'=>$virtualclass->id);
+        $params = array('modulename' => 'virtualclass', 'instance' => $virtualclass->id);
         $event->id = $DB->get_field('event', 'id', $params);
         $event->name = $virtualclass->name;
         $event->timestart = $virtualclass->opentime;
@@ -135,6 +134,6 @@ function update_calendar($virtualclass) {
             calendar_event::create($event);
         }
     } else {
-        $DB->delete_records('event', array('modulename'=>'virtualclass', 'instance'=>$virtualclass->id));
+        $DB->delete_records('event', array('modulename' => 'virtualclass', 'instance' => $virtualclass->id));
     }
 }
