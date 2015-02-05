@@ -35,9 +35,15 @@ $course = $DB->get_record('course', array('id' => $id), '*', MUST_EXIST);
 
 require_course_login($course);
 
-add_to_log($course->id, 'virtualclass', 'view all', 'index.php?id='.$course->id, '');
-
 $coursecontext = context_course::instance($course->id);
+
+// Trigger instances list viewed event.
+$params = array(
+    'context' => $coursecontext
+);
+$event = \mod_virtualclass\event\course_module_instance_list_viewed::create($params);
+$event->add_record_snapshot('course', $course);
+$event->trigger();
 
 $PAGE->set_url('/mod/virtualclass/index.php', array('id' => $id));
 $PAGE->set_title(format_string($course->fullname));

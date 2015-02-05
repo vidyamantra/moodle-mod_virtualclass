@@ -33,5 +33,5 @@ $module->version   = 2014111402;               // The current module version (Da
 $module->requires  = 2014051202;      // Requires this Moodle version.(2.7.2+)
 $module->cron      = 0;               // Period for cron to check this module (secs).
 $module->component = 'mod_virtualclass'; // To check on upgrade, that module sits in correct place.
-$plugin->maturity = MATURITY_RC;
+$plugin->maturity = MATURITY_STABLE;
 $plugin->dependencies = array('local_getkey' => 2014081300);

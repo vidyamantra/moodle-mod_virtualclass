@@ -6,20 +6,20 @@
 
 /*    Css Archaius, AARDVARK, ESSENTIAL, Elision28, easyeducation28, Aardvark, Elegant28 theme*/
 
-#page-mod-virtualclass-view.pagelayout-popup #page.main-content{max-width: none; width: auto !important;}
-#page-mod-virtualclass-view.pagelayout-popup #page-header{margin-bottom: 0px;}
-#page-mod-virtualclass-view.pagelayout-popup #page{margin-top: 0px;}
-#page-mod-virtualclass-view.pagelayout-popup #page #page-content{margin-top: 0px;}
-#page-mod-virtualclass-view.pagelayout-popup #page #page-content h1{display: none;}
+#page-mod-virtualclass-classroom.pagelayout-popup #page.main-content{max-width: none; width: auto !important;}
+#page-mod-virtualclass-classroom.pagelayout-popup #page-header{margin-bottom: 0px;}
+#page-mod-virtualclass-classroom.pagelayout-popup #page{margin-top: 0px;}
+#page-mod-virtualclass-classroom.pagelayout-popup #page #page-content{margin-top: 0px;}
+#page-mod-virtualclass-classroom.pagelayout-popup #page #page-content h1{display: none;}
 #page #page-content #region-main{padding: 0;}
-#page-mod-virtualclass-view.pagelayout-popup #header-container, #page-mod-virtualclass-view.pagelayout-popup #page #page-navbar{display: none;}
-#page-mod-virtualclass-view.pagelayout-popup #page #page-content{width: auto; padding: px;}
-#page-mod-virtualclass-view.pagelayout-popup #back-to-top{display: none;}
+#page-mod-virtualclass-classroom.pagelayout-popup #header-container, #page-mod-virtualclass-classroom.pagelayout-popup #page #page-navbar{display: none;}
+#page-mod-virtualclass-classroom.pagelayout-popup #page #page-content{width: auto; padding: px;}
+#page-mod-virtualclass-classroom.pagelayout-popup #back-to-top{display: none;}
 ::-webkit-scrollbar, ::-webkit-scrollbar-track, ::-webkit-scrollbar-track-piece, ::-webkit-scrollbar-thumb, ::-webkit-scrollbar-corner{
 	background-color: transparent !important; 
 }
 
-#page-mod-virtualclass-view #page.container-fluid #page-header{display: none !important; margin: 0 !important;}
+#page-mod-virtualclass-classroom #page.container-fluid #page-header{display: none !important; margin: 0 !important;}
 
-#page-mod-virtualclass-view #page.container-fluid{max-width: none !important;}
+#page-mod-virtualclass-classroom #page.container-fluid{max-width: none !important;}
 .close.tooltip:hover:after, .open.tooltip:hover:after{bottom: 2.2em;}
