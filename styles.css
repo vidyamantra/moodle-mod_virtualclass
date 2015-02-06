@@ -23,3 +23,4 @@
 
 #page-mod-virtualclass-classroom #page.container-fluid{max-width: none !important;}
 .close.tooltip:hover:after, .open.tooltip:hover:after{bottom: 2.2em;}
+#page-mod-virtualclass-classroom.pagelayout-popup .container-fluid{padding-right: 0px; padding-left: 0px; }
