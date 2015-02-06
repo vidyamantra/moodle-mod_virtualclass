@@ -46,7 +46,9 @@ function mycurlrequest($url, $postdata) {
     return $result;
 }
 
-$licen = get_config('local_getkey', 'keyvalue');
+if (!$licen = get_config('local_getkey', 'keyvalue')) {
+    echo 'You must specify Virtualclass API key';exit;
+}
 // Send auth detail to python script.
 $authusername = substr(str_shuffle(md5(microtime())), 0, 12);
 $authpassword = substr(str_shuffle(md5(microtime())), 0, 12);

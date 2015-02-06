@@ -28,7 +28,7 @@
 require_once(dirname(dirname(dirname(__FILE__))).'/config.php');
 require_once(dirname(__FILE__).'/lib.php');
 require_once(dirname(__FILE__).'/locallib.php');
-require_once('auth.php');
+
 
 $id = optional_param('id', 0, PARAM_INT); // Course_module ID, or
 $n  = optional_param('n', 0, PARAM_INT);  // ... virtualclass instance ID - it should be named as the first character of the module.
@@ -42,7 +42,7 @@ if ($id) {
     $course     = $DB->get_record('course', array('id' => $virtualclass->course), '*', MUST_EXIST);
     $cm         = get_coursemodule_from_instance('virtualclass', $virtualclass->id, $course->id, false, MUST_EXIST);
 } else {
-    error('You must specify a course_module ID or an instance ID');
+    print_error('You must specify a course_module ID or an instance ID');
 }
 
 require_login($course, true, $cm);
@@ -54,26 +54,29 @@ $PAGE->set_title(format_string($virtualclass->name));
 $PAGE->set_heading(format_string($course->fullname));
 $PAGE->set_context($context);
 
+// Output starts here.
+echo $OUTPUT->header();
+echo $OUTPUT->heading($virtualclass->name);
+
+// If vidya.io API key missing.
+if (!$licen = get_config('local_getkey', 'keyvalue')) {
+    echo $OUTPUT->notification(get_string('notsavekey', 'virtualclass'));
+    echo $OUTPUT->footer();
+    exit();
+} else {
+    require_once('auth.php');
+}
+
 $a = new stdClass();
 $a->open = userdate($virtualclass->opentime);
 $a->close = userdate($virtualclass->closetime);
 $user = $DB->get_record('user', array('id' => $virtualclass->moderatorid));
 
-// Output starts here.
-echo $OUTPUT->header();
-echo $OUTPUT->heading($virtualclass->name);
 echo html_writer::tag('div', get_string('virtualclasstiming', 'mod_virtualclass', $a));
 echo html_writer::tag('div', get_string('teachername', 'mod_virtualclass', $user));
 // Conditions to show the intro can change to look for own settings or whatever.
 if ($virtualclass->intro) {
     echo $OUTPUT->box(format_module_intro('virtualclass', $virtualclass, $cm->id), 'generalbox mod_introbox', 'virtualclassintro');
-}
-
-// If vidya.io API key missing.
-if (empty($licen)) {
-    echo $OUTPUT->notification(get_string('notsavekey', 'virtualclass'));
-    echo $OUTPUT->footer();
-    exit();
 }
 
 // Check virtualclass is open.
