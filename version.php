@@ -28,10 +28,10 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$module->version   = 2014111402;               // The current module version (Date: YYYYMMDDXX).
-                                      // If version == 0 then module will not be installed.
-$module->requires  = 2014051202;      // Requires this Moodle version.(2.7.2+)
-$module->cron      = 0;               // Period for cron to check this module (secs).
-$module->component = 'mod_virtualclass'; // To check on upgrade, that module sits in correct place.
+$plugin->version   = 2014111402;      // The current module version (Date: YYYYMMDDXX).
+$plugin->release = '1.0 (Build: 2015020600)';
+$plugin->requires  = 2014051202;      // Requires this Moodle version.(2.7.2+)
+$plugin->cron      = 0;               // Period for cron to check this module (secs).
+$plugin->component = 'mod_virtualclass'; // To check on upgrade, that module sits in correct place.
 $plugin->maturity = MATURITY_STABLE;
 $plugin->dependencies = array('local_getkey' => 2014081300);
