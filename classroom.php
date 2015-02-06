@@ -135,7 +135,7 @@ $PAGE->requires->js('/mod/virtualclass/bundle/virtualclass/index.js');
 
 echo html_writer::start_tag('div', array('id' => 'vAppCont', 'class' => "$role"));
     echo html_writer::start_tag('div', array('id' => 'vAppWhiteboard', 'class' => 'vmApp'));
-        echo html_writer::start_tag('div', array('id' => 'vcanvas', 'class' => 'socketon '.$role.''));
+        echo html_writer::start_tag('div', array('id' => 'vcanvas', 'class' => 'canvasMsgBoxParent'));
             echo html_writer::tag('div', '', array('id' => 'containerWb'));
                 echo html_writer::start_tag('div', array('id' => 'mainContainer'));
                     echo html_writer::tag('div', '', array('id' => 'packetContainer'));
