@@ -69,6 +69,13 @@ if ($virtualclass->intro) {
     echo $OUTPUT->box(format_module_intro('virtualclass', $virtualclass, $cm->id), 'generalbox mod_introbox', 'virtualclassintro');
 }
 
+// If vidya.io API key missing.
+if (empty($licen)) {
+    echo $OUTPUT->notification(get_string('notsavekey', 'virtualclass'));
+    echo $OUTPUT->footer();
+    exit();
+}
+
 // Check virtualclass is open.
 if ($virtualclass->closetime > time() && $virtualclass->opentime <= time()) {
     echo html_writer::script('', $CFG->wwwroot.'/mod/virtualclass/popup.js');
@@ -112,5 +119,6 @@ if ($virtualclass->closetime > time() && $virtualclass->opentime <= time()) {
     // Virtualclass closed.
     echo $OUTPUT->heading(get_string('sessionclosed', 'virtualclass'));
 }
+
 // Finish the page.
 echo $OUTPUT->footer();

@@ -42,7 +42,7 @@ $string['configactiontolocalrun'] = 'If you select \'Local\' SSL (https://) will
 $string['joinroom'] = 'Join virtual class room';
 $string['liverun'] = 'Online - Use vidya.io server';
 $string['localrun'] = 'Local - Use Moodle Files';
-$string['notsavekey'] = "You have not saved the license key, to save it";
+$string['notsavekey'] = "API key is missing. Go to <a href='\".$CFG->wwwroot.'/local/getkey/index.php'.\"'>GetKey page</a> to save key.";
 $string['opentime'] = 'Sessions open';
 $string['pluginadministration'] = 'virtualclass administration';
 $string['pluginname'] = 'virtualclass';
