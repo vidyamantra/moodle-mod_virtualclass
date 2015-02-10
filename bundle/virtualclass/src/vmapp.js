@@ -10,11 +10,12 @@ function (window){
 //        vmApp.storage.init();
 
         return {
-            apps : ["Whiteboard", "ScreenShare", "WholeScreenShare"],
+//            apps : ["Whiteboard", "ScreenShare", "WholeScreenShare"],
+            apps : ["Whiteboard", "ScreenShare"],
             appSessionEnd : "vAppSessionEnd",
             appAudioTest : "vAppAudioTest",
             //appAudioTestPlay : "vAppAudioTestPlay",
-            rWidgetConfig : {id: 'audioWidget' },
+            rWidgetConfig : {id: 'audioWidget'},
             wb : "",
             ss : "",
             wss: "",
@@ -86,7 +87,7 @@ function (window){
                       'rid': wbUser.path,
                       'authuser':wbUser.auth_user,
                       'authpass':wbUser.auth_pass,
-                      'userobj': {'userid':wbUser.id,'name':wbUser.name, 'img' : wbUser.imageurl, role :  wbUser.role},
+                      'userobj': {'userid':wbUser.id,'name':wbUser.name, lname : wbUser.lname,'img' : wbUser.imageurl, role :  wbUser.role},
                       'room':wbUser.room
                       };
                       io.init(vApp.uInfo);

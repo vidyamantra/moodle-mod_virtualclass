@@ -195,16 +195,19 @@
                         if(ssVideo != null && ssVideo.tagName == "VIDEO"){
                             vApp.vutil.videoTeacher2Student('ScreenShare', true);
                         }
-                        var wssVideo = document.getElementById('vAppWholeScreenShareLocalVideo');
-                        if(wssVideo != null && wssVideo.tagName == "VIDEO"){
-                            vApp.vutil.videoTeacher2Student('WholeScreenShare', true);
-                        }
+                        
+//                        var wssVideo = document.getElementById('vAppWholeScreenShareLocalVideo');
+//                        if(wssVideo != null && wssVideo.tagName == "VIDEO"){
+//                            vApp.vutil.videoTeacher2Student('WholeScreenShare', true);
+//                        }
+                        
                         var app;
                         if(vApp.currApp == "ScreenShare"){
                             app = 'ss';
-                        }else if(vApp.currApp == "WholeScreenShare"){
-                            app = 'wss';
                         }
+//                        else if(vApp.currApp == "WholeScreenShare"){
+//                            app = 'wss';
+//                        }
                         if(vApp.currApp != "Whiteboard"){
                             if(vApp[app].hasOwnProperty('currentStream')){
                                 vApp[app].currentStream.stop();
@@ -248,7 +251,8 @@
                         studentSpeaker.style.opacity = "0.5";
                         studentSpeaker.style.pointerEvents = "none";
                         studentSpeaker.className = 'deactive';
-                        vApp.gObj.video.audio.studentNotSpeak();
+                        var alwaysPressElem = document.getElementById('speakerPressing');
+                        vApp.gObj.video.audio.studentNotSpeak(alwaysPressElem);
                         vApp.gObj.video.audio.clickOnceSpeaker('speakerPressOnce', "alwaysDisable");
                     },
                     allChatDisable : function (){
@@ -383,12 +387,12 @@
                     }
                 },
                 displayStudentSpeaker : function(display){
-                    var speakerStudent = document.getElementById('speakerStudent');
-                    if(speakerStudent != null){
+                    var alwaysPress = document.getElementById('alwaysPress');
+                    if(alwaysPress != null){
                         if(display){
-                            speakerStudent.style.display = 'block';
+                            alwaysPress.style.display = 'block';
                         }else {
-                            speakerStudent.style.display = 'none';
+                            alwaysPress.style.display = 'none';
                         }
                     }
                 }

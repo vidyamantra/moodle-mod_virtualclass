@@ -22,8 +22,9 @@ $whiteboardpath = "https://local.vidya.io/virtualclass/";
 
 
 <?php
-//include('js.debug.php');
-include('js.php');
+include('js.debug.php');
+
+//include('js.php');
 
 // this url should be soemthing like this
 // https://local.vidya.io/virtualclass/example/index.php?id=103&r=t&name=moh&room=1422#
@@ -51,18 +52,27 @@ $room = (isset($_GET['room'])) ? $_GET['room'] : '215';
 
 if(isset($_GET['name'])){
     $uname = $_GET['name'];
-    $fname = $uname;
-    $lname = $uname + ' lastname';
+//    $fname = $uname;
+//    $lname = $uname + ' lastname';
 }else{
     $uname = 'My name';
-    $fname = $uname;
-    $lname = $uname + ' lastname';
+//    $fname = $uname;
+//    $lname = $uname + ' lastname';
 }
+
+if(isset($_GET['lname'])){
+    $lname = $_GET['lname'];
+}else{
+    $lname = '';
+}
+
+
+
 
 ?>
 <script type="text/javascript">	
     if (!!window.Worker) {
-        var sworker = new Worker("<?php echo $whiteboardpath."src/screenworker.js" ?>");
+        var sworker = new Worker("<?php echo $whiteboardpath."worker/screenworker.js" ?>");
     }
    
 	<?php echo "wbUser.name='$uname';"; ?>
@@ -72,7 +82,7 @@ if(isset($_GET['name'])){
 	<?php echo "wbUser.room='".$room."';"; ?>
 	<?php echo "wbUser.sid='".$sid."';"; ?>
 	<?php echo "wbUser.role='".$r."';"; ?>
-	<?php echo "wbUser.fname='".$fname."';"; ?>
+	<?php // echo "wbUser.fname='".$fname."';"; ?>
     <?php echo "wbUser.lname='".$lname."';"; ?>
 	window.io = io;
     window.whiteboardPath =  'https://local.vidya.io/virtualclass/';
@@ -114,40 +124,42 @@ if(isset($_GET['name'])){
     if($r == 's'){
         $dap = "false";
         $classes = "audioTool deactive";
-    ?>
-        <div id="speakerStudent">
-          <div class="audioTool deactive" id="speakerPressing">
-            <a data-title="Press always to speak" class="tooltip" id="speakerPressingAnch"
-            name="speakerPressingAnch"><img src=
-            "https://local.vidya.io/virtualclass/images/speakerpressing.png"
-            id="speakerPressingImg" /></a>
-          </div>
+        $speakermsg = "Enable Speaker";
+    } else {
+        $classes = "audioTool active";
+        $speakermsg = "Disable Speaker";
+        $dap = "true";
+    }?>
+    
+    <div id="mainAudioPanel">
+        <div id="alwaysPress">
+              <div class="<?php echo $classes; ?>" id="speakerPressing">
+<!--                <a data-title="Press always to speak" class="tooltip" id="speakerPressingAnch"
+                name="speakerPressingAnch">Push To Talk</a>-->
+                <a   id="speakerPressingAnch" name="speakerPressingAnch">Push To Talk</a>
+              </div>
         </div>
-        
-<?php }else{
-          $classes = "audioTool active";
-          $dap = "true";
-      }?>
 
-    <div id="speakerPressOnce" class="<?php echo $classes; ?>" data-audio-playing="<?php echo $dap;?>">
-      <a id="speakerPressonceAnch" class="tooltip" data-title="Press once to speak" name=
-      "speakerPressonceAnch"><img id="speakerPressonceImg" src=
-      "https://local.vidya.io/virtualclass/images/speakerpressonce.png" /></a>
+        <div id="speakerPressOnce" class="<?php echo $classes; ?>" data-audio-playing="<?php echo $dap;?>">
+          <a id="speakerPressonceAnch" class="tooltip" data-title="<?php echo $speakermsg; ?>" name=
+          "speakerPressonceAnch">
+            <label id="speakerPressonceLabel"><i> Press Once </i></label>
+          </a>
+           
+        </div>
     </div>
-
+    
+    <div class="audioTool" id="silenceDetect" data-silence-detect="stop">
+        
+    </div>
+    
     <div class="audioTool" id="audioTest">
-      <a data-title="Audio Testing" class="tooltip" id="audiotestAnch" name=
+      <a data-title="Test Audio" class="tooltip" id="audiotestAnch" name=
       "audiotestAnch"><img src=
       "https://local.vidya.io/virtualclass/images/audiotest.png"
       id="audiotestImg" /></a>
     </div>
-
-    <div class="audioTool" id="silenceDetect">
-      <a data-title="Silence Detection" class="tooltip sdDisable" id="silenceDetectAnch"
-      name="silenceDetectAnch"><img src=
-      "https://local.vidya.io/virtualclass/images/silencedetectdisable.png"
-      id="silencedetectImg" /></a>
-    </div>
+    
 </div>
 
 <div id="chatWidget"> 

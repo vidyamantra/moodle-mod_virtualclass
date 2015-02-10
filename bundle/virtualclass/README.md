@@ -6,11 +6,11 @@ It is a tool to facilitate real time Interaction between users. Build of Educati
 
 Teacher would be able to share her Audio, Whiteboard and Screen with all students. Everyone would be able to see each other. This application requires no Plugins and is based on WebRTC.
 
-## Liceance : GPLv3
+## License : GPLv3
 
 ## Browser Compability for Teacher (Presentor)  
 Firefox V 34  
-Chrome V 40 (Beta at present)  
+Chrome V 40
 
 ## Demo - https://d.vidya.io
 1. Go to https://d.vidya.io, type your name and click on submit.  

@@ -197,9 +197,10 @@
                     var app;
                     if(app  == 'ScreenShare'){
                         app = "ss";
-                    }else if(app  == 'WholeScreenShare'){
-                        app = "wss";
                     }
+//                    else if(app  == 'WholeScreenShare'){
+//                        app = "wss";
+//                    }
 
                     if(typeof notPutImage == 'undefined' && (typeof app != 'undefined' && (app == 'ss' || app == 'wss'))){
                         vApp[app].localCanvas = stCanvas;
@@ -360,7 +361,7 @@
 
 //            var data = JSON.stringify(vmstorage);
          //   localStorage.setItem(wbUser.sid, JSON.stringify(vmstorage))
-            cthis.sendMessage('bye');
+//            cthis.sendMessage('bye'); not using of 'video' label at index.js
             io.disconnect();
         }
     }
