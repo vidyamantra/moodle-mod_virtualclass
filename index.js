@@ -24,8 +24,6 @@ $.uiBackCompat = false;
         }else{
             localStorage.setItem('tc', true);
         }
-//        alert("suman bogati");
-//        debugger;
 
         if(vApp.vutil.isMiniFileIncluded('wb.min')){
             vApp.gObj.displayError = 0;
@@ -36,12 +34,10 @@ $.uiBackCompat = false;
             return;
         }
         
-       //     if ((typeof vcan.teacher == 'undefined') && (!storageHasTeacher) && (e.fromUser.userid == id) && (e.fromUser.userid == joinId)) {
         if ((typeof vcan.teacher == 'undefined') && (!vApp.wb.stHasTeacher)) {
             vApp.wb.utility.makeCanvasDisable();
         }
 
-            //if (e.fromUser.userid == id ){
         vApp.wb.utility.initDefaultInfo(wbUser.role);
         
         if(wbUser.role == 's'){
@@ -92,9 +88,11 @@ $.uiBackCompat = false;
             if(vApp.gObj.uRole == 't'){
                 if(vApp.currApp == 'ScreenShare'){
                     var sType = 'ss';
-                }else if (vApp.currApp == 'WholeScreenShare'){
-                    var sType = 'wss';
                 }
+                
+//                else if (vApp.currApp == 'WholeScreenShare'){
+//                    var sType = 'wss';
+//                }
                 
                 if(typeof sType != 'undefined'){
                     //TODO this should be into function
@@ -135,10 +133,11 @@ $.uiBackCompat = false;
             if(data_pack[0] == 101 || data_pack[0] == 102 || data_pack[0] == 103 || data_pack[0] == 104){
                 var stype = 'ss';
                 var sTool = 'ScreenShare';
-            }else if (data_pack[0] == 201 || data_pack[0] == 202 || data_pack[0] == 203 || data_pack[0] == 204){
-                var stype = 'wss';
-                var sTool = 'WholeScreenShare';
             }
+//            else if (data_pack[0] == 201 || data_pack[0] == 202 || data_pack[0] == 203 || data_pack[0] == 204){
+//                var stype = 'wss';
+//                var sTool = 'WholeScreenShare';
+//            }
             
 //            var data_pack = new Uint8ClampedArray(e.message);
 //            var uid = numValidateFour(data_pack[1],data_pack[2],data_pack[3],data_pack[4]);
@@ -149,29 +148,6 @@ $.uiBackCompat = false;
                 var data_pack = new Uint8ClampedArray(e.message);
                 var uid = numValidateFour(data_pack[1],data_pack[2],data_pack[3],data_pack[4]);
                 var recmsg = data_pack.subarray(5, data_pack.length)
-                
-//                var data_pack = new Uint8ClampedArray(e.message);
-                
-                // Send data to Worker TODO
-                //vApp.gObj.playRecAudio(data_pack);
-                
-//                audWorker.postMessage({ playTime : Math.round(newSource.buffer.duration * 1000), uid: uid});
-                
-//                if (!!window.Worker) {
-//                    if(!vApp.gObj.hasOwnProperty('G711')  || !vApp.gObj.hasOwnProperty('gObjSent')){
-////                        audWorker.postMessage({wrappAudioData: true});
-//                        var packets = {wrappAudioData: data_pack, G711: G711, vAppGObj : vApp.gObj};
-////                        audWorker.postMessage(packets, [packets.bar.buffer]);
-//                        audWorker.postMessage(packets, [packets.G711, packets.vAppGObj]);
-//                        vApp.gObj.G711 = true;
-//                        vApp.gObj.gObjSent = true;
-//                    }else{
-//                        var packets = {wrappAudioData: data_pack};
-//                        audWorker.postMessage({wrappAudioData: data_pack});
-//                    }
-//                    
-////                    audWorker.postMessage(packets, [packets.G711, packets.vAppGObj]);
-//                }
                 
                 if(!vApp.gObj.video.audio.otherSound){
                     
@@ -194,16 +170,6 @@ $.uiBackCompat = false;
                 return;
             //this may not need that we can achieve this by protocol 104    
             }else if(data_pack[0] == 102 || data_pack[0] == 202) { //full image
-                
-//                if(data_pack[0] == 102){
-//                    var stype = 'ss';
-//                    var sTool = 'ScreenShare';
-//                }else{
-//                    var stype = 'wss';
-//                    var sTool = 'WholeScreenShare';
-//                }
-                
-                
                 var data_pack = new Uint8ClampedArray(e.message);
                 var w = numValidateTwo(data_pack[1],data_pack[2]);
                 var h = numValidateTwo(data_pack[3],data_pack[4]);
@@ -271,18 +237,12 @@ $.uiBackCompat = false;
          }   
             
         $(document).on("newmessage", function(e){
-            //vApp.wb.view.removeElement('serverErrorCont');
-//            vApp.gObj.uid = "undefined";
-            
             if(e.message.hasOwnProperty('sad')){
-                
-//                if(vApp.gObj.uRole == 't'){
                 if(localStorage.getItem('orginalTeacherId') != null){
                     if(e.message.sad){
                         var user =  vApp.user.control.updateUser(e.fromUser.userid, 'ad', true);
                         vApp.user.control.audioSign(user, "create");
                     }else{
-//                        alert('suman bogati');
                         var user =  vApp.user.control.updateUser(e.fromUser.userid, 'ad', false);
                         vApp.user.control.audioSign(user, 'remove');
                     }
@@ -321,36 +281,29 @@ $.uiBackCompat = false;
                 vApp.storage.config.endSession();
                 return;
             }if(e.message.hasOwnProperty('dispWhiteboard')){
-              //  if(e.fromUser.userid != wbUser.id){
                 vApp.makeAppReady(vApp.apps[0]);
                 return;
-               // }
             } else if(e.message.hasOwnProperty('si')){ //screen share start
                 if(vApp.gObj.uRole == 's'){
-//                    if(e.message.st == 'ss'){
-//                        vApp.currApp == 'ScreenShare';
-//                    }else if(e.message.st == 'wss') {
-//                        vApp.currApp == 'WholeScreenShare';
-//                    }
                    if(!e.message.hasOwnProperty('resimg')){
                       vApp.initStudentScreen(e.message);
                    }else{
-                        //  alert('requested image is received');
                        if(e.message.byRequest == vApp.gObj.uid){
-						 //  alert('requested image is received');
-                            vApp.initStudentScreen(e.message);
+			                vApp.initStudentScreen(e.message);
                         }
                    }
                 }
                return;
            } else if(e.message.hasOwnProperty('requestImagesBy')){
-                if(vApp.gObj.uRole == "t" && (vApp.currApp == vApp.apps[1] || vApp.currApp == vApp.apps[2])){
+//                if(vApp.gObj.uRole == "t" && (vApp.currApp == vApp.apps[1] || vApp.currApp == vApp.apps[2])){
+                if(vApp.gObj.uRole == "t" && (vApp.currApp == vApp.apps[1])){
                     var requestBy = e.message.requestImagesBy; //request user
                     if(vApp.currApp == vApp.apps[1]){
                         vApp.ss.sendPackets(requestBy);
-                    }else if(vApp.currApp == vApp.apps[2]){
-                        vApp.wss.sendPackets(requestBy);
                     }
+//                    else if(vApp.currApp == vApp.apps[2]){
+//                        vApp.wss.sendPackets(requestBy);
+//                    }
                 }
                 return;
             }else if(e.message.hasOwnProperty('imageResponsed')){
@@ -358,34 +311,20 @@ $.uiBackCompat = false;
                     vApp.initStudentScreen(e.message);
                 }
                 return;
-            //}else if(e.message.hasOwnProperty('unShareScreen')){ //screen share end
                 }else if(e.message.hasOwnProperty('unshareScreen')){ //screen share end
                      var app  =  e.message.st;
-               // if(e.fromUser.userid != wbUser.id){
                     if(typeof vApp[app] == 'object'){
                         vApp[app].prevImageSlices = [];
                         vApp[app].removeStream();
                     }
-                   
-               // }
                 return;
-           }else if(e.message.hasOwnProperty('audioSamp')){
-                //if(e.fromUser.userid != wbUser.id){
-//                    var data_pack = e.message.audioSamp;
-//                    vApp.gObj.video.audio.play(data_pack, 0 , 0);
-                    
-                //}
-                return;
-            } if(e.message.hasOwnProperty('videoSlice')){ //video share start
+           }else if(e.message.hasOwnProperty('videoSlice')){ //video share start
                 vApp.gObj.video.playVideo(e.message.videoSlice);
                 return;
             } else if(e.message.hasOwnProperty('videoByImage')){ //video end start
-//                if(e.fromUser.userid != wbUser.id){ 
-                    if(!vApp.gObj.video.existVideoContainer(e.message.videoByImage)){
-                        vApp.gObj.video.video.createElement(e.message.videoByImage);
-                    }
-                    //vApp.gObj.video.video.playWithoutSlice(e.message);
-                //}
+                if(!vApp.gObj.video.existVideoContainer(e.message.videoByImage)){
+                    vApp.gObj.video.video.createElement(e.message.videoByImage);
+                }
                 return;
             } else if(e.message.hasOwnProperty('userMsg')){ //chat start
                 //vApp.gObj.chat.display(e.message.userMsg, e.fromUser.userid);
@@ -409,13 +348,7 @@ $.uiBackCompat = false;
                         return;
                      }
                  }
-            }
-
-            else if(e.message.hasOwnProperty('video')){
-                
-//                vApp.wb.response.video(e.fromUser.userid, wbUser.id, e.message.video);
-                
-            }else{
+            } else {
                 if(e.message.hasOwnProperty('reclaimRole')){
                     //from that user only
                     if(localStorage.getItem('teacherId') !=  null){
@@ -434,49 +367,36 @@ $.uiBackCompat = false;
                     vApp.wb.response.clearAll(e.fromUser.userid , wbUser.id, e.message, vApp.wb.oTeacher);
                 }
 
-                //if(e.fromUser.userid != wbUser.id){
-                    if(e.message.hasOwnProperty('repObj') && !e.message.hasOwnProperty('sentObj')){
-                        
-                        if(e.message.repObj[0].hasOwnProperty('uid')){
-                            if(vApp.previous !=  "vApp" + vApp.apps[0]){
-                               vApp.makeAppReady(vApp.apps[0]);
-                            }
-                            vApp.wb.uid = e.message.repObj[e.message.repObj.length - 1].uid;
+                if(e.message.hasOwnProperty('repObj') && !e.message.hasOwnProperty('sentObj')){
+                    if(e.message.repObj[0].hasOwnProperty('uid')){
+                        if(vApp.previous !=  "vApp" + vApp.apps[0]){
+                           vApp.makeAppReady(vApp.apps[0]);
                         }
-                        
-                        if(vApp.wb.gObj.displayedObjId > 0 && !e.message.hasOwnProperty('getMsPckt') && !e.message.hasOwnProperty('chunk') && vApp.wb.gObj.rcvdPackId != 0){
-                            vApp.wb.bridge.makeQueue(e);
-                        }
+                        vApp.wb.uid = e.message.repObj[e.message.repObj.length - 1].uid;
                     }
 
-                   if(e.message.hasOwnProperty('repObj')){
-                       vApp.wb.response.repObjForMissedPkts(e.message.repObj);
-                   }
-              //  }
-
-               // if(e.fromUser.userid != wbUser.id){
-                    if(e.message.hasOwnProperty('getMsPckt')){
-                        vApp.wb.gObj.chunk = [];
-                        var chunk = vApp.wb.bridge.sendPackets(e, vApp.wb.gObj.chunk);
-                        vApp.wb.utility.beforeSend({'repObj' : chunk, 'chunk' : true});
+                    if(vApp.wb.gObj.displayedObjId > 0 && !e.message.hasOwnProperty('getMsPckt') && !e.message.hasOwnProperty('chunk') && vApp.wb.gObj.rcvdPackId != 0){
+                        vApp.wb.bridge.makeQueue(e);
                     }
-              //  }
+                }
 
-              //  if(e.fromUser.userid != wbUser.id){
-                    if(e.message.hasOwnProperty('createArrow')){
-                        vApp.wb.response.createArrow(e.message, vApp.wb.oTeacher);
-                    }else{
-                        if(!e.message.hasOwnProperty('replayAll') && !e.message.hasOwnProperty('clearAll') && !e.message.hasOwnProperty('getMsPckt') && !e.message.hasOwnProperty('checkUser')){
-                            if(typeof e.message.repObj == 'undefined'){
-                                
-//                                alert('suman');
-//                                debugger;
-                                
-                                vApp.wb.utility.updateRcvdInformation(e.message.repObj[0]);
-                            }
+               if(e.message.hasOwnProperty('repObj')){
+                   vApp.wb.response.repObjForMissedPkts(e.message.repObj);
+               }
+                if(e.message.hasOwnProperty('getMsPckt')){
+                    vApp.wb.gObj.chunk = [];
+                    var chunk = vApp.wb.bridge.sendPackets(e, vApp.wb.gObj.chunk);
+                    vApp.wb.utility.beforeSend({'repObj' : chunk, 'chunk' : true});
+                }
+                if(e.message.hasOwnProperty('createArrow')){
+                    vApp.wb.response.createArrow(e.message, vApp.wb.oTeacher);
+                }else{
+                    if(!e.message.hasOwnProperty('replayAll') && !e.message.hasOwnProperty('clearAll') && !e.message.hasOwnProperty('getMsPckt') && !e.message.hasOwnProperty('checkUser')){
+                        if(typeof e.message.repObj == 'undefined'){
+                            vApp.wb.utility.updateRcvdInformation(e.message.repObj[0]);
                         }
                     }
-              // }
+                }
 
                 if(!e.message.hasOwnProperty('clearAll') && !e.message.hasOwnProperty('replayAll')){
                     if(e.message.hasOwnProperty('repObj')){
@@ -516,16 +436,14 @@ $.uiBackCompat = false;
                     }
 
                     if(vApp.wb.oTeacher){
-                    //    if(e.fromUser.userid != wbUser.id ){
-                            if(e.message.hasOwnProperty('createArrow')){
-                                vApp.wb.receivedPackets = vApp.wb.receivedPackets + (JSON.stringify(e.message).length);
-                            }else if(!e.message.hasOwnProperty('getMsPckt') && !e.message.hasOwnProperty('checkUser') && !e.message.hasOwnProperty('videoInt')){
-                                vApp.wb.receivedPackets = vApp.wb.receivedPackets + (JSON.stringify(e.message.repObj).length);
-                            }
-                            if(document.getElementById(vApp.wb.receivedPackDiv) != null){
-                                document.getElementById(vApp.wb.receivedPackDiv).innerHTML = vApp.wb.receivedPackets;
-                            }
-                    //    }
+                        if(e.message.hasOwnProperty('createArrow')){
+                            vApp.wb.receivedPackets = vApp.wb.receivedPackets + (JSON.stringify(e.message).length);
+                        }else if(!e.message.hasOwnProperty('getMsPckt') && !e.message.hasOwnProperty('checkUser') && !e.message.hasOwnProperty('videoInt')){
+                            vApp.wb.receivedPackets = vApp.wb.receivedPackets + (JSON.stringify(e.message.repObj).length);
+                        }
+                        if(document.getElementById(vApp.wb.receivedPackDiv) != null){
+                            document.getElementById(vApp.wb.receivedPackDiv).innerHTML = vApp.wb.receivedPackets;
+                        }
                         if(typeof vApp.wb.receivedPackets != 'undefined'){
                             localStorage.receivedPackets = vApp.wb.receivedPackets;
                         }
@@ -579,12 +497,6 @@ $.uiBackCompat = false;
                 if(chatEnable != null && chatEnable ==  "false"){
                     vApp.user.control.disbaleAllChatBox();
                 }
-                
-//                var div = document.getElementById("chatrm");
-//                if(div != null){
-//                     vApp.user.control.makeElemDisable(div);
-//                }
-                
                 vmstorage = JSON.parse(localStorage.getItem(wbUser.sid));
          }
 

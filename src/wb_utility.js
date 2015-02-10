@@ -428,7 +428,6 @@
                     canvasElement.style.pointerEvents = "none";
                 },
                 makeCanvasEnable: function() {
-
                     if (localStorage.getItem('teacherId') != null) {
                         if(!vApp.wb.hasOwnProperty('canvasDisable') || !vApp.wb.canvasDisable){
                             var canvasElement = vcan.main.canvas;
@@ -905,20 +904,32 @@
                  * @param {type} msg
                  * @returns {undefined}
                  */
-                audioSend : function (msg){
-                    var uid = breakintobytes(vApp.gObj.uid, 8);
-                    var scode = new Int8Array( [ 101,  uid[0], uid[1], uid[2], uid[3]] ); // Status Code Audio
-                    var sendmsg = new Int8Array(msg.length + scode.length);
-                    sendmsg.set(scode);
-                    sendmsg.set(msg, scode.length); // First element is status code (101)
-
-                    // Temp change
-                    if (io.sock.readyState == 1) {
-                        if(vApp.gObj.audMouseDown){
-                           io.sendBinary(sendmsg);
-//                           vApp.gObj.playRecAudio(sendmsg);
-                        }
+                audioSend : function (msg, adStatus){
+                    if(vApp.gObj.audMouseDown && io.sock.readyState == 1){
+                        var uid = breakintobytes(vApp.gObj.uid, 8);
+                        var scode = new Int8Array( [ 101,  uid[0], uid[1], uid[2], uid[3]] ); // Status Code Audio
+                        var sendmsg = new Int8Array(msg.length + scode.length);
+                        sendmsg.set(scode);
+                        sendmsg.set(msg, scode.length); // First element is status code (101)
+                        io.sendBinary(sendmsg);
+                        vApp.gObj.video.audio.setAudioStatus(adStatus);
+                    }else{
+                        vApp.gObj.video.audio.setAudioStatus("stop");
                     }
+                    
+                    
+//                    var uid = breakintobytes(vApp.gObj.uid, 8);
+//                    var scode = new Int8Array( [ 101,  uid[0], uid[1], uid[2], uid[3]] ); // Status Code Audio
+//                    var sendmsg = new Int8Array(msg.length + scode.length);
+//                    sendmsg.set(scode);
+//                    sendmsg.set(msg, scode.length); // First element is status code (101)
+//
+//                    // Temp change
+//                    if (io.sock.readyState == 1) {
+//                        if(vApp.gObj.audMouseDown){
+//                           io.sendBinary(sendmsg);
+//                        }
+//                    }
                 },
                 /**
                  * the operation before send infor to server
@@ -930,7 +941,6 @@
                         var jobj = JSON.stringify(msg);
                         vApp.wb.vcan.optimize.sendPacketWithOptimization(jobj, io.sock.readyState, 100);
                     } else {
-
                         if(msg.hasOwnProperty('repObj')){
                             vApp.wb.gObj.rcvdPackId = msg.repObj[msg.repObj.length - 1].uid;
                             vApp.wb.gObj.displayedObjId = vApp.wb.gObj.rcvdPackId;
