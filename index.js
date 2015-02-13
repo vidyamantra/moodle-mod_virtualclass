@@ -70,7 +70,6 @@ $.uiBackCompat = false;
                     console.log(e.message.stack);
                 }
             }
-            
         });
         
         $(document).on("member_added", function(e){
@@ -82,17 +81,12 @@ $.uiBackCompat = false;
             if(typeof vApp.gObj.hasOwnProperty('updateHeight')){
                 vApp.gObj.video.updateVidContHeight();
                 vApp.gObj.updateHeight = true;
-                
             }
             
             if(vApp.gObj.uRole == 't'){
                 if(vApp.currApp == 'ScreenShare'){
                     var sType = 'ss';
                 }
-                
-//                else if (vApp.currApp == 'WholeScreenShare'){
-//                    var sType = 'wss';
-//                }
                 
                 if(typeof sType != 'undefined'){
                     //TODO this should be into function
@@ -104,27 +98,17 @@ $.uiBackCompat = false;
             }
         });
         
-        vApp.gObj.playRecAudio = function (data_pack, uid){
-            var uid = numValidateFour(data_pack[1],data_pack[2],data_pack[3],data_pack[4]);
-            var recmsg = data_pack.subarray(5, data_pack.length)
-            
-            if(!vApp.gObj.video.audio.otherSound){
-                vApp.gObj.video.audio.queue(recmsg, uid);
-                if(!vApp.gObj.hasOwnProperty(uid)){
-                    vApp.gObj[uid] = {};
-                    setTimeout(
-                        function (){
-                            vApp.gObj.video.audio.extractAudios(uid, "first  Time");
-                        },
-                        100
-                    );
-                }else if(vApp.gObj[uid].isplaying == false){
-                    if(vApp.gObj.video.audio.audioToBePlay[uid].length > 0 ){
-                        vApp.gObj.video.audio.extractAudios(uid);
-                    }
-                }
-            }
-        }
+        $(document).on("Multiple_login", function(e){
+            vApp.chat.removedPrvLoggedInDetail(); 
+        });
+
+        $(document).on("authentication_failed", function(e){
+           vApp.chat.removeCookieUserInfo();
+        });
+
+        $(document).on("connectionclose", function(e){
+            vApp.chat.makeUserListEmpty();
+        });
         
         $(document).on("binrec", function(e){
             //vApp.gObj.video.audio []
@@ -134,108 +118,24 @@ $.uiBackCompat = false;
                 var stype = 'ss';
                 var sTool = 'ScreenShare';
             }
-//            else if (data_pack[0] == 201 || data_pack[0] == 202 || data_pack[0] == 203 || data_pack[0] == 204){
-//                var stype = 'wss';
-//                var sTool = 'WholeScreenShare';
-//            }
-            
-//            var data_pack = new Uint8ClampedArray(e.message);
-//            var uid = numValidateFour(data_pack[1],data_pack[2],data_pack[3],data_pack[4]);
-//            var recmsg = data_pack.subarray(5,data_pack.length);
-//            vApp.gObj.video.video.playWithoutSlice(uid,recmsg);
             
             if (data_pack[0] == 101) { // Audio
-                var data_pack = new Uint8ClampedArray(e.message);
-                var uid = numValidateFour(data_pack[1],data_pack[2],data_pack[3],data_pack[4]);
-                var recmsg = data_pack.subarray(5, data_pack.length)
-                
                 if(!vApp.gObj.video.audio.otherSound){
-                    
-                    vApp.gObj.video.audio.queue(recmsg, uid);
-                   
-                    if(!vApp.gObj.hasOwnProperty(uid) || !vApp.gObj[uid].hasOwnProperty('isplaying')){
-                        vApp.gObj[uid] = {};
-                        vApp.gObj[uid].isplaying = true;
-                        setTimeout(
-                            function (){
-                                vApp.gObj.video.audio.extractAudios(uid, "first  Time");
-                            },
-                            100
-                        );
-                    }else if(vApp.gObj[uid].isplaying == false){
-                        vApp.gObj.video.audio.extractAudios(uid, "from index");
-                    }
+                    vApp.gObj.video.audio.receivedAudioProcess(e.message);
                 }
-                
                 return;
-            //this may not need that we can achieve this by protocol 104    
-            }else if(data_pack[0] == 102 || data_pack[0] == 202) { //full image
-                var data_pack = new Uint8ClampedArray(e.message);
-                var w = numValidateTwo(data_pack[1],data_pack[2]);
-                var h = numValidateTwo(data_pack[3],data_pack[4]);
-                var recmsg = data_pack.subarray(5,data_pack.length);
-                vApp.initStudentScreen(recmsg, {w:w, h:h}, stype, sTool);
-                
+            } else if (data_pack[0] == 11) { // user video image
+                vApp.gObj.video.video.process(e.message);
                 return;
-            }else if(data_pack[0] == 103 || data_pack[0] == 203) { //slice image
-                var data_pack = new Uint8ClampedArray(e.message);
-                var s = 7;
-                for (var i = 0; (i+7) <= data_pack.length;i=l+1) {
-                    var x = numValidateTwo(data_pack[i+1],data_pack[i+2]);
-                    var y = numValidateTwo(data_pack[i+3],data_pack[i+4]);
-                    var h = parseInt(data_pack[i+5]);
-                    var w = parseInt(data_pack[i+6]);
-                    var l = s+(h*w)-1;
-                    var recmsg = data_pack.subarray(s,l+1);
-                    var d = { x:x, y : y, w :w, h : h };
-                    vApp.initStudentScreen(recmsg, d, stype, sTool);
-                    s=l+7+1;
+            } else{
+                if(!vApp.hasOwnProperty('studentScreen')){
+                    vApp.studentScreen = new studentScreen();
                 }
-                
-            }else if (data_pack[0] == 104 || data_pack[0] == 204){ //full image with resize
-                var data_pack = new Uint8ClampedArray(e.message);
-                var dw = numValidateTwo(data_pack[1],data_pack[2]);
-                var dh = numValidateTwo(data_pack[3],data_pack[4]);
-                var vcw = numValidateTwo(data_pack[5],data_pack[6]);
-                var vch = numValidateTwo(data_pack[7],data_pack[8]);
-                var recmsg = data_pack.subarray(9,data_pack.length);
-                var dimObj = { d : {w : dw, h : dh},  vc : {w : vcw, h : vch}};
-                vApp.initStudentScreen(recmsg, dimObj, stype, sTool);
-            } else if (data_pack[0] == 11) {
-                var data_pack = new Uint8ClampedArray(e.message);
-                var uid = numValidateFour(data_pack[1],data_pack[2],data_pack[3],data_pack[4]);
-                var recmsg = data_pack.subarray(5,data_pack.length);
-                vApp.gObj.video.video.playWithoutSlice(uid,recmsg);
-                
+                vApp.studentScreen.ssProcess(data_pack, e.message, stype, sTool);
+                return
             }
-          
         });
         
-        function numValidateFour (n1,n2,n3,n4) {
-             n1 = preNumValidateTwo(n1);
-             n2 = preNumValidateTwo(n2);
-             n3 = preNumValidateTwo(n3);
-             n4 = preNumValidateTwo(n4);
-             var nres = n1+n2+n3+n4;
-             return parseInt(nres);
-
-         }
-         function numValidateTwo (n1,n2) {
-             n1 = preNumValidateTwo(n1);
-             n2 = preNumValidateTwo(n2);
-             var nres = n1+n2;
-             return parseInt(nres);
-
-         }
-         function preNumValidateTwo (n) {
-             var numstring = n.toString();
-             if (numstring.length == 1) {
-                 return '0'+numstring;
-             } else if (numstring.length == 2) {
-                 return numstring;
-             }
-         }   
-            
         $(document).on("newmessage", function(e){
             if(e.message.hasOwnProperty('sad')){
                 if(localStorage.getItem('orginalTeacherId') != null){
@@ -275,48 +175,24 @@ $.uiBackCompat = false;
             }
             
             if(typeof e.message == 'string' || e.message.hasOwnProperty('msg')){
-                messageUpdate(e);
+                messageUpdate(e);  //chat update
                 return;
-            }if(e.message.hasOwnProperty('sEnd')){
+            }
+            
+            if(e.message.hasOwnProperty('sEnd')){
                 vApp.storage.config.endSession();
                 return;
-            }if(e.message.hasOwnProperty('dispWhiteboard')){
+            }
+            
+            if(e.message.hasOwnProperty('dispWhiteboard')){
                 vApp.makeAppReady(vApp.apps[0]);
                 return;
-            } else if(e.message.hasOwnProperty('si')){ //screen share start
-                if(vApp.gObj.uRole == 's'){
-                   if(!e.message.hasOwnProperty('resimg')){
-                      vApp.initStudentScreen(e.message);
-                   }else{
-                       if(e.message.byRequest == vApp.gObj.uid){
-			                vApp.initStudentScreen(e.message);
-                        }
-                   }
+            }else if(e.message.hasOwnProperty('unshareScreen')){ //screen share end
+                var app  =  e.message.st;
+                if(typeof vApp[app] == 'object'){
+                    vApp[app].prevImageSlices = [];
+                    vApp[app].removeStream();
                 }
-               return;
-           } else if(e.message.hasOwnProperty('requestImagesBy')){
-//                if(vApp.gObj.uRole == "t" && (vApp.currApp == vApp.apps[1] || vApp.currApp == vApp.apps[2])){
-                if(vApp.gObj.uRole == "t" && (vApp.currApp == vApp.apps[1])){
-                    var requestBy = e.message.requestImagesBy; //request user
-                    if(vApp.currApp == vApp.apps[1]){
-                        vApp.ss.sendPackets(requestBy);
-                    }
-//                    else if(vApp.currApp == vApp.apps[2]){
-//                        vApp.wss.sendPackets(requestBy);
-//                    }
-                }
-                return;
-            }else if(e.message.hasOwnProperty('imageResponsed')){
-                if(e.message.byRequest == vApp.gObj.uid){
-                    vApp.initStudentScreen(e.message);
-                }
-                return;
-                }else if(e.message.hasOwnProperty('unshareScreen')){ //screen share end
-                     var app  =  e.message.st;
-                    if(typeof vApp[app] == 'object'){
-                        vApp[app].prevImageSlices = [];
-                        vApp[app].removeStream();
-                    }
                 return;
            }else if(e.message.hasOwnProperty('videoSlice')){ //video share start
                 vApp.gObj.video.playVideo(e.message.videoSlice);
@@ -458,142 +334,18 @@ $.uiBackCompat = false;
                     vApp.wb.response.replayAll();
                 }
             }
-            
             //Chat code start to check if message has chat
-           // messageUpdate(e);
-
+            // messageUpdate(e);
         });
-        
-        
-        /** Chat code start from here **/
-        
-         counter = 0;
-         idList = new Array();
-         var box = null;
-         $.htab = [];
-         $.htabIndex = [];
-         //vmstorage = {};
-         vmstorage = {};
-
-         $('body').footerbar();
-
-         if(localStorage.getItem('init') == 'false'){ // check footer is close
-             $('#stickybar').removeClass('maximize').addClass('minimize');
-             $('#hide_bar input').removeClass('close').addClass('expand');
-         }
-         tabs = $('#tabs').tabs({ cache: true, activeOnAdd: true});
-
-         if (browserSupportsLocalStorage() == false)  { // check browser for local storage
-             alert(lang.sterror);
-             return;
-         }
-         // checking private chat local storage
-         // Data stored in session key inside localStorage variable
-         // sid is the session id
-         if (localStorage.getItem(wbUser.sid) != null)  {
-                displayChatHistory();
-                
-                chatEnable = localStorage.getItem('chatEnable');
-                if(chatEnable != null && chatEnable ==  "false"){
-                    vApp.user.control.disbaleAllChatBox();
-                }
-                vmstorage = JSON.parse(localStorage.getItem(wbUser.sid));
-         }
-
-         //checking common chat local storage
-         //Data stored inside sessionStorage variable
-         if(sessionStorage.length > 0){
-             displaycomChatHistory();
-             if(typeof chatEnable != 'undefined' && chatEnable == "false"){
-                 vApp.user.control.disableCommonChat();
-             }
-         }
-
-         /* Remove user tab and chatbox when click on tab close icon */
-         $('#tabs').delegate( "span.ui-icon-close", "click", function() {
-
-             // delete box
-             var tabid = $( this ).closest( "li" ).attr( "id").substring(5);
-             $("#" + tabid).chatbox("option").boxClosed(tabid);
-             $('div#cb' + tabid + '.ui-widget').hide();
-
-             //delete tab
-             var panelId = $( this ).closest( "li" ).remove().attr( "aria-controls" );
-             $( "#" + panelId ).remove();
-
-             delete vmstorage[tabid]; //delete variable storage
-         });
-
-         /* Hide box when click on user tab */
-         $("#tabs").on("click", "li a", function(){
-            var tabid = $( this ).closest( "li" ).attr( "id").substring(5);
-            $("#" + tabid).chatbox('toggleContentbox');
-            if(localStorage.getItem(tabid) == 'hidden'){
-               localStorage.removeItem(tabid);
-            }else{
-               localStorage.setItem(tabid, 'hidden');
-            }
-             
-         });
-
-         // new message alert
-         $('ul.tabs').on("click, focus", "li", function(){
-             $("li[aria-controls='" + $(this).attr('id') + "']").removeClass('ui-state-highlight');
-         });
-
          
-         $(document).on("Multiple_login", function(e){
-            //if same user login multiple times then
-            //remove previously logged in detail
-
-            $('.ui-memblist').remove();
-            $('.ui-chatbox').remove();
-            $('div#chatrm').remove();
-            chatroombox = null;
-
-            // delete open chat box
-            for(key in io.uniquesids){
-                if(key != io.cfg.userid){
-                    chatboxManager.delBox(key);
-                    $( "li#tabcb" + key ).remove(); //delete tab
-                }
-            }
-            idList = new Array(); // chatbox
-            $('#stickybar').removeClass('maximize').addClass('minimize');
-            tabs.tabs( "refresh" );//tabs
-         });
-
-        $(document).on("authentication_failed", function(e){
-           //delete cookie
-           document.cookie = "auth_user=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
-           document.cookie = "auth_pass=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
-           document.cookie = "path=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
-           display_error(e.message);
-        });
-
-//         $(document).on("error", function(e){
-//            if(typeof e.message != 'object'){
-//                display_error(e.message);
-//            
-//         });
-
-         $(document).on("connectionclose", function(e){
-             $("#user_list .inner_bt #usertab_icon").css({'background':  'url('+window.whiteboardPath+'images/offline.png)no-repeat top left'});
-             $("#user_list .inner_bt #usertab_text").text(lang.whos + " (0)");
-             $("#chatroom_bt .inner_bt #chatroom_text").text(lang.chatroom + " (0)");
-             $('div#memlist').css('display','none');
-         });
-
+        //this should be in proper place
         var encMode = "alaw"; 
-         
         setTimeout(
             function (){
                 window.postMessage({ type: 'isInstalled', id: 1 }, '*');
             },
             500
         );
-
         vApp.vutil.attachClickOutSideCanvas();
-        
    });
 //});

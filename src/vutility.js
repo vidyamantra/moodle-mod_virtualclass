@@ -275,7 +275,8 @@
                 localStorage.removeItem(vApp.gObj.uid) //remove chat about user
                 sessionStorage.clear('chatroom'); //all 
                 //idList = [];
-                idList.length = 0;
+//                idList.length = 0;
+                vApp.chat.idList.length = 0;
                 clearAllChatBox();
 
                 var allChat = document.getElementById("chatWidget").getElementsByClassName('ui-chatbox-msg');
@@ -334,7 +335,32 @@
                 }
                 var parts = numstring.match(/[\S]{1,2}/g) || [];
                 return parts;
-            }
+            },
+            
+            numValidateFour : function (n1,n2,n3,n4) {
+                n1 = this.preNumValidateTwo(n1);
+                n2 = this.preNumValidateTwo(n2);
+                n3 = this.preNumValidateTwo(n3);
+                n4 = this.preNumValidateTwo(n4);
+                var nres = n1+n2+n3+n4;
+                return parseInt(nres);
+            },
+            
+            numValidateTwo : function (n1,n2) {
+                n1 = this.preNumValidateTwo(n1);
+                n2 = this.preNumValidateTwo(n2);
+                var nres = n1+n2;
+                return parseInt(nres);
+            }, 
+            
+            preNumValidateTwo : function (n) {
+                var numstring = n.toString();
+                if (numstring.length == 1) {
+                    return '0'+numstring;
+                } else if (numstring.length == 2) {
+                    return numstring;
+                }
+            }   
         }
 
         window.vutil = vutil;
@@ -353,14 +379,14 @@
             vApp.gObj.video.audio.studentNotSpeak();
             vApp.vutil.clickOutSideCanvas();
             
-            //var data = JSON.stringify(vmstorage);
-//            if(!vApp.vutil.isObjectEmpty(vmstorage)){
-//                localStorage.setItem(wbUser.sid, JSON.stringify(vmstorage));
+            //var data = JSON.stringify(vApp.chat.vmstorage);
+//            if(!vApp.vutil.isObjectEmpty(vApp.chat.vmstorage)){
+//                localStorage.setItem(wbUser.sid, JSON.stringify(vApp.chat.vmstorage));
 //            }
-            localStorage.setItem(wbUser.sid, JSON.stringify(vmstorage));
+            localStorage.setItem(wbUser.sid, JSON.stringify(vApp.chat.vmstorage));
 
-//            var data = JSON.stringify(vmstorage);
-         //   localStorage.setItem(wbUser.sid, JSON.stringify(vmstorage))
+//            var data = JSON.stringify(vApp.chat.vmstorage);
+         //   localStorage.setItem(wbUser.sid, JSON.stringify(vApp.chat.vmstorage))
 //            cthis.sendMessage('bye'); not using of 'video' label at index.js
             io.disconnect();
         }
