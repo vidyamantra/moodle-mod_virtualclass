@@ -150,42 +150,57 @@ echo html_writer::start_tag('div', array('id' => 'vAppCont', 'class' => "$role")
         echo html_writer::end_tag('div');
     echo html_writer::end_tag('div');
 
+
 echo html_writer::start_tag('div', array('id' => 'audioWidget'));
     echo html_writer::start_tag('div', array('id' => 'mainAudioPanel'));
+    
+        echo html_writer::start_tag('div', array('id' => 'speakerPressOnce', 'class' => $classes, 'data-audio-playing' => $dap));
+            echo html_writer::start_tag('a', array('id' => 'speakerPressonceAnch', 'class' => 'tooltip', 'data-title' => $speakermsg));
+                 //echo html_writer::tag('img', '', array('id' => 'speakerPressonceImg', 'src' => $pressonceimg));
+                        echo html_writer::start_tag('label', array('id' => 'speakerPressonceLabel'));
+                            echo html_writer::start_tag('i');
+                            echo html_writer::end_tag('i');
+                            
+                            //echo html_writer::tag('i', array('id' => 'speakerPressonceI'));
+                        echo html_writer::end_tag('label');
+            echo html_writer::end_tag('a');
+            echo html_writer::start_tag('div', array('id' => 'silenceDetect', 'class' => 'audioTool', 'data-silence-detect' => 'stop'));
+                //echo "sd";
+            echo html_writer::end_tag('div');
+        echo html_writer::end_tag('div');
+        
         echo html_writer::start_tag('div', array('id' => 'alwaysPress'));
-
             echo html_writer::start_tag('div', array('id' => 'speakerPressing', 'class' => $classes));
-                echo html_writer::start_tag('a', array('id' => 'speakerPressingAnch', 'class' => 'tooltip', 'data-title' => get_string('pressalways', 'virtualclass')));
+                echo html_writer::start_tag('a', array('id' => 'speakerPressingAnch', 'name' => 'speakerPressingAnch'));
 //                    $pressingimg = $whiteboardpath . "images/speakerpressingative.png";
                     echo get_string("pushtotalk", "virtualclass") ;
-                    echo html_writer::tag('img', '', array('id' => 'speakerPressingButton', 'src' => $pressingimg));
-
+//                    <span id="speakerPressingButton" class="icon-speakerPressing"></span>
+//                    
+                    //echo html_writer::tag('img', '', array('id' => 'speakerPressingButton', 'src' => $pressingimg));
+                    echo html_writer::start_tag('span', array('id' => 'speakerPressingButton', 'class' => "icon-speakerPressing"));
+                    echo html_writer::end_tag('span');
                 echo html_writer::end_tag('a');
 
             echo html_writer::end_tag('div');
         echo html_writer::end_tag('div');
-
-        $pressonceimg = $whiteboardpath . "images/speakerpressonce.png";
-
-
-        echo html_writer::start_tag('div', array('id' => 'speakerPressOnce', 'class' => $classes, 'data-audio-playing' => $dap));
-            echo html_writer::start_tag('a', array('id' => 'speakerPressonceAnch', 'class' => 'tooltip', 'data-title' => $speakermsg));
-                 //echo html_writer::tag('img', '', array('id' => 'speakerPressonceImg', 'src' => $pressonceimg));
-                 echo "press once";
+      //  $pressonceimg = $whiteboardpath . "images/speakerpressonce.png";
+    echo html_writer::end_tag('div');
+    
+    echo html_writer::start_tag('div', array('id' => 'audioTest-box'));
+        echo html_writer::start_tag('div', array('id' => 'audioTest', 'class' => 'audioTool'));
+//            $audioimg = $whiteboardpath . "images/audiotest.png";
+            echo html_writer::start_tag('a', array('id' => 'audiotestAnch', 'class' => 'tooltip', 'data-title' => get_string('audiotest', 'virtualclass')));
+    //             echo html_writer::tag('img', '', array('id' => 'audiotestImg', 'src' => $audioimg));
+                echo html_writer::start_tag('span', array('id' => 'audiotestImg', 'class' => 'icon-audiotest'));
+                echo html_writer::end_tag('span');
             echo html_writer::end_tag('a');
         echo html_writer::end_tag('div');
     echo html_writer::end_tag('div');
+    
 
-    echo html_writer::start_tag('div', array('id' => 'audioTest', 'class' => 'audioTool'));
-        $audioimg = $whiteboardpath . "images/audiotest.png";
-        echo html_writer::start_tag('a', array('id' => 'audiotestAnch', 'class' => 'tooltip', 'data-title' => get_string('audiotest', 'virtualclass')));
-             echo html_writer::tag('img', '', array('id' => 'audiotestImg', 'src' => $audioimg));
-        echo html_writer::end_tag('a');
-    echo html_writer::end_tag('div');
-
-    echo html_writer::start_tag('div', array('id' => 'silenceDetect', 'class' => 'audioTool', 'data-silence-detect' => 'stop'));
-        echo "sd";
-    echo html_writer::end_tag('div');
+//    echo html_writer::start_tag('div', array('id' => 'silenceDetect', 'class' => 'audioTool', 'data-silence-detect' => 'stop'));
+//        echo "sd";
+//    echo html_writer::end_tag('div');
 
 echo html_writer::end_tag('div');
 
