@@ -47,7 +47,8 @@ function mycurlrequest($url, $postdata) {
 }
 
 if (!$licen = get_config('local_getkey', 'keyvalue')) {
-    echo 'You must specify Virtualclass API key';exit;
+    print_error('You must specify Virtualclass API key');
+    exit;
 }
 // Send auth detail to python script.
 $authusername = substr(str_shuffle(md5(microtime())), 0, 12);
@@ -56,7 +57,10 @@ $postdata = array('authuser' => $authusername, 'authpass' => $authpassword, 'lic
 $postdata = json_encode($postdata);
 $rid = mycurlrequest("https://c.vidya.io", $postdata); // REMOVE HTTP.
 if (empty($rid) or strlen($rid) > 32) {
-    echo "Chat server is unavailable!";
+    print_error("Chat server is unavailable!");
+    exit;
+} else if(substr($rid, -9) !== '.vidya.io') { 
+    print_error($rid);
     exit;
 }
 ?>
