@@ -131,20 +131,24 @@ if(isset($_GET['lname'])){
     
     <div id="mainAudioPanel">
         <div id="speakerPressOnce" class="<?php echo $classes; ?>" data-audio-playing="<?php echo $dap;?>">
+        
           <a id="speakerPressonceAnch" class="tooltip" data-title="<?php echo $speakermsg; ?>" name=
           "speakerPressonceAnch">
-             <label id="speakerPressonceLabel"><i>  </i></label>
+            <label id="speakerPressonceLabel" class="silenceDetect"  data-silence-detect="stop" > <i>  </i> </label>
+<!--             <span class="audioTool  id="silenceDetect" data-silence-detect="stop"> </span>-->
           </a>
            
-            <div class="audioTool" id="silenceDetect" data-silence-detect="stop"> </div>
+            
+            
         </div>
         
         <div id="alwaysPress">
               <div class="<?php echo $classes; ?>" id="speakerPressing">
 <!--                <a data-title="Press always to speak" class="tooltip" id="speakerPressingAnch"
                 name="speakerPressingAnch">Push To Talk</a>-->
-                <a id="speakerPressingAnch" name="speakerPressingAnch">Push To Talk &nbsp; &nbsp;&nbsp;
+                <a id="speakerPressingAnch" name="speakerPressingAnch">
                     <span id="speakerPressingButton" class="icon-speakerPressing"></span>
+                    <span id="speakerPressingtext">Push <br >  To  <br > &nbsp;Talk </span> &nbsp; &nbsp;
 <!--                <img id="speakerPressingButton" src="<?php //echo $speakerimg; ?>" />-->
                 
                 </a>

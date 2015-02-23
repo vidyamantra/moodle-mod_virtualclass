@@ -116,7 +116,7 @@
                             chatBlock.id = userId + imgName + "Img";
                             chatBlock.innerHTML = "&nbsp;";
 //                            chatBlock.src = window.whiteboardPath + "images/" + imgName + ".png";
-                            chatBlock.innerHTML = "S";
+//                            chatBlock.innerHTML = "S";
                             var chatAnch = document.createElement('a');
                             chatAnch.id = userId + imgName + "Anch";
                             chatAnch.className = "tooltip";
@@ -142,7 +142,7 @@
                         if(elemEnable){
                             elem.parentNode.setAttribute('data-title', vApp.lang.getString(control + "Disable"));
                             elem.setAttribute('data-' + control + '-disable', "false");
-                            elem.className = "icon-"+control + "Img tooltip enable";
+                            elem.className = "icon-"+control + "Img enable";
                             vApp.user.control.updateUser(userId, label, true);
                         }else{
                             if(control == 'assign'){
@@ -150,7 +150,12 @@
                             }
                             elem.parentNode.setAttribute('data-title', vApp.lang.getString(control + "Enable"));
                             elem.setAttribute('data-' + control + '-disable', 'true');
-                            elem.className =  "icon-"+control + "Img tooltip block";
+                            
+                            if(control == 'audio'){
+                                elem.className =  "icon-"+control + "DisImg block";
+                            }else{ 
+                                elem.className =  "icon-"+control + "Img block";
+                            }
                             vApp.user.control.updateUser(userId, label, false);
                         }
                     },
@@ -347,6 +352,7 @@
                         return uObj;
                     },
                     audioSign : function (user, action){
+                        
                         if(action == 'create'){
                             if(document.getElementById(user.id + "AudEnableSign") == null){
                                 //important
@@ -369,7 +375,42 @@
                             var audioEnableTag = document.getElementById(user.id + "AudEnableSign");
                             audioEnableTag.parentNode.removeChild(audioEnableTag);
                         }
+                        
+                        
                     },
+                    
+                    audioSignNew : function (user, action){
+                        if(action == 'create'){
+//                            123contrAudImg
+                            var audioImg = document.getElementById(user.id + 'contrAudImg'); 
+                                for(var i=0; i<audioImg.classList.length; i++){
+                                    if(audioImg.classList[i].substring(0, 5) ==  'icon-'){
+                                       audioImg.classList.remove(audioImg.classList[i]);
+                                       audioImg.classList.add("icon-audioEnaGreen") ;
+                                       break;  
+                                    }
+                                }
+                              
+                        }else {
+                            alert('removed audio sign');
+//                            var audioEnableTag = document.getElementById(user.id + "AudEnableSign");
+//                            audioEnableTag.parentNode.removeChild(audioEnableTag);
+                        }
+                        
+                        
+                    },
+                    
+                    iconAttrManupulate : function (uid){
+                        var audioImg = document.getElementById(uid + 'contrAudImg'); 
+                        for(var i=0; i<audioImg.classList.length; i++){
+                            if(audioImg.classList[i].substring(0, 5) ==  'icon-'){
+                               audioImg.classList.remove(audioImg.classList[i]);
+                               audioImg.classList.add("icon-audioEnaGreen") ;
+                               break;  
+                            }
+                        }
+                    },
+                    
                     shouldApply : function (uid){
                         var userObj = localStorage.getItem('vApp' + uid);
                         if(userObj != null){
