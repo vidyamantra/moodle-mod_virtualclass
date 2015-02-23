@@ -44,7 +44,7 @@ $string['enablespeaker'] = 'Enable Speaker';
 $string['joinroom'] = 'Join virtual class room';
 $string['liverun'] = 'Online - Use vidya.io server';
 $string['localrun'] = 'Local - Use Moodle Files';
-$string['notsavekey'] = "API key is missing. Go to <a href='\".$CFG->wwwroot.'/local/getkey/index.php'.\"'>GetKey page</a> to save key.";
+$string['notsavekey'] = 'API key is missing. Go to <a href="{$a}">GetKey page</a> to save key.';
 $string['opentime'] = 'Sessions open';
 $string['pluginadministration'] = 'virtualclass administration';
 $string['pluginname'] = 'virtualclass';
