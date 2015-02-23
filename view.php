@@ -60,7 +60,8 @@ echo $OUTPUT->heading($virtualclass->name);
 
 // If vidya.io API key missing.
 if (!$licen = get_config('local_getkey', 'keyvalue')) {
-    echo $OUTPUT->notification(get_string('notsavekey', 'virtualclass'));
+    $url = new moodle_url('/local/getkey/index.php');
+    echo $OUTPUT->notification(get_string('notsavekey', 'virtualclass', $url->out(false)));
     echo $OUTPUT->footer();
     exit();
 } else {
