@@ -39,13 +39,15 @@
             uiFooterbarchatroomContent = (self.uiFooterbarchatroomContent = $('<div class = "inner_bt"></div>'))
             .appendTo(uiFooterbarchatroomtab)
 
-            uiFooterbarchatroomIcon = (self.uiFooterbarchatroomIcon = $('<div id = "chatroom_icon" class="icon-chatroom"></div>'))
+            uiFooterbarchatroomIcon = (self.uiFooterbarchatroomIcon = $('<div id = "chatroom_icon"><span class="icon-chatroom"></span></div>'))
             .appendTo(uiFooterbarchatroomContent)
              uiFooterbarchatroomText = (self.uiFooterbarchatroomText = $('<div id = "chatroom_text"></div>'))
             .appendTo(uiFooterbarchatroomContent)
-            .text('Chatroom')
+            .html('Chatroom <span id="cc_arrow_button" class="icon-arrow-up"></span>')
             .click(function(){
+                
                 if(vApp.chat.chatroombox){
+                    
 				    if(sessionStorage.getItem('chatroom_status') == 'hidden'){
                        sessionStorage.removeItem('chatroom_status');
                        uiFooterbarchatroomtab.attr('data-title', vApp.lang.getString('minCommonChat'));
@@ -54,9 +56,27 @@
                        sessionStorage.setItem("chatroom_status", "hidden");
                        uiFooterbarchatroomtab.attr('data-title', vApp.lang.getString('maxCommonChat'));
                    }
+                   
+                   var iconarrowButton = document.getElementById('cc_arrow_button');
+                   if(iconarrowButton != null){
+                        if(vApp.vutil.elemHasAnyClass('cc_arrow_button')){
+                            if(iconarrowButton.classList.contains('icon-arrow-up')){
+                                iconarrowButton.classList.add('icon-arrow-down');
+                                iconarrowButton.classList.remove('icon-arrow-up');
+                            }else{
+                                iconarrowButton.classList.add('icon-arrow-up');
+                                iconarrowButton.classList.remove('icon-arrow-down');
+                            }
+                        }else{
+                            iconarrowButton.className = 'icon-arrow-up';
+                        }
+                        
+                   }
                    vApp.chat.chatroombox.chatroom("option", "boxManager").toggleBox();
+                   
+                   
                 }else{
-
+//                    alert('sss');
                     if($("div#chat_room").length == 0){
                         var d = document.createElement('div');
                         d.id = 'chat_room';
@@ -96,19 +116,30 @@
 
             uiFooterbarUserlistIcon = (self.uiFooterbarUserlistIcon = $('<div id="usertab_icon"></div>'))
             .appendTo(uiFooterbarUserlistContent)
-             uiFooterbarUserlistText = (self.uiFooterbarUserlistText = $('<div id="usertab_text" class="tooltip close icon-arrow-up" data-title="'+vApp.lang.getString('maxUserList')+'"></div>'))
-            .appendTo(uiFooterbarUserlistContent)
+             uiFooterbarUserlistText = (self.uiFooterbarUserlistText = $('<div id="usertab_text" class="tooltip close " data-title="'+vApp.lang.getString('maxUserList')+'"></div>'))
+                .appendTo(uiFooterbarUserlistContent)
+//            uiFooterUpArrowIcon = (self.uiFooterUpArrowIcon = $('<span id="usertab_toogle_icon" class="icon-arrow-up"></span>'))
+//                .appendto("#usertab_text")
+//        
             .text('Private Chat')
             .click(function(){ 
                vApp.gObj.video.dispAllVideo("chat_div");
                 if(Object.keys(io.uniquesids).length > 0){
                     if($(this).hasClass('close')){
-                        $(this).addClass('open icon-arrow-down');
-                        $(this).removeClass('close icon-arrow-up');
+                        $(this).addClass('open' );
+                        $(this).removeClass('close');
+                        
+                        $("#usertab_toogle_icon").addClass('icon-arrow-down');
+                        $("#usertab_toogle_icon").removeClass('close icon-arrow-up');
                         $(this).attr('data-title', vApp.lang.getString('miniUserList'));
+                        
                     }else{
-                        $(this).addClass('close icon-arrow-up');
-                        $(this).removeClass('open icon-arrow-down');
+//                        $(this).addClass('close icon-arrow-up');
+//                        $(this).removeClass('open icon-arrow-down');
+                        $(this).addClass('close');
+                        $(this).removeClass('open');
+                        $("#usertab_toogle_icon").addClass('icon-arrow-up');
+                        $("#usertab_toogle_icon").removeClass('icon-arrow-down');
                         $(this).attr('data-title', vApp.lang.getString('maxUserList'));
                     }
                     
