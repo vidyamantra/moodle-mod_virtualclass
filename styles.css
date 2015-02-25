@@ -1,8 +1,3 @@
-.text-center{
-	text-align:left;
-}
-
-
 
 /*    Css Archaius, AARDVARK, ESSENTIAL, Elision28, easyeducation28, Aardvark, Elegant28 theme*/
 
@@ -16,11 +11,24 @@
 #page-mod-virtualclass-classroom.pagelayout-popup #page #page-content{width: auto; padding: px;}
 #page-mod-virtualclass-classroom.pagelayout-popup #back-to-top{display: none;}
 ::-webkit-scrollbar, ::-webkit-scrollbar-track, ::-webkit-scrollbar-track-piece, ::-webkit-scrollbar-thumb, ::-webkit-scrollbar-corner{
-	background-color: transparent !important; 
+	background-color: transparent; 
 }
 
 #page-mod-virtualclass-classroom #page.container-fluid #page-header{display: none !important; margin: 0 !important;}
-
 #page-mod-virtualclass-classroom #page.container-fluid{max-width: none !important;}
 .close.tooltip:hover:after, .open.tooltip:hover:after{bottom: 2.2em;}
 #page-mod-virtualclass-classroom.pagelayout-popup .container-fluid{padding-right: 0px; padding-left: 0px; }
+classroom.pagelayout-popup  #audioWidget .audioTool a {color:#333 !important;}
+#page-mod-virtualclass-classroom.pagelayout-popup #audioWidget #speakerPressing.active a{color : #fff !important;}
+body#page-mod-virtualclass-classroom a{color:#333 !important;}
+#vAppCont #speakerPressing .icon-speakerPressing:before{left: -3px !important;}
+#vAppCont #alwaysPress .audioTool a:hover{text-decoration: none !important;}
+#vAppCont #chatroom_bt2 .inner_bt #chatroom_text .icon-arrow-down:after, #vAppCont #chatroom_bt2 .inner_bt #chatroom_text .icon-arrow-up:after, #vAppCont #chatWidget .ui-memblist .ui-widget-header.ui-corner-top span{top: -1px !important;}
+#vAppCont #chatWidget .ui-memblist .ui-widget-header.ui-corner-top span{top: -1px !important;}
+#vAppCont .ui-widget-header .icon-user:before{top: -1px !important;}
+#vAppCont #onlineusertext{position: relative; top: -3px !important;}
+.close{float: left !important;}
+#chatroom_bt2 .inner_bt #chatroom_text {margin-top: -2px !important;}
+#vAppCont #chatroom_bt2 .inner_bt #chatroom_text .icon-arrow-down:after, #vAppCont #chatroom_bt2 .inner_bt #chatroom_text .icon-arrow-up:after{top: -1px;}
+#vAppCont #speakerPressingtext{font-size: 11px !important;}
+#vAppCont #chat_div .ui-memblist-usr span{text-transform: uppercase !important;}
