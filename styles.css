@@ -10,8 +10,11 @@
 #page-mod-virtualclass-classroom.pagelayout-popup #header-container, #page-mod-virtualclass-classroom.pagelayout-popup #page #page-navbar{display: none;}
 #page-mod-virtualclass-classroom.pagelayout-popup #page #page-content{width: auto; padding: px;}
 #page-mod-virtualclass-classroom.pagelayout-popup #back-to-top{display: none;}
-::-webkit-scrollbar, ::-webkit-scrollbar-track, ::-webkit-scrollbar-track-piece, ::-webkit-scrollbar-thumb, ::-webkit-scrollbar-corner{
+/*::-webkit-scrollbar, ::-webkit-scrollbar-track, ::-webkit-scrollbar-track-piece, ::-webkit-scrollbar-thumb, ::-webkit-scrollbar-corner{
 	background-color: transparent; 
+}*/
+#page-mod-virtualclass-classroom ::-webkit-scrollbar,#page-mod-virtualclass-classroom ::-webkit-scrollbar-track, #page-mod-virtualclass-classroom ::-webkit-scrollbar-track-piece, #page-mod-virtualclass-classroom ::-webkit-scrollbar-thumb, #page-mod-virtualclass-classroom ::-webkit-scrollbar-corner{
+ background-color: transparent !important; 
 }
 
 #page-mod-virtualclass-classroom #page.container-fluid #page-header{display: none !important; margin: 0 !important;}
