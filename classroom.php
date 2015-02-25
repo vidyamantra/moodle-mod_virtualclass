@@ -97,7 +97,7 @@ $pressingimg = $whiteboardpath . "images/speakerpressing.png";
 if (has_capability('mod/virtualclass:addinstance', $context)) {
     if ($USER->id == $virtualclass->moderatorid) {
         $r = 't';
-        $role  = 'teacher';
+        $role  = 'teacher orginalTeacher';
         $classes = "audioTool active";
         $dap = "true";
         $speakermsg = get_string('disablespeaker', 'virtualclass');
