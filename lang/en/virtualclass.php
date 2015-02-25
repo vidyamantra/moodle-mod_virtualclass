@@ -33,14 +33,14 @@ $string['modulenameplural'] = 'Virtualclasss';
 $string['modulename_help'] = 'Use the virtualclass module for real-time online learning.  The virtualclass module allows you to participate in synchronous learning,which means that the teacher and students are logged into the virtual learning environment and interacting with each other at the same time.
 This module provide students with asynchronous communication tools, such as whiteboard and chat capabilities';
 
-$string['audiotest'] = 'Audio Testing';
+$string['audiotest'] = 'Test Audio';
 $string['closebeforeopen'] = 'Could not save the virtualclass. You have specified a close date before the open date.';
 $string['closenotset'] = 'You have to specify a close time.';
 $string['closesameopen'] = 'Session open and close time should not be same';
 $string['closetime'] = 'Sessions closed';
 $string['configactiontolocalrun'] = 'If you select \'Local\' SSL (https://) will be required to use Screen Sharing Features.';
-$string['disablespeaker'] = 'Disable Speaker';
-$string['enablespeaker'] = 'Enable Speaker';
+$string['disablespeaker'] = 'Disable Audio';
+$string['enablespeaker'] = 'Enable Audio';
 $string['joinroom'] = 'Join virtual class room';
 $string['liverun'] = 'Online - Use vidya.io server';
 $string['localrun'] = 'Local - Use Moodle Files';
