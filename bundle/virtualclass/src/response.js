@@ -8,11 +8,14 @@
             reclaimRole: function(formUserId, id) {
 //                alert(formUserId + ' ' + id);
                 if (formUserId != id) {
+                    
                     vApp.user.control._assign(id, 'notsent', formUserId);
+                    
                     vApp.user.displayStudentSpeaker(true);
                     if(localStorage.getItem('aId') != null){
                         localStorage.removeItem('aId');
                     }
+                    vApp.user.control.removeAudioFromParticipate(formUserId)
                     //vApp.vutil.toggleRoleClass(true);
                 }
             },
@@ -42,7 +45,6 @@
                         if(currTeacherElem != null){
                             vApp.user.control.removeCurrTeacherFromControl(currTeacherElem.id);
                         }
-                        
                         vApp.user.control.changeAttrToAssign('enable');
                     }
                 }
