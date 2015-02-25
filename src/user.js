@@ -46,6 +46,51 @@
                     this.createControlDivs(controlCont, userId, controls);
                     return controlCont;
                 },
+                
+                createAssignControl : function (controlCont, userId, aRoleEnable, currTeacher){
+                    var that = this;
+                    var assignImg = document.createElement('span'); 
+                    var imgName = "contrAssign";
+                    assignImg.id = userId + imgName + "Img";
+                    
+                   //  assignImg.src = window.whiteboardPath + "images/" + imgName + ".png";
+                    assignImg.innerHTML = "&nbsp;";
+
+                    var assignAnch = document.createElement('a');
+                    assignAnch.id = userId + imgName + "Anch";
+                    assignAnch.className = "tooltip";
+                   // assignAnch.setAttribute('data-title', "Assign Role");
+                    assignAnch.appendChild(assignImg);
+                    var imgCont = document.createElement('div');
+                    imgCont.id = userId + imgName + "Cont";
+                    imgCont.className = "controleCont";
+                    imgCont.appendChild(assignAnch);
+
+                    var controllerDiv = document.getElementById(userId+'ControlContainer');
+
+                    if(controllerDiv != null){
+                        var controllers = controllerDiv.getElementsByClassName('controleCont');
+                        if(controllers.length <= 0){
+                            controllerDiv.appendChild(imgCont);
+                        }else{
+                            controllerDiv.insertBefore(imgCont, controllerDiv.firstChild);
+                        }
+                    }else{
+                        controlCont.appendChild(imgCont);
+                    }
+
+//                    alert(userId);
+//                    debugger;
+                    //assignImg.className = 'contrAssign';
+                    vApp.user.control.changeAttribute(userId, assignImg, aRoleEnable, 'assign', 'aRole');
+                    
+                    if(typeof currTeacher != 'undefined'){
+                        assignImg.className = assignImg.className + ' currTeacher';
+                    }
+                    assignImg.addEventListener('click', function (){ that.control.init.call(that, assignImg);});
+
+                },
+                
                 // TODO this function should be normalize with other
                 createControlDivs : function (controlCont, userId, controls){
                     var that  = this;
@@ -55,37 +100,82 @@
                     if(userObj != null){
                         uObj = true;
                         userObj = JSON.parse(userObj);
+                        if(userObj.hasOwnProperty('currTeacher')){
+                             vApp.gObj[userId+'currTeacher'] = {};
+                           if(userObj.currTeacher ==  true){
+                                vApp.user.control.currTeacherAlready = true;
+                                var currTeacher = true; 
+                                 vApp.gObj[userId+'currTeacher'].ct = true;
+                           }else {
+                               vApp.gObj[userId+'currTeacher'].ct = false;
+                           }
+                        }
                     }
+                    
+                   
+                    
                     var assignDisable = localStorage.getItem('reclaim');
                     if(assignDisable != null && assignDisable){
                         var aRoleEnable = false;
                     }else{
                         var aRoleEnable = true;
                     }
+                    
+                    var orginalTeacher = vApp.vutil.userIsOrginalTeacher(userId);
+                    var isUserTeacher = vApp.vutil.isUserTeacher(userId);
                     //var this should be in normalize in function
                     for(var i = 0; i < controls.length; i++){
-                        if(controls[i] == 'assign'){
+                        if(controls[i] == 'assign' && orginalTeacher){
+                            if(typeof currTeacher != 'undefined'){
+                                this.createAssignControl(controlCont, userId, aRoleEnable, currTeacher);
+                            }else{
+                                this.createAssignControl(controlCont, userId, aRoleEnable);
+                            }
                             
+                            
+
 //                            var assignImg = document.createElement('img');
-                            var assignImg = document.createElement('span'); 
-                            var imgName = "contrAssign";
-                            assignImg.id = userId + imgName + "Img";
-                          //  assignImg.src = window.whiteboardPath + "images/" + imgName + ".png";
-                            assignImg.innerHTML = "&nbsp;";
+//                            var assignImg = document.createElement('span'); 
+//                            var imgName = "contrAssign";
+//                            assignImg.id = userId + imgName + "Img";
+//                          //  assignImg.src = window.whiteboardPath + "images/" + imgName + ".png";
+//                            assignImg.innerHTML = "&nbsp;";
+//                            
+//                            var assignAnch = document.createElement('a');
+//                            assignAnch.id = userId + imgName + "Anch";
+//                            assignAnch.className = "tooltip";
+//                           // assignAnch.setAttribute('data-title', "Assign Role");
+//                            assignAnch.appendChild(assignImg);
+//                            var imgCont = document.createElement('div');
+//                            imgCont.id = userId + imgName + "Cont";
+//                            imgCont.className = "controleCont";
+//                            imgCont.appendChild(assignAnch);
+//                            
+//                            var controllerDiv = document.getElementById(userId+'ControlContainer');
+//                            
+//                            if(controllerDiv != null){
+//                                var controllers = controllerDiv.getElementsByClassName('controleCont');
+//                                    
+//                                if(controllers.length <= 0){
+//                                    controllerDiv.appendChild(imgCont);
+//                                }else{
+//                                    controllerDiv.insertBefore(imgCont, controllerDiv.firstChild);
+//                                }
+//                            }else{
+//                                controlCont.appendChild(imgCont);
+//                            }
                             
-                            var assignAnch = document.createElement('a');
-                            assignAnch.id = userId + imgName + "Anch";
-                            assignAnch.className = "tooltip";
-                           // assignAnch.setAttribute('data-title', "Assign Role");
-                            assignAnch.appendChild(assignImg);
-                            var imgCont = document.createElement('div');
-                            imgCont.id = userId + imgName + "Cont";
-                            imgCont.className = "controleCont";
-                            imgCont.appendChild(assignAnch);
-                            controlCont.appendChild(imgCont);
+                             
+                            
+                            
                             //assignImg.className = 'contrAssign';
-                            vApp.user.control.changeAttribute(userId, assignImg, aRoleEnable, 'assign', 'aRole');
-                            assignImg.addEventListener('click', function (){ that.control.init.call(that, assignImg);});
+//                            vApp.user.control.changeAttribute(userId, assignImg, aRoleEnable, 'assign', 'aRole');
+//                            
+////                            if(orginalTeacher){
+//                                assignImg.addEventListener('click', function (){ that.control.init.call(that, assignImg);});
+//                            }
+                            
+                            
                         } else if(controls[i] == 'audio'){
                              var audBlock = document.createElement('span'); 
 //                            var audBlock = document.createElement('img');
@@ -102,13 +192,19 @@
                             imgCont.className = "controleCont";
                             imgCont.appendChild(audAnch);
                             controlCont.appendChild(imgCont);
+                            
                             if(uObj && userObj.hasOwnProperty('aud')){
+                                
                                 var audEnable = (userObj.aud) ? true : false;
                             } else {
                                 var audEnable = true;
                             }
                             vApp.user.control.changeAttribute(userId, audBlock, audEnable, 'audio', 'aud');
-                            audBlock.addEventListener('click', function (){ that.control.init.call(that, audBlock);});
+                            
+                            if(orginalTeacher){
+                                audBlock.addEventListener('click', function (){ that.control.init.call(that, audBlock);});
+                            }
+                            
                         }else if (controls[i] == 'chat'){
 //                            var chatBlock = document.createElement('img');
                             var chatBlock = document.createElement('span');
@@ -127,36 +223,149 @@
                             imgCont.className = "controleCont";
                             imgCont.appendChild(chatAnch);
                             controlCont.appendChild(imgCont);
-                            chatBlock.addEventListener('click', function (){ that.control.init.call(that, chatBlock);});
+                            
+                            if(orginalTeacher){
+                                 chatBlock.addEventListener('click', function (){ that.control.init.call(that, chatBlock);});
+                            }
+                            
                             if(uObj && userObj.hasOwnProperty('ch')){
                                 var chEnable = (userObj.ch) ? true : false;
                             } else {
                                 var chEnable = true;
                             }
+                             
                             vApp.user.control.changeAttribute(userId, chatBlock, chEnable, 'chat', 'ch');
                         }
                     }
                 },
                 control : {
-                    changeAttribute : function (userId, elem, elemEnable, control, label){
-                        if(elemEnable){
-                            elem.parentNode.setAttribute('data-title', vApp.lang.getString(control + "Disable"));
-                            elem.setAttribute('data-' + control + '-disable', "false");
-                            elem.className = "icon-"+control + "Img enable";
-                            vApp.user.control.updateUser(userId, label, true);
-                        }else{
-                            if(control == 'assign'){
-                                elem.parentNode.classList.remove('tooltip');
+                    addCurrTeacherToControl  : function (id){
+                        
+                        var elem = document.getElementById(id);
+                        if(elem != null){
+                            if(vApp.vutil.elemHasAnyClass(id)){
+                                elem.classList.add('currTeacher');
+                            }else{
+                                elem.className = 'currTeacher';
                             }
-                            elem.parentNode.setAttribute('data-title', vApp.lang.getString(control + "Enable"));
-                            elem.setAttribute('data-' + control + '-disable', 'true');
+                        }
+                    },
+                    
+                    removeCurrTeacherFromControl  : function (id){
+                        var elem = document.getElementById(id);
+                        if(vApp.vutil.elemHasAnyClass(id)){
+                            elem.classList.remove('currTeacher');
+                                var uidPos = id.indexOf("contr");
+                                var userId = id.substring(0, uidPos);
+                                vApp.user.control.updateUser(userId, 'currTeacher', false);
+                        }
+                    },
+                    
+                    disable : function (toUser, control, contIdPart, label){
+                        var elem = document.getElementById(toUser+'contr'+contIdPart+'Img');
+                        vApp.user.control._disable(elem, control, toUser, label);
+                    }, 
+                    
+                    _disable : function (elem, control, userId, label){
+//                        if(control == 'assign'){
+//                           elem.parentNode.classList.remove('tooltip');
+//                           this.addCurrTeacherToControl(elem.id);
+//                            //alert(userId + ' ' +elem.id);
+//                        }
+
+//                        alert('suman bogati');
+//                        debugger;
+                        
+                        elem.parentNode.setAttribute('data-title', vApp.lang.getString(control + "Enable"));
+                        elem.setAttribute('data-' + control + '-disable', 'true');
+
+                        if(control == 'audio'){
+                            elem.className =  "icon-"+control + "DisImg block" + ' '+ control + 'DisImg' ;
+                        }else{ 
+                            elem.className =  "icon-"+control + "Img block"+ ' '+ control + 'Img';
+                        }
+                        
+                        if(control == 'assign'){
+                           elem.parentNode.classList.remove('tooltip');
+                           this.addCurrTeacherToControl(elem.id);
+                            var userObj = localStorage.getItem('vApp' + userId);
+                            userObj = JSON.parse(userObj);
                             
-                            if(control == 'audio'){
-                                elem.className =  "icon-"+control + "DisImg block";
-                            }else{ 
-                                elem.className =  "icon-"+control + "Img block";
+                            
+//                            if(!vApp.user.control.hasOwnProperty('currTeacherAlready') ){
+//                                vApp.user.control.updateUser(userId, 'currTeacher', true);
+//                            }
+                            if(vApp.gObj.hasOwnProperty(userId+'currTeacher')){
+                                if(vApp.gObj[userId+'currTeacher'].ct || (vApp.gObj.hasOwnProperty('controlAssign') && vApp.gObj.controlAssign && userObj.currTeacher)){
+                                    vApp.user.control.updateUser(userId, 'currTeacher', true);
+                                }
+                            }else{
+                                
+                                if(vApp.gObj.hasOwnProperty('controlAssign') && vApp.gObj.controlAssignId == userId){
+                                    vApp.user.control.updateUser(userId, 'currTeacher', true);
+                                }
+                                
                             }
-                            vApp.user.control.updateUser(userId, label, false);
+
+                            
+                            
+//                            if(!userObj.hasOwnProperty('currTeacher')){
+//                                vApp.user.control.updateUser(userId, 'currTeacher', true);
+//                            }else {
+//                                if(userObj.currTeacher){
+//                                    vApp.user.control.updateUser(userId, 'currTeacher', true);
+//                                }
+//                            }
+                           
+                            //alert(userId + ' ' +elem.id);
+                        }
+                        
+                        vApp.user.control.updateUser(userId, label, false);
+                        
+                    },
+                    
+                    enable : function (toUser, control, contIdPart,  label){
+                        var elem = document.getElementById(toUser+'contr'+contIdPart+'Img');
+                        vApp.user.control._enable(elem, control, toUser, label);
+                    },
+                    _enable : function (elem, control, userId, label){
+                        elem.parentNode.setAttribute('data-title', vApp.lang.getString(control + "Disable"));
+                        elem.setAttribute('data-' + control + '-disable', "false");
+                        elem.className = "icon-"+control + "Img enable" + ' '+ control + 'Img';
+                        
+                        
+                        
+                        vApp.user.control.updateUser(userId, label, true);
+                    },
+                    
+                    changeAttribute : function (userId, elem, elemEnable, control, label){
+//                        alert(control + ' ' + label)
+                        if(elemEnable){
+                            vApp.user.control._enable(elem, control, userId, label);
+                            
+//                            elem.parentNode.setAttribute('data-title', vApp.lang.getString(control + "Disable"));
+//                            elem.setAttribute('data-' + control + '-disable', "false");
+//                            elem.className = "icon-"+control + "Img enable" + ' '+ control + 'Img';
+//                            vApp.user.control.updateUser(userId, label, true);
+                            
+                        }else{
+//                            alert(elem.id + ' ' + label);
+                            vApp.user.control._disable(elem, control, userId, label);
+                            
+                            
+//                            if(control == 'assign'){
+//                                elem.parentNode.classList.remove('tooltip');
+//                            }
+//                            
+//                            elem.parentNode.setAttribute('data-title', vApp.lang.getString(control + "Enable"));
+//                            elem.setAttribute('data-' + control + '-disable', 'true');
+//                            
+//                            if(control == 'audio'){
+//                                elem.className =  "icon-"+control + "DisImg block" + ' '+ control + 'DisImg' ;
+//                            }else{ 
+//                                elem.className =  "icon-"+control + "Img block"+ ' '+ control + 'Img';
+//                            }
+//                            vApp.user.control.updateUser(userId, label, false);
                         }
                     },
                     init : function (tag){
@@ -167,12 +376,15 @@
                         var imgPos = restString.indexOf("Img");
                         var control = restString.substring(0, imgPos);
                         if(control == 'Assign'){
+                           vApp.gObj.controlAssign = true;
+                           vApp.gObj.controlAssignId = userId;
                            var assignDisable = (tag.getAttribute('data-assign-disable') == 'true') ? true : false;
                            if(!assignDisable){
                                this.control.changeAttribute(userId, tag, assignDisable, 'assign', 'aRole');
                                vApp.user.control._assign(userId);
                                vApp.user.control.changeAttrToAssign('block');
                            }
+                           
                         }else if (control == 'Chat'){
                             var action;
                             if(tag.getAttribute('data-chat-disable') == 'true'){
@@ -196,7 +408,9 @@
                             this.control._audio(userId, action);
                         }
                     },
-                    _assign : function (userId, notsent){
+                    
+                    _assign : function (userId, notsent, fromUserId){
+                        
                         vApp.wb.utility.assignRole();
                         vApp.vutil.removeAppPanel();
                         if (!vApp.vutil.chkValueInLocalStorage('orginalTeacherId')) {
@@ -232,8 +446,13 @@
                             vApp.wb.utility.beforeSend({'assignRole' : true, toUser : userId});
                         }
                         if(localStorage.getItem('orginalTeacherId') == null){
-                            var controlContainer = document.getElementById('chat_div').getElementsByClassName('controls')[0];
-                            controlContainer.parentNode.removeChild(controlContainer);
+                            if(typeof fromUserId == 'undefined'){
+                                fromUserId = userId;
+                            }
+                            var controlContainer = document.getElementById(fromUserId + 'ControlContainer').getElementsByClassName('controleCont')[0];
+                            controlContainer.removeChild(controlContainer.firstChild);
+                            
+                            //controlContainer.parentNode.removeChild(controlContainer);
                         }
                     },
                     _chat : function (userId, action){
@@ -383,7 +602,7 @@
 //                            alert('hello brother');
 //                            debugger;
 //                            123contrAudImg
-                            this.changeAttrToAssign();
+                           // this.changeAttrToAssign();
                             this.iconAttrManupulate(user.id, "icon-audioEnaGreen");
                             
                             
@@ -431,8 +650,12 @@
                            }
                         }
                     },
+                    
+                    
+                    
+                    
                     changeAttrToAssign : function(action){
-                        var allUserElem = document.getElementsByClassName("assignImg");
+                        var allUserElem = document.getElementById('chatWidget').getElementsByClassName("assignImg");
                         for(var i = 0; i < allUserElem.length; i++){
                             if(action == 'enable'){
                                 allUserElem[i].classList.remove('block');

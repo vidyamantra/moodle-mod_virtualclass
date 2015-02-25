@@ -6,8 +6,9 @@
     function(window) {
         var response = {
             reclaimRole: function(formUserId, id) {
+//                alert(formUserId + ' ' + id);
                 if (formUserId != id) {
-                    vApp.user.control._assign(id, 'notsent');
+                    vApp.user.control._assign(id, 'notsent', formUserId);
                     vApp.user.displayStudentSpeaker(true);
                     if(localStorage.getItem('aId') != null){
                         localStorage.removeItem('aId');
@@ -16,6 +17,7 @@
                 }
             },
             assignRole: function(fromUserId, id, reclaim) {
+//                alert(fromUserId + ' ' + id);
                 if (fromUserId != id || typeof reclaim != 'undefined') {
                     vApp.wb.utility.assignRole(id);
                     vApp.wb.utility.uniqueArrOfObjsToTeacher();
@@ -24,11 +26,23 @@
                         vApp.vutil.removeSessionTool();   //
                         var divContainer = document.getElementById("ml" + fromUserId);
                         var controls = ['assign'];
-                        var divControl = vApp.user.createControl(fromUserId, controls);
-                        divContainer.appendChild(divControl);
+                            
+                        var controlCont = document.getElementById(fromUserId + "ControlContainer");
+                        if(controlCont != null){
+                            vApp.user.createAssignControl(controlCont, fromUserId, true);
+                        }else{
+                            var divControl = vApp.user.createControl(fromUserId, controls);
+                            divContainer.appendChild(divControl);
+                        }
+                            
                         localStorage.setItem('aId', fromUserId);
                         //vApp.vutil.toggleRoleClass();
                     }else{
+                        var currTeacherElem = document.getElementById('chat_div').getElementsByClassName('currTeacher')[0];
+                        if(currTeacherElem != null){
+                            vApp.user.control.removeCurrTeacherFromControl(currTeacherElem.id);
+                        }
+                        
                         vApp.user.control.changeAttrToAssign('enable');
                     }
                 }

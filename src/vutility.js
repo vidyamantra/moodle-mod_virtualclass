@@ -366,8 +366,28 @@
             
             elemHasAnyClass : function (elemId){
                 var elem = document.getElementById(elemId);
-                return (typeof elem.classList != 'undefined') ? true : false;
+                if(elem != null){
+                    return (typeof elem.classList != 'undefined') ? true : false;
+                }
+                return false;
+            },
+            
+            userIsOrginalTeacher : function (userId){
+                if(localStorage.getItem('orginalTeacherId') != null){
+                    return true;
+                }else{
+                    return false;
+                }
+            },
+            
+            isUserTeacher : function (userId){
+                if(localStorage.getItem('teacherId') != null){
+                    return true;
+                }else{
+                    return false;
+                }
             }
+            
         }
 
         window.vutil = vutil;
