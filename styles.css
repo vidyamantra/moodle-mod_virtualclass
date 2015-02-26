@@ -1,4 +1,6 @@
-/*    Css Clean Archaius, AARDVARK, ESSENTIAL, Elision28, easyeducation28, Aardvark, Elegant28 theme*/
+
+/*    Css Archaius, AARDVARK, ESSENTIAL, Elision28, easyeducation28, Aardvark, Elegant28 theme*/
+body{margin: 0 !important; padding: 0 !important; font-family: hevta}
 
 #page-mod-virtualclass-classroom.pagelayout-popup #page.main-content{max-width: none; width: auto !important;}
 #page-mod-virtualclass-classroom.pagelayout-popup #page-header{margin-bottom: 0px;}
@@ -9,8 +11,8 @@
 #page-mod-virtualclass-classroom.pagelayout-popup #header-container, #page-mod-virtualclass-classroom.pagelayout-popup #page #page-navbar{display: none;}
 #page-mod-virtualclass-classroom.pagelayout-popup #page #page-content{width: auto; padding: px;}
 #page-mod-virtualclass-classroom.pagelayout-popup #back-to-top{display: none;}
-#page-mod-virtualclass-classroom ::-webkit-scrollbar,#page-mod-virtualclass-classroom ::-webkit-scrollbar-track, #page-mod-virtualclass-classroom ::-webkit-scrollbar-track-piece, #page-mod-virtualclass-classroom ::-webkit-scrollbar-thumb, #page-mod-virtualclass-classroom ::-webkit-scrollbar-corner{
- background-color: transparent !important; 
+::-webkit-scrollbar, ::-webkit-scrollbar-track, ::-webkit-scrollbar-track-piece, ::-webkit-scrollbar-thumb, ::-webkit-scrollbar-corner{
+	background-color: transparent !important; 
 }
 
 #page-mod-virtualclass-classroom #page.container-fluid #page-header{display: none !important; margin: 0 !important;}
@@ -25,17 +27,36 @@ body#page-mod-virtualclass-classroom a{color:#333 !important;}
 #vAppCont #chatroom_bt2 .inner_bt #chatroom_text .icon-arrow-down:after, #vAppCont #chatroom_bt2 .inner_bt #chatroom_text .icon-arrow-up:after, #vAppCont #chatWidget .ui-memblist .ui-widget-header.ui-corner-top span{top: -1px !important;}
 #vAppCont #chatWidget .ui-memblist .ui-widget-header.ui-corner-top span{top: -1px !important;}
 #vAppCont .ui-widget-header .icon-user:before{top: -1px !important;}
-#vAppCont #onlineusertext{position: relative; top: -3px !important;}
+#vAppCont #onlineusertext{position: relative; top: -2px !important;}
 .close{float: left !important;}
-#chatroom_bt2 .inner_bt #chatroom_text {margin-top: -2px !important;}
+#chatroom_bt2 .inner_bt #chatroom_text {margin-top: -1px !important;}
 #vAppCont #chatroom_bt2 .inner_bt #chatroom_text .icon-arrow-down:after, #vAppCont #chatroom_bt2 .inner_bt #chatroom_text .icon-arrow-up:after{top: -1px;}
 #vAppCont #speakerPressingtext{font-size: 11px !important;}
-/*#vAppCont #chat_div .ui-memblist-usr span{text-transform: uppercase !important;}*/
 .close:hover, .close:focus{opacity: inherit !important;}
 #vAppCont .icon-arrow-down:after, #vAppCont .icon-arrow-up:after{top: -6px !important;  font-size: 18px;}
 #vAppCont .close.tooltip:hover:after{left: 0.5em !important;}
 #vAppCont .ui-memblist-usr a img{padding: 8px 15px !important; }
 #vAppCont #memlist .ui-memblist-content .ui-memblist-log .ui-memblist-usr .controls .controleCont a.tooltip:hover:after{bottom: -35px !important; left: 5px !important;}
-#vAppCont #informationCont{
-    float :none !important;
+
+#vAppCont .inner_bt{padding: 10px 0 !important;}
+#vAppCont #chatroom_icon .icon-chatroom:before{position: inherit !important;}
+#vAppCont .icon-arrow-down:after, #vAppCont .icon-arrow-up:after{position: inherit !important;}
+#vAppCont #chat_div .ui-memblist-usr span.block{
+	min-height: inherit !important;
+	padding: inherit !important;
+	margin-bottom: inherit !important;
+	background-color: transparent !important;
+	border: none !important;
+	border-color: transparent !important;
+	-webkit-border-radius: 0 !important;
+	-moz-border-radius: 0 !important;
+	border-radius: 0 !important;
+	-webkit-box-shadow: none !important;
+	-moz-box-shadow: none !important;
+	box-shadow: none !important;
 }
+#vAppCont .vmchat_room_bt .inner_bt #chatroom_text{vertical-align: bottom !important;}
+#vAppCont #onlineusertext{vertical-align: bottom !important; position: inherit !important;}
+#vAppCont #chatroom_icon .icon-chatroom:before{font-size: 18px !important; }
+#vAppCont #usertab_icon{margin: 3px 2px 0 0 !important;}
+#cc_arrow_button{vertical-align: text-top !important;}
