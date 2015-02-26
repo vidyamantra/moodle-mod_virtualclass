@@ -30,7 +30,7 @@ body#page-mod-virtualclass-classroom a{color:#333 !important;}
 #chatroom_bt2 .inner_bt #chatroom_text {margin-top: -2px !important;}
 #vAppCont #chatroom_bt2 .inner_bt #chatroom_text .icon-arrow-down:after, #vAppCont #chatroom_bt2 .inner_bt #chatroom_text .icon-arrow-up:after{top: -1px;}
 #vAppCont #speakerPressingtext{font-size: 11px !important;}
-#vAppCont #chat_div .ui-memblist-usr span{text-transform: uppercase !important;}
+/*#vAppCont #chat_div .ui-memblist-usr span{text-transform: uppercase !important;}*/
 .close:hover, .close:focus{opacity: inherit !important;}
 #vAppCont .icon-arrow-down:after, #vAppCont .icon-arrow-up:after{top: -6px !important;  font-size: 18px;}
 #vAppCont .close.tooltip:hover:after{left: 0.5em !important;}
