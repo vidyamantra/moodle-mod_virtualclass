@@ -68,10 +68,10 @@ class mod_virtualclass_mod_form extends moodleform_mod {
         $mform->addRule('moderatorid', get_string('error'), 'required', null, 'client');
 
         $mform->addElement('header', 'general', get_string('sessionsschedule', 'virtualclass'));
-        $mform->addElement('date_time_selector', 'opentime', get_string('opentime', 'virtualclass'), array('optional' => true));
+        $mform->addElement('date_time_selector', 'opentime', get_string('opentime', 'virtualclass'));
         // $mform->setDefault('timeavailable', 0);
         $mform->addRule('opentime', null, 'required', null, 'client');
-        $mform->addElement('date_time_selector', 'closetime', get_string('closetime', 'virtualclass'), array('optional' => true));
+        $mform->addElement('date_time_selector', 'closetime', get_string('closetime', 'virtualclass'));
         // $mform->setDefault('timedue', 0);
         $mform->addRule('closetime', null, 'required', null, 'client');
 
