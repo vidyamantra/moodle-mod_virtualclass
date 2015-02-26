@@ -120,7 +120,7 @@ if ($USER->id) {
     wbUser.imageurl =  '<?php echo $src; ?>';
     wbUser.id =  '<?php echo $USER->id; ?>';
     wbUser.socketOn =  '<?php echo $info; ?>';
-    wbUser.dataInfo =  '<?php echo $info; ?>';
+    wbUser.dataInfo =  0; //layout and all inofrmation is not validated since long time
     wbUser.room =  '<?php echo $course->id . "_" . $cm->id; ?>';
     wbUser.sid =  '<?php echo $sid; ?>';
     wbUser.role =  '<?php echo $r; ?>';
