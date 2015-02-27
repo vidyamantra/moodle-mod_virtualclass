@@ -28,8 +28,8 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version   = 2014111402;      // The current module version (Date: YYYYMMDDXX).
-$plugin->release = '1.0 (Build: 2015020600)';
+$plugin->version   = 2015022700;      // The current module version (Date: YYYYMMDDXX).
+$plugin->release = '1.1 (Build: 2015022700)';
 $plugin->requires  = 2014051202;      // Requires this Moodle version.(2.7.2+)
 $plugin->cron      = 0;               // Period for cron to check this module (secs).
 $plugin->component = 'mod_virtualclass'; // To check on upgrade, that module sits in correct place.
