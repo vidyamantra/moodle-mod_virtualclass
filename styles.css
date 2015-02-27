@@ -59,4 +59,5 @@ body#page-mod-virtualclass-classroom a{color:#333 !important;}
 #vAppCont #onlineusertext{vertical-align: bottom !important; position: inherit !important;}
 #vAppCont #chatroom_icon .icon-chatroom:before{font-size: 18px !important; }
 #vAppCont #usertab_icon{margin: 3px 2px 0 0 !important;}
-#cc_arrow_button{vertical-align: text-top !important;}
+#vAppCont #cc_arrow_button {vertical-align: -webkit-baseline-middle !important;}
+#vAppCont #alwaysPress #speakerPressing #speakerPressingAnch {margin-bottom: 0px !important;}

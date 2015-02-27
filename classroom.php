@@ -181,9 +181,11 @@ echo html_writer::start_tag('div', array('id' => 'vAppCont', 'class' => "$role")
             echo html_writer::start_tag('div', array('id' => 'speakerPressing', 'class' => $classes));
                 echo html_writer::start_tag('a', array('id' => 'speakerPressingAnch', 'name' => 'speakerPressingAnch'));
                     echo html_writer::start_tag('span', array('id' => 'speakerPressingButton', 'class' => "icon-speakerPressing"));
-                        echo html_writer::tag('span', '', array('class' => 'clear'));
+                     
 //                        echo html_writer::tag('div',  array("class" => 'clear'));     
                     echo html_writer::end_tag('span');
+                    echo html_writer::tag('label', '', array('class' => 'clear'));
+         
                     
                     echo html_writer::start_tag('span', array('id' => 'speakerPressingtext'));
                         echo get_string("pushtotalk", "virtualclass") ;
@@ -213,10 +215,5 @@ echo html_writer::end_tag('div');
         echo html_writer::tag('div', '', array('id' => 'stickycontainer'));
     echo html_writer::end_tag('div');
 echo html_writer::end_tag('div');
-
-
 // Finish the page.
 echo $OUTPUT->footer();
-
-
- 
