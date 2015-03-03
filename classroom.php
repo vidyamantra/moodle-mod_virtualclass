@@ -170,7 +170,7 @@ echo html_writer::start_tag('div', array('id' => 'vAppCont', 'class' => "$role")
                                 echo html_writer::end_tag('i');
 
                                 //echo html_writer::tag('i', array('id' => 'speakerPressonceI'));
-                            echo html_writer::end_tag('label');
+                            echo html_writer::end_tag('span');
                 echo html_writer::end_tag('a');
     //            echo html_writer::start_tag('div', array('id' => 'silenceDetect', 'class' => 'audioTool', 'data-silence-detect' => 'stop'));
                     //echo "sd";
