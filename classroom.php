@@ -165,7 +165,7 @@ echo html_writer::start_tag('div', array('id' => 'vAppCont', 'class' => "$role")
             echo html_writer::start_tag('div', array('id' => 'speakerPressOnce', 'class' => $classes, 'data-audio-playing' => $dap));
                 echo html_writer::start_tag('a', array('id' => 'speakerPressonceAnch', 'class' => 'tooltip', 'data-title' => $speakermsg));
                      //echo html_writer::tag('img', '', array('id' => 'speakerPressonceImg', 'src' => $pressonceimg));
-                            echo html_writer::start_tag('label', array('id' => 'speakerPressonceLabel', 'class' => 'silenceDetect', 'data-silence-detect' => 'stop'));
+                            echo html_writer::start_tag('span', array('id' => 'speakerPressonceLabel', 'class' => 'silenceDetect', 'data-silence-detect' => 'stop'));
                                 echo html_writer::start_tag('i');
                                 echo html_writer::end_tag('i');
 
