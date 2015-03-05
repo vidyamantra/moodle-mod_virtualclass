@@ -1,72 +1,176 @@
-
-/*    Css Archaius, AARDVARK, ESSENTIAL, Elision28, easyeducation28, Aardvark, Elegant28 theme*/
-body{margin: 0 !important; padding: 0 !important;}
-#page-mod-virtualclass-classroom a{color:#444;}
-
-#page-mod-virtualclass-classroom.pagelayout-popup #page.main-content{max-width: none; width: auto !important;}
-#page-mod-virtualclass-classroom.pagelayout-popup #page{padding-top: 0px;}
-#page-mod-virtualclass-classroom.pagelayout-popup #page-header{margin-bottom: 0px;}
-#page-mod-virtualclass-classroom.pagelayout-popup #page{margin-top: 0px;}
-#page-mod-virtualclass-classroom.pagelayout-popup #page #page-content{margin-top: 0px;}
-#page-mod-virtualclass-classroom.pagelayout-popup #page #page-content h1{display: none;}
-#page #page-content #region-main{padding: 0;}
-#page-mod-virtualclass-classroom.pagelayout-popup #header-container, #page-mod-virtualclass-classroom.pagelayout-popup #page #page-navbar{display: none;}
-#page-mod-virtualclass-classroom.pagelayout-popup #page #page-content{width: auto; padding: px;}
-#page-mod-virtualclass-classroom.pagelayout-popup #back-to-top{display: none;}
-::-webkit-scrollbar, ::-webkit-scrollbar-track, ::-webkit-scrollbar-track-piece, ::-webkit-scrollbar-thumb, ::-webkit-scrollbar-corner{
-	background-color: transparent !important; 
+body {
+	margin : 0 !important;
+	padding : 0 !important;
 }
-#page-mod-virtualclass-classroom #page.container-fluid #page-header{display: none !important; margin: 0 !important;}
-#page-mod-virtualclass-classroom #page.container-fluid{max-width: none !important;}
-#page-mod-virtualclass-classroom.pagelayout-popup .container-fluid{padding-right: 0px; padding-left: 0px; }
-#page-mod-virtualclass-classroom.pagelayout-popup #page.container-fluid{padding-right: 0px;padding-left: 0px;}
-#vAppCont #usertab_text .icon-arrow-down:after, #vAppCont #chatroom_text .icon-arrow-down:after{top: -2px !important; vertical-align: sub !important;}
-#vAppCont .ui-memblist-usr a img{padding: 6px 16px !important;}
-.close{float: left !important;}
-#vAppCont #alwaysPress .audioTool a:hover{text-decoration: none;}
-#vAppCont #containerWb #commandToolsWrapper .tool a{padding: 11px 18px 10px !important;}
-#vAppCont #alwaysPress .audioTool.active #speakerPressingAnch #speakerPressingButton, #vAppCont #alwaysPress .audioTool.active #speakerPressingAnch{color:#fff;}
-#speakerPressingAnch #speakerPressingtext{top: -11px;}
-#vAppCont #usertab_text .icon-arrow-up:before, #vAppCont #chatroom_text .icon-arrow-up:before, #vAppCont #usertab_text .icon-arrow-down:after, #vAppCont #chatroom_text .icon-arrow-down:after{top: 0 !important; vertical-align: middle !important;}
-#vAppCont .vmchat_room_bt .inner_bt #chatroom_text{top: 0px !important;}
-#chatroom_bt2 .inner_bt #chatroom_text{margin-top: 0px !important;}
-#vAppCont #chatroom_bt2 .inner_bt{margin-top: 3px !important;}
-#vAppCont #usertab_icon{margin: 4px 2px 0 0  !important;}
-.inner_bt{padding: 12px 0 !important;}
-#vAppCont #chat_div .controleCont{margin-top: 8px;}
-.ui-memblist-usr a span{ margin-left: 5px !important;}
-.ui-memblist-usr .tooltip:hover:after{bottom: 13px !important;}
-#vAppCont .ui-widget-header .icon-user:before{font-size: 21px !important; }
-.ui-memblist-usr a span.chatImg{margin-left: 0px !important;}
-#vAppCont .icon-chatImg.enable:before{font-size: 100% !important; top: 0px !important;}
-#vAppCont .ui-memblist-usr .icon-chatImg:before{top:0 !important;}
-#vAppCont #audioWidget .audioTool .tooltip:hover:after{}
-#vAppCont #audioWidget .audioTool .tooltip:hover:after{bottom:0.3em !important;}
-#vAppCont #speakerPressOnce a#speakerPressonceAnch.tooltip{bottom: 0em !important;}
-#vAppCont #speakerPressing .icon-speakerPressing:before{top: -12px !important; }
-.close:focus, .close:hover{opacity: inherit !important;}
-.close.tooltip:hover:after{left: 7px !important;}
-#vAppCont #chat_div .ui-memblist-usr span{position: relative; top: 3px !important;}
-#vAppCont #alwaysPress .audioTool.deactive, #audioTest-box .audioTool{padding-bottom: 7px !important;}
-#vAppCont.student #chat_div .ui-memblist-usr a.tooltip:hover:after:first-child{ bottom: -3px !important; padding: 0.2em 1em !important; font-size: 11.5px !important;}
-.controleCont a.tooltip:hover:after{ bottom: -28px !important; left: -18px !important;}
-#vAppCont.student .ui-memblist-usr .icon-chatImg:before{left: 0 !important;}
-#vAppCont #alwaysPress .audioTool.active, #alwaysPress .audioTool.deactive{padding-bottom: 7px !important;}
-#vAppCont .ui-memblist-usr .icon-audioEnaOrange:before, #vAppCont .ui-memblist-usr .icon-audioEnaGreen:before{font-size: 105% !important;}
-#vAppCont #chat_div .ui-memblist-usr.teacher{pointer-events: visible !important;}
-#vAppCont #chat_div.ui-memblist-log{ padding-top: 20px !important;}
-#vAppCont div.ui-memblist-usr .userVideos{margin: 3px 5px 3px 2px !important;}
-#vAppCont #chat_div .ui-memblist-usr span.block{
-	min-height: inherit !important;
-	padding: inherit !important;
-	margin-bottom: inherit !important;
-	background-color: transparent !important;
-	border: none !important;
-	border-color: transparent !important;
-	-webkit-border-radius: 0 !important;
-	-moz-border-radius: 0 !important;
-	border-radius: 0 !important;
-	-webkit-box-shadow: none !important;
-	-moz-box-shadow: none !important;
-	box-shadow: none !important;
+#page-mod-virtualclass-classroom a {
+	color : #444;
+}
+#page-mod-virtualclass-classroom.pagelayout-popup #page.main-content {
+	max-width : none;
+	width : auto !important;
+}
+#page-mod-virtualclass-classroom.pagelayout-popup #page {
+	padding-top : 0;
+}
+#page-mod-virtualclass-classroom.pagelayout-popup #page-header {
+	margin-bottom : 0;
+}
+#page-mod-virtualclass-classroom.pagelayout-popup #page, #page-mod-virtualclass-classroom.pagelayout-popup #page #page-content  {
+	margin-top : 0;
+}
+
+#page #page-content #region-main {
+	padding : 0;
+}
+#page-mod-virtualclass-classroom.pagelayout-popup #header-container, #page-mod-virtualclass-classroom.pagelayout-popup #page #page-navbar, 
+#page-mod-virtualclass-classroom.pagelayout-popup #back-to-top,
+#page-mod-virtualclass-classroom.pagelayout-popup #page #page-content h1    {
+	display : none;
+}
+#page-mod-virtualclass-classroom.pagelayout-popup #page #page-content {
+	width : auto;
+}
+
+::-webkit-scrollbar, ::-webkit-scrollbar-track, ::-webkit-scrollbar-track-piece, ::-webkit-scrollbar-thumb, ::-webkit-scrollbar-corner {
+background-color : transparent !important;
+}
+#page-mod-virtualclass-classroom #page.container-fluid #page-header {
+	display : none !important;
+	margin : 0 !important;
+}
+#page-mod-virtualclass-classroom #page.container-fluid {
+	max-width : none !important;
+}
+#page-mod-virtualclass-classroom.pagelayout-popup .container-fluid, #page-mod-virtualclass-classroom.pagelayout-popup #page.container-fluid  {
+	padding-right : 0;
+	padding-left : 0;
+}
+
+#vAppCont #usertab_text .icon-arrow-down:after, #vAppCont #chatroom_text .icon-arrow-down:after {
+	top : -2px !important;
+	vertical-align : sub !important;
+}
+#vAppCont .ui-memblist-usr a img {
+	padding : 6px 16px !important;
+}
+.close {
+	float : left !important;
+}
+#vAppCont #alwaysPress .audioTool a:hover {
+	text-decoration : none;
+}
+#vAppCont #containerWb #commandToolsWrapper .tool a {
+	padding : 11px 18px 10px !important;
+}
+#vAppCont #alwaysPress .audioTool.active #speakerPressingAnch #speakerPressingButton, #vAppCont #alwaysPress .audioTool.active #speakerPressingAnch {
+	color : #fff;
+}
+#speakerPressingAnch #speakerPressingtext {
+	top : -11px;
+}
+#vAppCont #usertab_text .icon-arrow-up:before, #vAppCont #chatroom_text .icon-arrow-up:before, #vAppCont #usertab_text .icon-arrow-down:after, #vAppCont #chatroom_text .icon-arrow-down:after {
+	top : 0 !important;
+	vertical-align : middle !important;
+}
+#vAppCont .vmchat_room_bt .inner_bt #chatroom_text {
+	top : 0 !important;
+}
+#chatroom_bt2 .inner_bt #chatroom_text {
+	margin-top : 0 !important;
+}
+#vAppCont #chatroom_bt2 .inner_bt {
+	margin-top : 3px !important;
+}
+#vAppCont #usertab_icon {
+	margin : 4px 2px 0 0 !important;
+}
+.inner_bt {
+	padding : 12px 0 !important;
+}
+#vAppCont #chat_div .controleCont {
+	margin-top : 8px;
+}
+.ui-memblist-usr a span {
+	margin-left : 5px !important;
+}
+.ui-memblist-usr .tooltip:hover:after {
+	bottom : 13px !important;
+}
+#vAppCont .ui-widget-header .icon-user:before {
+	font-size : 21px !important;
+}
+.ui-memblist-usr a span.chatImg {
+	margin-left : 0 !important;
+}
+#vAppCont .icon-chatImg.enable:before {
+	font-size : 100% !important;
+	top : 0 !important;
+}
+#vAppCont .ui-memblist-usr .icon-chatImg:before {
+	top : 0 !important;
+}
+#audioTest-box #audioTest #audiotestAnch.tooltip:hover:after {
+	bottom : -1.3em !important;
+}
+#speakerPressOnce #speakerPressonceAnch.tooltip:hover:after {
+	bottom : 0em !important;
+}
+#vAppCont #speakerPressing .icon-speakerPressing:before {
+	top : -12px !important;
+}
+.close:focus, .close:hover {
+	opacity : inherit !important;
+}
+.close.tooltip:hover:after {
+	left : 7px !important;
+}
+#vAppCont #chat_div .ui-memblist-usr span {
+	position : relative;
+	top : 3px !important;
+}
+#vAppCont #alwaysPress .audioTool.deactive, #audioTest-box .audioTool {
+	padding-bottom : 7px !important;
+}
+#vAppCont.student #chat_div .ui-memblist-usr a.tooltip:hover:after:first-child {
+bottom : -3px !important;
+padding : 0.2em 1em !important;
+font-size : 11.5px !important;
+}
+.controleCont a.tooltip:hover:after {
+	bottom : -28px !important;
+	left : -18px !important;
+}
+#vAppCont.student .ui-memblist-usr .icon-chatImg:before {
+	left : 0 !important;
+}
+#vAppCont #alwaysPress .audioTool.active, #alwaysPress .audioTool.deactive {
+	padding-bottom : 7px !important;
+}
+#vAppCont .ui-memblist-usr .icon-audioEnaOrange:before, #vAppCont .ui-memblist-usr .icon-audioEnaGreen:before {
+	font-size : 105% !important;
+}
+#vAppCont #chat_div.ui-memblist-log {
+	padding-top : 20px !important;
+}
+#vAppCont div.ui-memblist-usr .userVideos {
+	margin : 3px 5px 3px 2px !important;
+}
+#vAppCont #chat_div .ui-memblist-usr span.block {
+	min-height : inherit !important;
+	padding : inherit !important;
+	margin-bottom : inherit !important;
+	background-color : transparent !important;
+	border : none !important;
+	border-color : transparent !important;
+	border-radius : 0 !important;
+	box-shadow : none !important;
+}
+#vAppCont #chat_div .ui-memblist-usr.teacher {
+	pointer-events: visible !important;
+}
+ @media screen and (-webkit-min-device-pixel-ratio:0) {
+#vAppCont #chat_div .ui-memblist-usr a.tooltip:hover:after {
+	bottom: -5px;
+	left: 0em !important;
+}
 }
