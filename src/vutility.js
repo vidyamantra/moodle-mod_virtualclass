@@ -47,16 +47,23 @@
                 var sidebar = document.getElementById("widgetRightSide");
                 sidebar.style.height = (window.innerHeight) + "px";
             },
-
-             isSystemCompatible: function() {
-                if (window.vApp.error.length > 0) {
-                    for (var i = 0; i < window.vApp.error.length; i++) {
-                        var error = window.vApp.error[i];
-                        if (error.hasOwnProperty('msg')) {
-                            vApp.wb.view.displayMessage(error.msg, error.id, error.className);
-                        }
-                    }
-                }
+            
+            //there function name should be change
+            isSystemCompatible: function() {
+                if (vApp.error.length > 0) {
+                    var errorMsg = (vApp.error.length > 1) ? (vApp.error.join(",")) : vApp.error[0];
+                    vApp.wb.view.createErrorMsg(errorMsg, 'errorContainer', 'chatWidget');
+                }   
+                    
+//                    for (var i = 0; i < window.vApp.error.length; i++) {
+//                        var error = window.vApp.error[i];
+//                        if (error.hasOwnProperty('msg')) {
+//                            //view should come out from language file
+//                            
+//                            vApp.wb.view.displayMessage(error.msg, error.id, error.className, errorContId);
+//                        }
+//                    }
+//                }
             },
 
             chkValueInLocalStorage : function(property) {
