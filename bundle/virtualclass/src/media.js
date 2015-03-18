@@ -26,7 +26,7 @@
         var minthreshold = 65535;
         var maxthreshold = 0;
         var audiotime = 0;
-
+//        var AudioContext = AudioContext || webkitAudioContext;
         var  media = function() {
             return {
                 isChannelReady: '',
@@ -70,7 +70,7 @@
                   audioNodes : [],
                   sdElem : 'silenceDetect',
 //                  sd : false,
-                   Html5Audio : {audioContext : new AudioContext()},
+                   Html5Audio : {audioContext :  new (window.AudioContext || window.webkitAudioContext)()},
                    init : function (){
                         if(localStorage.getItem('orginalTeacherId') != null){
                             vApp.gObj.audMouseDown = true;
@@ -396,11 +396,18 @@
                         var currTime = new Date().getTime();
                         if(!repMode){
                             var left = e.inputBuffer.getChannelData(0);
+//                            alert('hi guys what is up');
+//                            debugger;
                             var samples = this.resampler.resampler(left);
-
+//                            alert('sumna');
+//                            debugger;
+                            
                             if(!this.recordAudio){
                                 this.recordingLength += this.bufferSize;
                             }
+                            
+//                            console.log('recordingLength ' + this.recordingLength);
+                            
 
                             var leftSix = convertFloat32ToInt16(samples);
 
@@ -473,14 +480,18 @@
                         samples = this.mergeBuffers(this.myaudioNodes, recordingLength);
                         (typeof testAudio != 'undefined') ? vApp.gObj.video.audio.play(samples, uid, testAudio) : vApp.gObj.video.audio.play(samples, uid);
                     },
+                    
                     play : function (receivedAudio, uid, testAudio){
                         var userObj = JSON.parse(localStorage.getItem('vApp' + uid));
+                        if(typeof receivedResampler == 'undefined') {
+                            receivedResampler = new Resampler(8000, 44100, 1, 16384);
+                        }
+                        var samples = receivedResampler.resampler(receivedAudio);
                         
-                        var samples = receivedAudio;
-                        var newBuffer = this.Html5Audio.audioContext.createBuffer(1, samples.length, 8000); //8100 when sound is being delay
+//                        console.log('samples ' + samples.length);
+                        var newBuffer = this.Html5Audio.audioContext.createBuffer(1, samples.length, 44100); //8100 when sound is being delay
                         newBuffer.getChannelData(0).set(samples);
                         var newSource = this.Html5Audio.audioContext.createBufferSource();
-                        newSource.buffer = newBuffer;
                         newSource.buffer = newBuffer;
                         var gainNode = this.Html5Audio.audioContext.createGain();
                         gainNode.gain.value = 0.9;
@@ -492,35 +503,7 @@
                             var anchorTag = document.getElementById(userObj.id + 'contrAudAnch');
                             anchorTag.setAttribute('data-title', vApp.lang.getString('audioOn'));
                         }
-                            
-//                        if(userObj.hasOwnProperty('ad')){
-//                            if(userObj.ad && userObj.aud){
-//                                vApp.user.control.iconAttrManupulate(uid, "icon-audioEnaGreen");
-//                            }
-//                        }else{
-//                            vApp.user.control.iconAttrManupulate(uid, "icon-audioEnaGreen");
-//                        }
-                        
-//                        if(userObj.hasOwnProperty('ad')){
-//                            if(userObj.ad && userObj.aud){
-//                                vApp.user.control.iconAttrManupulate(uid, "icon-audioEnaGreen");
-//                            }
-//                        }else{
-//                            vApp.user.control.iconAttrManupulate(uid, "icon-audioEnaGreen");
-//                        }
-//                        if(userObj.ad && userObj.aud){
-//                        if(userObj.aud){
-//                            vApp.user.control.iconAttrManupulate(uid, "icon-audioEnaGreen");
-//                        }
-                        
-                        
-//                         if(this.audioToBePlay[uid].length <= 0){
-////                            vApp.user.control.audioSign(user, "create"); 
-//                            vApp.user.control.iconAttrManupulate(uid, "icon-audioEnaOrange");
-//                            
-//                        }else{
-//                           vApp.user.control.iconAttrManupulate(uid, "icon-audioEnaGreen"); 
-//                        }
+  
                         newSource.onended = function (){
                             userObj = JSON.parse(localStorage.getItem('vApp' + uid));
                             // console.log("UID " + uid+  " video ended  Duration :"+newSource.buffer.duration);
@@ -538,7 +521,8 @@
                                 }
                             }
                         }
-                        newSource.start();
+                        
+                        newSource.start(0);
 //                        console.log("stack length " +  this.audioToBePlay[uid].length + " UID " + uid + " video Start  Duration :"+newSource.buffer.duration);
                         vApp.gObj[uid].isplaying = true;
                      //   console.log("Current time : "+ this.Html5Audio.audioContext.currentTime +" Duration :"+newSource.buffer.duration);
@@ -556,7 +540,10 @@
                                 (newSource.buffer.duration * 1000) + 10
                             );
                         }
+                        
+//                        }
                     },
+                 
                     calcAverage : function (){
                         var array = new Uint8Array(analyser.frequencyBinCount);
                         analyser.getByteFrequencyData(array);
@@ -595,7 +582,9 @@
                     
                     // TODO this(getChunks) should be rename into getAudioChunks()
                     getChunks : function  (uid, label){
-//                        console.log(label + ' Audio Stack Length  '+this.audioToBePlay[uid].length + ' UID : '+ uid)
+//                        alert('suman bogati');
+//                        debugger;
+////                        console.log(label + ' Audio Stack Length  '+this.audioToBePlay[uid].length + ' UID : '+ uid)
                         if(this.audioToBePlay[uid].length > 8){
                             this.audioToBePlay[uid].length = 0;
                             vApp.gObj[uid].isplaying = false;
@@ -693,6 +682,10 @@
                     },
                     
                     receivedAudioProcess : function (msg){
+                        if(vApp.gObj.hasOwnProperty('iosTabAudTrue') && vApp.gObj.iosTabAudTrue ==  false){
+                            return;
+                        }
+                        
                         var dataArr = this.extractData(msg); 
                         var uid = dataArr[0];
                         
@@ -706,8 +699,6 @@
                             var user =  vApp.user.control.updateUser(uid, 'ad', true);
                             vApp.user.control.audioSign(user, "create");
                         }
-                        
-                         
                         
                         vApp.gObj.video.audio.queue(dataArr[1], uid); //dataArr[1] is audio
                         if(!vApp.gObj.hasOwnProperty(uid) || !vApp.gObj[uid].hasOwnProperty('isplaying')){
@@ -967,7 +958,7 @@
                     }
                 },
                 handleUserMedia : function(stream){
-                     
+                    //latest code 
                     var audioWiget = document.getElementById('audioWidget');
 //                    if(audioWiget.hasOwnProperty('classList') && audioWiget.classList.contains('deactive')){
 //                    if(vApp.vutil.elemHasAnyClass(elem.id)
@@ -993,10 +984,10 @@
                 _handleUserMedia: function(userid) {
                     var userMainDiv = document.getElementById(userid);
                     var  stream = cthis.video.tempStream;
-                    var userDiv = document.getElementById("ml" + vApp.gObj.uid);
-                    if(userDiv != null){
-                       userDiv.classList.add("mySelf");
-                    }
+//                    var userDiv = document.getElementById("ml" + vApp.gObj.uid);
+//                    if(userDiv != null){
+//                       userDiv.classList.add("mySelf");
+//                    }
                     if(typeof stream != 'undefined'){
                         var vidContainer = cthis.video.createVideoElement();
                         vApp.gObj.video.util.imageReplaceWithVideo(vApp.gObj.uid, vidContainer);
