@@ -31,9 +31,12 @@ body {
 	width : auto;
 }
 
+/**
+We can't do this as scroll is invisible in chrome browser, colorful scroller should handle in some other way
 ::-webkit-scrollbar, ::-webkit-scrollbar-track, ::-webkit-scrollbar-track-piece, ::-webkit-scrollbar-thumb, ::-webkit-scrollbar-corner {
 background-color : transparent !important;
 }
+**/
 #page-mod-virtualclass-classroom #page.container-fluid #page-header {
 	display : none !important;
 	margin : 0 !important;
