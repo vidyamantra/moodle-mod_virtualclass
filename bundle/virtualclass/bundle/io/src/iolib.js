@@ -21,7 +21,7 @@ var io = {
     },
 
     wsconnect: function () {
-        "use strict";
+	    "use strict";
         io.wsuri = "wss://" + this.cfg.rid;
         if ("WebSocket" in window) {
             this.sock = new WebSocket(io.wsuri);
@@ -102,8 +102,8 @@ var io = {
         if(msg.hasOwnProperty('eddata')){
 
             if(msg.eddata != 'initVcEditor' && msg.eddata != 'virtualclass-editor-operation'){
-                if(virtualclass.currApp == "Editor" || virtualclass.currApp == "editor"){
-                    msg.et = 'editor';
+                if(virtualclass.currApp == "EditorRich" || virtualclass.currApp == "editorRich"){
+                    msg.et = 'editorRich';
                 } else if (virtualclass.currApp == "EditorCode" || virtualclass.currApp == "editorCode"){
                     msg.et = 'editorCode';
                 }else {

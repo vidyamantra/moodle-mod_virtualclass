@@ -69,6 +69,10 @@ $PAGE->requires->jquery_plugin('ui-css');
 $PAGE->requires->css(new moodle_url($CFG->wwwroot . '/mod/virtualclass/bundle/virtualclass/css/styles.css'));
 $PAGE->requires->css(new moodle_url($CFG->wwwroot . '/mod/virtualclass/bundle/virtualclass/bundle/jquery/css/base/jquery-ui.css'));
 $PAGE->requires->css(new moodle_url($CFG->wwwroot . '/mod/virtualclass/bundle/virtualclass/css/jquery.ui.chatbox.css'));
+$PAGE->requires->css(new moodle_url($CFG->wwwroot . '/mod/virtualclass/bundle/virtualclass/codemirror/lib/codemirror.css'));
+$PAGE->requires->css(new moodle_url($CFG->wwwroot . '/mod/virtualclass/bundle/virtualclass/css/vceditor.css'));
+
+
 
 // Chrome extension for desktop sharing.
 echo '<link rel="chrome-webstore-item" href="https://chrome.google.com/webstore/detail/ijhofagnokdeoghaohcekchijfeffbjl">';
@@ -130,25 +134,29 @@ if ($USER->id) {
     
     window.whiteboardPath =  '<?php echo $whiteboardpath; ?>';
     if (!!window.Worker) {
-        var sworker = new Worker("<?php echo $whiteboardpath."src/screenworker.js" ?>");
+        var sworker = new Worker("<?php echo $whiteboardpath."worker/screenworker.js" ?>");
     }
 </script> <?php
 
 $PAGE->requires->js('/mod/virtualclass/bundle/virtualclass/bundle/io/src/iolib.js');
-$PAGE->requires->js('/mod/virtualclass/bundle/virtualclass/build/wb.min.js');
 
+/*
+ * 
 if($info){
     require_once('bundle/virtualclass/build/js.debug.php');
 }else{
     $PAGE->requires->js('/mod/virtualclass/bundle/virtualclass/build/wb.min.js');
 }
 
+**/
+
+require_once('bundle/virtualclass/build/js.debug.php');
 
 $PAGE->requires->js('/mod/virtualclass/bundle/virtualclass/index.js');
 
-echo html_writer::start_tag('div', array('id' => 'vAppCont', 'class' => "$role"));
+echo html_writer::start_tag('div', array('id' => 'virtualclassCont', 'class' => "$role"));
     
-    echo html_writer::start_tag('div', array('id' => 'vAppWhiteboard', 'class' => 'vmApp'));
+    echo html_writer::start_tag('div', array('id' => 'virtualclassWhiteboard', 'class' => 'vmApp'));
         echo html_writer::start_tag('div', array('id' => 'vcanvas', 'class' => 'canvasMsgBoxParent'));
             echo html_writer::tag('div', '', array('id' => 'containerWb'));
                 echo html_writer::start_tag('div', array('id' => 'mainContainer'));
