@@ -1,5 +1,6 @@
 
 test/
+uploads/
 .project
 /nbproject/private/
 /nbproject
@@ -14,4 +15,5 @@ todo.txt
 /desktopSelector
 /ff_screenshare
 /src/audioworker.js
-
+*.txt
+.idea*

@@ -10,7 +10,7 @@
                 var box = null;
                 $.htab = [];
                 $.htabIndex = [];
-                //vApp.chat.vmstorage = {};
+                //virtualclass.chat.vmstorage = {};
                 this.vmstorage = {};
                 $('body').footerbar();
 
@@ -44,7 +44,7 @@
                    displayPvtChatHistory();
                    chatEnable = localStorage.getItem('chatEnable');
                    if(chatEnable != null && chatEnable ==  "false"){
-                       vApp.user.control.disbaleAllChatBox();
+                       virtualclass.user.control.disbaleAllChatBox();
                    }
                    this.vmstorage = JSON.parse(localStorage.getItem(wbUser.sid));
                 }
@@ -55,7 +55,7 @@
                     displaycomChatHistory();
                     //if(typeof chatEnable != null && chatEnable == "false"){
                     if(chatEnable != null && chatEnable == "false"){
-                        vApp.user.control.disableCommonChat();
+                        virtualclass.user.control.disableCommonChat();
                     }
                 }
             }, 
@@ -79,7 +79,7 @@
                         var panelId = $( this ).closest( "li" ).remove().attr( "aria-controls" );
                         $( "#" + panelId ).remove();
 
-                        delete vApp.chat.vmstorage[tabid]; //delete variable storage
+                        delete virtualclass.chat.vmstorage[tabid]; //delete variable storage
                     },
                     
                     toggle : function (){
@@ -101,7 +101,7 @@
                 $('.ui-memblist').remove();
                 $('.ui-chatbox').remove();
                 $('div#chatrm').remove();
-                vApp.chat.chatroombox = null;
+                virtualclass.chat.chatroombox = null;
 
                 // delete open chat box
                 for(key in io.uniquesids){
@@ -128,12 +128,12 @@
                 
                 $("#user_list .inner_bt #usertab_icon").css({'background':  'url('+window.whiteboardPath+'images/offline.png)no-repeat top left'});
 //                $("#user_list .inner_bt #usertab_text").text(lang.whos + " (0)");
-                $("#user_list .inner_bt #usertab_text").html("<span id='onlineusertext'>"+lang.whos + " (0) s</span> <span id='usertab_toogle_icon' class='icon-arrow-up'>d</span>");
+                $("#user_list .inner_bt #usertab_text").html("<span id='onlineusertext'>"+lang.whos + " (0) </span> <span id='usertab_toogle_icon' class='icon-arrow-up'></span>");
                 $("#chatroom_bt .inner_bt #chatroom_text").text(lang.chatroom + " (0)");
                 $('div#memlist').css('display','none');
             }
         }
-    }
+    };
     
     window.Chat = Chat;
 })(window, $);
