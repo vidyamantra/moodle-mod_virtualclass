@@ -238,7 +238,7 @@ function virtualclass_get_extra_capabilities() {
  */
 function virtualclass_scale_used($virtualclassid, $scaleid) {
     global $DB;
-
+    return false;
     /* @example */
     if ($scaleid and $DB->record_exists('virtualclass', array('id' => $virtualclassid, 'grade' => -$scaleid))) {
         return true;
@@ -257,7 +257,7 @@ function virtualclass_scale_used($virtualclassid, $scaleid) {
  */
 function virtualclass_scale_used_anywhere($scaleid) {
     global $DB;
-
+    return false;
     /* @example */
     if ($scaleid and $DB->record_exists('virtualclass', array('grade' => -$scaleid))) {
         return true;
