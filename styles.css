@@ -175,3 +175,7 @@ font-size : 11.5px !important;
 	left: 0em !important;
 }
 }
+
+#page-mod-virtualclass-classroom hand {
+	cursor: pointer;
+}

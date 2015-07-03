@@ -46,6 +46,7 @@ $string['liverun'] = 'Online - Use vidya.io server';
 $string['localrun'] = 'Local - Use Moodle Files';
 $string['notsavekey'] = 'API key is missing. Go to <a href="{$a}">GetKey page</a> to save key.';
 $string['opentime'] = 'Sessions open';
+$string['play'] = 'Play';
 $string['pluginadministration'] = 'Virtualclass administration';
 $string['pluginname'] = 'Virtualclass';
 $string['pressalways'] = 'Press always to speak';
@@ -57,11 +58,16 @@ $string['selectteacher_help'] = 'Select teacher as a moderator for virtual class
 $string['sessionclosed'] = 'This session is not available now';
 $string['sessionsschedule'] = 'Schedule for sessions';
 $string['teachername'] = 'Teacher : {$a->firstname} {$a->lastname}';
+$string['uploadrecordedfile'] = 'Upload recorded file';
 $string['virtualclass'] = 'Virtualclass';
 $string['virtualclassfieldset'] = 'Custom example fieldset';
 $string['virtualclassname'] = 'Virtualclass name';
 $string['virtualclassname_help'] = 'This is a real-time online class room which allows participates interaction with each other and provide asynchronous communication tools such as whiteboard, chat and screen sharing .';
 $string['virtualclasstiming'] = 'Virtual class timing : {$a->open} to {$a->close}';
 $string['virtualclass:addinstance'] = 'Add a new virtualclass';
+$string['virtualclass:dorecording'] = 'Save recoding';
+$string['virtualclass:recordingdelete'] = 'Delete recording';
+$string['virtualclass:recordingupload'] = 'Upload recorded file';
 $string['virtualclass:view'] = 'View virtualclass';
 $string['wheretorunvirtualclass'] = 'From where to serve Virtualclass App';
+

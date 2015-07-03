@@ -31,6 +31,8 @@ require_once('auth.php');
 
 $id = optional_param('id', 0, PARAM_INT); // Course_module ID, or
 $n  = optional_param('n', 0, PARAM_INT);  // ... virtualclass instance ID - it should be named as the first character of the module.
+$isplay  = optional_param('play', 0, PARAM_INT);  // Play recording
+$vcSid = optional_param('vcSid', 0, PARAM_INT); // virtual class session record id
 
 if ($id) {
     $cm         = get_coursemodule_from_id('virtualclass', $id, 0, false, MUST_EXIST);
@@ -71,6 +73,7 @@ $PAGE->requires->css(new moodle_url($CFG->wwwroot . '/mod/virtualclass/bundle/vi
 $PAGE->requires->css(new moodle_url($CFG->wwwroot . '/mod/virtualclass/bundle/virtualclass/css/jquery.ui.chatbox.css'));
 $PAGE->requires->css(new moodle_url($CFG->wwwroot . '/mod/virtualclass/bundle/virtualclass/codemirror/lib/codemirror.css'));
 $PAGE->requires->css(new moodle_url($CFG->wwwroot . '/mod/virtualclass/bundle/virtualclass/css/vceditor.css'));
+$PAGE->requires->css(new moodle_url($CFG->wwwroot . '/mod/virtualclass/bundle/virtualclass/css/popup.css'));
 
 
 
@@ -94,7 +97,9 @@ $r = 's'; // Default role.
 $role  = 'student';
 $dap = "false";
 $classes = "audioTool deactive";
+//$isplay = false;
 $speakermsg = get_string('enablespeaker', 'virtualclass');
+
 
 $pressingimg = $whiteboardpath . "images/speakerpressing.png";
 
@@ -121,6 +126,8 @@ if ($USER->id) {
 
 // Javascript variables.
 ?> <script type="text/javascript">    
+    wbUser.virtualclassPlay = '<?php echo $isplay; ?>';
+    wbUser.vcSid = '<?php echo $vcSid; ?>';
     wbUser.imageurl =  '<?php echo $src; ?>';
     wbUser.id =  '<?php echo $USER->id; ?>';
     wbUser.socketOn =  '<?php echo $info; ?>';
@@ -133,8 +140,11 @@ if ($USER->id) {
     wbUser.name =  '<?php echo $USER->firstname; ?>';
     
     window.whiteboardPath =  '<?php echo $whiteboardpath; ?>';
+    window.importfilepath = "<?php echo $CFG->wwwroot."/mod/virtualclass/recording.php?cmid=".$cm->id ?>";
+    window.exportfilepath = "<?php echo $CFG->wwwroot."/mod/virtualclass/play_recording.php?cmid=".$cm->id ?>";
     if (!!window.Worker) {
         var sworker = new Worker("<?php echo $whiteboardpath."worker/screenworker.js" ?>");
+        var mvDataWorker = new Worker("<?php echo $whiteboardpath."worker/json-chunks.js" ?>");
     }
 </script> <?php
 
@@ -155,6 +165,19 @@ require_once('bundle/virtualclass/build/js.debug.php');
 $PAGE->requires->js('/mod/virtualclass/bundle/virtualclass/index.js');
 
 echo html_writer::start_tag('div', array('id' => 'virtualclassCont', 'class' => "$role"));
+   
+   if($isplay){
+            ?>
+        <div id="playController">
+            <div id="playProgress"> <div id="playProgressBar" class="progressBar" style="width: 0%;"></div> </div>
+            <div id="recPlayCont" class="recButton"> <button id="recPlay"> Play </button></div>
+            <div id="recPlayCont" class="recButton"> <button id="recPause"> Pause </button></div> 
+            <div id="ff2Cont" class="recButton"> <button id="ff2" class="ff"> FF2 </button></div>
+            <div id="ff8Cont" class="recButton"> <button id="ff8" class="ff"> FF8 </button></div>
+            <div id="repTimeCont"> <span id="tillRepTime">0 </span> / <span id="totalRepTime">0</span> </div> 
+        </div>
+    <?php
+        }
     
     echo html_writer::start_tag('div', array('id' => 'virtualclassWhiteboard', 'class' => 'vmApp'));
         echo html_writer::start_tag('div', array('id' => 'vcanvas', 'class' => 'canvasMsgBoxParent'));
@@ -223,5 +246,75 @@ echo html_writer::end_tag('div');
         echo html_writer::tag('div', '', array('id' => 'stickycontainer'));
     echo html_writer::end_tag('div');
 echo html_writer::end_tag('div');
+
+
+
+echo '<div id="chatWidget"> 
+    <div id = "stickycontainer"> </div>
+</div>   
+    <div id="popupContainer">
+        <div id="about-modal" class="rv-vanilla-modal">
+
+            <div id="progressBarContainer">
+                <div class="rv-vanilla-modal-header group">
+                    <h2 class="rv-vanilla-modal-title"> uploadsession</h2>
+                </div>
+
+                <div class="rv-vanilla-modal-body">
+                    <div style="width:200px; padding:50px;">
+                        <div id="totProgressCont">
+                            <div id="totalProgressLabel"> totalprogress </div>
+                            
+                            <div id="progress">
+                                <div id="progressBar" class="progressBar"></div>
+                                <div id="progressValue" class="progressValue"> 0%</div>
+                            </div>
+                            
+                        </div>
+                       
+                        <div id="indvProgressCont">
+                            <div id="indvProgressLabel">indvprogress</div>
+                        
+                            <div id="indProgress">
+                                <div id="indProgressBar" class="progressBar">
+                                </div>
+
+                                <div id="indProgressValue" class="progressValue"> 0%
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                
+
+            </div>
+            
+                <div id="waitPlay">
+                    <div class="rv-vanilla-modal-body">
+                        <div id="downloadPcCont">
+                            <div id="downloadSessionText"> downloadsession</div>
+                            
+                            <div id="downloadPrgressLabel"> overallprogress </div>
+                            <div id="downloadProgress">
+                                <div id="downloadProgressBar" class="progressBar"></div>
+                                <div id="downloadProgressValue" class="progressValue"> 0% </div>
+                            </div>
+                            
+                        </div>
+                        
+                        <div id="askPlay">
+                            <div id="askplayMessage"> </div>
+                            <button id="playButton">Play</button>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+            
+        </div>
+        
+    </div>
+</div>';
 // Finish the page.
 echo $OUTPUT->footer();

@@ -137,3 +137,113 @@ function update_calendar($virtualclass) {
         $DB->delete_records('event', array('modulename' => 'virtualclass', 'instance' => $virtualclass->id));
     }
 }
+
+/**
+ * Delete recoded files with folder.
+ *
+ * @param string $directory - Path of folder where  
+ * recording files of one session has been stored.
+ * @return bool
+ */
+
+function deleteAll($directory, $empty = false) {
+    if(substr($directory,-1) == "/") {
+        $directory = substr($directory,0,-1);
+    }
+
+    if(!file_exists($directory) || !is_dir($directory)) {
+        return false;
+    } elseif(!is_readable($directory)) {
+        return false;
+    } else {
+        $directoryHandle = opendir($directory);
+       
+        while ($contents = readdir($directoryHandle)) {
+            if($contents != '.' && $contents != '..') {
+                $path = $directory . "/" . $contents;
+               
+                if(is_dir($path)) {
+                    deleteAll($path);
+                } else {
+                    unlink($path);
+                }
+            }
+        }      
+        closedir($directoryHandle);
+        if($empty == false) {
+            if(!rmdir($directory)) {
+                return false;
+            }
+        }       
+        return true;
+    }
+} 
+
+/**
+ * Returns the rename action.
+ *
+ * @param cm_info $mod The module to produce editing buttons for
+ * @param int $sr The section to link back to (used for creating the links)
+ * @return The markup for the rename action, or an empty string if not available.
+ */
+function module_get_rename_action($cm, $instance, $sr = null) {
+    global $COURSE, $OUTPUT;
+
+    static $str;
+    static $baseurl;
+
+    $modcontext = context_module::instance($cm->id);
+    $hasmanageactivities = has_capability('mod/virtualclass:recordingupload', $modcontext);
+
+    if (!isset($str)) {
+        $str = get_strings(array('edittitle'));
+    }
+
+    if (!isset($baseurl)) {
+        $baseurl = new moodle_url('edit.php', array('id' => $cm->id, 'sesskey' => sesskey()));
+    }
+
+    if ($sr !== null) {
+        $baseurl->param('sr', $sr);
+    }
+
+    // AJAX edit title.
+    /*
+if ($mod->has_view() && $hasmanageactivities && course_ajax_enabled($COURSE) &&
+                (($mod->course == $COURSE->id) || ($mod->course == SITEID))) {
+*/
+    if($hasmanageactivities){
+        // we will not display link if we are on some other-course page (where we should not see this module anyway)
+        return html_writer::span(
+            html_writer::link(
+                new moodle_url($baseurl, array('update' => $instance->id)),
+                $OUTPUT->pix_icon('t/editstring', '', 'moodle', array('class' => 'iconsmall visibleifjs', 'title' => '')),
+                array(
+                    'class' => 'editing_title',
+                    'data-action' => 'edittitle',
+                    'title' => $str->edittitle,
+                )
+            )
+        );
+    }
+    return '';
+}
+
+
+/**
+ * Generate random string of specified length
+ *
+ * @param int $length - length of random string  
+ * @return bool
+ */
+
+function generateRandomString($length = 11) {
+    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    $charactersLength = strlen($characters);
+    $randomString = '';
+    for ($i = 0; $i < $length; $i++) {
+        $randomString .= $characters[rand(0, $charactersLength - 1)];
+    }
+    return $randomString;
+}
+

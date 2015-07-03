@@ -32,6 +32,8 @@ require_once(dirname(__FILE__).'/locallib.php');
 
 $id = optional_param('id', 0, PARAM_INT); // Course_module ID, or
 $n  = optional_param('n', 0, PARAM_INT);  // ... virtualclass instance ID - it should be named as the first character of the module.
+$delete       = optional_param('delete', 0, PARAM_INT);
+$confirm      = optional_param('confirm', '', PARAM_ALPHANUM);   //md5 confirmation hash
 
 if ($id) {
     $cm         = get_coursemodule_from_id('virtualclass', $id, 0, false, MUST_EXIST);
@@ -55,6 +57,43 @@ $PAGE->set_heading(format_string($course->fullname));
 $PAGE->set_context($context);
 
 // Output starts here.
+
+
+
+$strdelete = get_string('delete');
+$strplay = get_string('play', 'virtualclass');
+$returnurl = new moodle_url('/mod/virtualclass/view.php', array('id' => $cm->id));
+
+$recordings = $DB->get_records('virtualclass_files', array('vcid' => $virtualclass->id),'timecreated DESC');
+
+// Delete a selected recording, after confirmation
+if ($delete and confirm_sesskey()) {              
+    require_capability('mod/virtualclass:recordingdelete', $context);
+    //require_capability('mod/virtualclass:addinstance', $context);
+    $record = $DB->get_record('virtualclass_files', array('id'=>$delete), '*', MUST_EXIST);
+    
+    if ($confirm != md5($delete)) {
+        echo $OUTPUT->header();
+        
+        echo $OUTPUT->heading($strdelete." ". $virtualclass->name);
+        $optionsyes = array('delete'=>$delete, 'confirm'=>md5($delete), 'sesskey'=>sesskey());
+        echo $OUTPUT->confirm(get_string('deletecheckfull', '', "'$record->vcsessionname'"), new moodle_url($returnurl, $optionsyes), $returnurl);
+        echo $OUTPUT->footer();
+        die;
+    } else if (data_submitted()) {
+        $filepath = $CFG->dataroot."/virtualclass/".$record->courseid."/".$record->vcid."/".$record->vcsessionkey;
+        
+        if (deleteAll($filepath)) {
+            $DB->delete_records('virtualclass_files', array('id'=> $record->id));
+            \core\session\manager::gc(); // Remove stale sessions.
+            redirect($returnurl);
+        } else {
+            \core\session\manager::gc(); // Remove stale sessions.
+            echo $OUTPUT->notification($returnurl, get_string('deletednot', '', $record->vcsessionname));
+        }
+    }
+}
+
 echo $OUTPUT->header();
 echo $OUTPUT->heading($virtualclass->name);
 
@@ -79,18 +118,18 @@ echo html_writer::tag('div', get_string('teachername', 'mod_virtualclass', $user
 if ($virtualclass->intro) {
     echo $OUTPUT->box(format_module_intro('virtualclass', $virtualclass, $cm->id), 'generalbox mod_introbox', 'virtualclassintro');
 }
+echo "<br/ >";
+
+echo html_writer::script('', $CFG->wwwroot.'/mod/virtualclass/popup.js');
+$popupname = 'Virtualclasspopup';
+$popupwidth = 'window.screen.width';
+$popupheight = 'window.screen.height';
+$popupoptions = "toolbar=no,location=no,menubar=no,copyhistory=no,status=no,directories=no,scrollbars=yes,resizable=yes";
 
 // Check virtualclass is open.
-if ($virtualclass->closetime > time() && $virtualclass->opentime <= time()) {
-    echo html_writer::script('', $CFG->wwwroot.'/mod/virtualclass/popup.js');
-    $popupname = 'Virtualclasspopup';
-    $popupwidth = 'window.screen.width';
-    $popupheight = 'window.screen.height';
-    $popupoptions = "toolbar=no,location=no,menubar=no,copyhistory=no,status=no,directories=no,scrollbars=yes,resizable=yes";
+if ($virtualclass->closetime > time() && $virtualclass->opentime <= time()) {    
     $room = $course->id . "_" . $cm->id;
-
     if ($CFG->virtualclass_serve) {
-
         // Serve local files.
         $url = new moodle_url($CFG->wwwroot.'/mod/virtualclass/classroom.php', array('id' => $id));
         $vcpopup = js_writer::function_call('virtualclass_openpopup', Array($url->out(false),
@@ -123,6 +162,60 @@ if ($virtualclass->closetime > time() && $virtualclass->opentime <= time()) {
     // Virtualclass closed.
     echo $OUTPUT->heading(get_string('sessionclosed', 'virtualclass'));
 }
+//if (has_capability('mod/virtualclass:addinstance', $context)) {
+if (has_capability('mod/virtualclass:recordingupload', $context)) {
+    echo html_writer::start_tag('div', array('class'=>'no-overflow'));
+    echo $OUTPUT->single_button(new moodle_url('/mod/virtualclass/upload.php', array('id' => $id)), get_string('uploadrecordedfile','virtualclass'), 'get');
+    echo html_writer::end_tag('div');
+}
+//display list of recorded files
+    
+$table = new html_table();
+$table->head = array ();
+$table->colclasses = array();
+$table->head[] = 'Filename';
+$table->attributes['class'] = 'admintable generaltable';
+$table->head[] = 'Time Created';
+$table->head[] = get_string('action');
+$table->colclasses[] = 'centeralign';
+$table->head[] = "";
+$table->colclasses[] = 'centeralign';
 
+$table->id = "recorded_data";
+
+
+foreach ($recordings as $record){
+    $buttons = array();
+    $lastcolumn = '';
+    $row = array ();
+    $row[] = $record->vcsessionname. ' ' . module_get_rename_action($cm, $record);  
+    $row[] = userdate($record->timecreated);    
+    
+    $playurl = new moodle_url($CFG->wwwroot.'/mod/virtualclass/classroom.php', array('id' => $id, 'vcSid' =>$record->id, 'play' =>1));
+    $playpopup = js_writer::function_call('virtualclass_openpopup', Array($playurl->out(false),
+                                                   $popupname, $popupoptions,
+                                                   $popupwidth, $popupheight));
+    // play button
+    if (has_capability('mod/virtualclass:view', $context)) {
+       $buttons[] = html_writer::empty_tag('img', array('src' => $OUTPUT->pix_url('e/insert_edit_video'), 'alt' => $strplay, 'class'=>'iconsmall hand', 'onclick' => $playpopup));           
+    }
+
+    // delete button
+    if (has_capability('mod/virtualclass:addinstance', $context)) {
+       $buttons[] = html_writer::link(new moodle_url($returnurl, array('delete'=>$record->id, 'sesskey'=>sesskey())), html_writer::empty_tag('img', array('src'=>$OUTPUT->pix_url('t/delete'), 'alt'=>$strdelete, 'class'=>'iconsmall')), array('title'=>$strdelete));             
+    }
+    
+    $row[] = implode(' ', $buttons);
+    $row[] = $lastcolumn;
+    $table->data[] = $row;
+}
+
+if (!empty($table->data)) {
+    echo html_writer::start_tag('div', array('class'=>'no-overflow'));
+    echo html_writer::table($table);
+    echo html_writer::end_tag('div');
+    //echo $OUTPUT->paging_bar($usercount, $page, $perpage, $baseurl);
+}
+   
 // Finish the page.
 echo $OUTPUT->footer();

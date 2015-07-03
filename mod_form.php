@@ -55,7 +55,8 @@ class mod_virtualclass_mod_form extends moodleform_mod {
         $mform->addHelpButton('name', 'virtualclassname', 'virtualclass');
 
         // Adding the standard "intro" and "introformat" fields.
-        $this->add_intro_editor();
+        //$this->add_intro_editor();
+        $this->standard_intro_elements();
 
         // Adding the rest of virtualclass settings
         // Adding list of teachers.
