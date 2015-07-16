@@ -34,6 +34,8 @@ $n  = optional_param('n', 0, PARAM_INT);  // ... virtualclass instance ID - it s
 $isplay  = optional_param('play', 0, PARAM_INT);  // Play recording
 $vcSid = optional_param('vcSid', 0, PARAM_INT); // virtual class session record id
 
+
+
 if ($id) {
     $cm         = get_coursemodule_from_id('virtualclass', $id, 0, false, MUST_EXIST);
     $course     = $DB->get_record('course', array('id' => $cm->course), '*', MUST_EXIST);
@@ -104,6 +106,7 @@ $speakermsg = get_string('enablespeaker', 'virtualclass');
 $pressingimg = $whiteboardpath . "images/speakerpressing.png";
 $cont_class = '';
 
+
 if (has_capability('mod/virtualclass:addinstance', $context)) {
     if ($USER->id == $virtualclass->moderatorid && !$isplay) {
         $r = 't';
@@ -115,9 +118,13 @@ if (has_capability('mod/virtualclass:addinstance', $context)) {
     }
 }
 $cont_class .= $role;
+
 if($isplay){
 	$cont_class .=  "playMode";
+	
 }
+
+
 
 // Output starts here.
 echo $OUTPUT->header();
@@ -167,7 +174,7 @@ if($info){
 
 require_once('bundle/virtualclass/build/js.debug.php');
 
-$PAGE->requires->js('/mod/virtualclass/bundle/virtualclass/index.js');
+//$PAGE->requires->js('/mod/virtualclass/bundle/virtualclass/index.js');
 
 echo html_writer::start_tag('div', array('id' => 'virtualclassCont', 'class' => "$cont_class"));
    
@@ -300,7 +307,7 @@ echo '<div id="chatWidget">
 
                     <div id="recordFinishedMessageBox">
                         <span id="recordFinishedMessage"> You have uploaded the current session. </span>
-                        <span id="recordingClose">X</span>
+                           <span id="recordingClose" class="icon-close"></span>
                     </div>
                 </div>
 
@@ -322,7 +329,7 @@ echo '<div id="chatWidget">
 
                     <div id="askPlay">
                         <div id="askplayMessage"> </div>
-                        <button id="playButton">Play</button>
+                        <button id="playButton" class="icon-play">Play</button>
                     </div>
                 </div>
              </div>
