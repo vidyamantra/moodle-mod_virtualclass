@@ -126,6 +126,11 @@ $popupwidth = 'window.screen.width';
 $popupheight = 'window.screen.height';
 $popupoptions = "toolbar=no,location=no,menubar=no,copyhistory=no,status=no,directories=no,scrollbars=yes,resizable=yes";
 
+/*
+echo '<pre>';
+print_r($virtualclass);
+echo time();
+exit; */
 // Check virtualclass is open.
 if ($virtualclass->closetime > time() && $virtualclass->opentime <= time()) {    
     $room = $course->id . "_" . $cm->id;

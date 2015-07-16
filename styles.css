@@ -1,10 +1,4 @@
-body {
-	margin : 0 !important;
-	padding : 0 !important;
-}
-#page-mod-virtualclass-classroom a {
-	color : #444;
-}
+
 #page-mod-virtualclass-classroom.pagelayout-popup #page.main-content {
 	max-width : none;
 	width : auto !important;
@@ -146,9 +140,7 @@ font-size : 11.5px !important;
 #vAppCont.student .ui-memblist-usr .icon-chatImg:before {
 	left : 0 !important;
 }
-#vAppCont #alwaysPress .audioTool.active, #alwaysPress .audioTool.deactive {
-	padding-bottom : 7px !important;
-}
+
 #vAppCont .ui-memblist-usr .icon-audioEnaOrange:before, #vAppCont .ui-memblist-usr .icon-audioEnaGreen:before {
 	font-size : 105% !important;
 }
@@ -176,6 +168,79 @@ font-size : 11.5px !important;
 }
 }
 
-#page-mod-virtualclass-classroom hand {
-	cursor: pointer;
+/* Moodle29 css */
+
+.vceditor-toolbar {
+	padding-top: 15px;
+}
+#virtualclassCont #alwaysPress .audioTool.active a, #virtualclassCont #alwaysPress .audioTool a{
+	text-decoration: none;
+}
+
+a.vceditor-btn{
+	color:#9c9c9c;
+}
+
+.vceditor-richtext .CodeMirror{
+	border:1px solid #ccc;
+}
+#virtualclassCont #alwaysPress .audioTool a{
+	color:#444 !important; 
+}
+
+#virtualclassCont #alwaysPress .audioTool.active a{
+	color:#fff !important; 
+}
+
+#virtualclassCont #alwaysPress .audioTool.active, #alwaysPress .audioTool.deactive {
+	padding : 7px 13px !important;
+}
+
+#virtualclassCont #usertab_icon{
+	margin: 7px 15px 0 0 !important; 
+}
+#virtualclassCont #usertab_text .icon-arrow-up:before, #virtualclassCont #chatroom_text .icon-arrow-up:before{
+	top:0px !important;
+}
+
+#virtualclassCont #chatroom_bt2 .inner_bt{
+	margin-top: 6px !important;
+	
+}
+
+#virtualclassCont #chatroom_icon .icon-chatroom::before{
+	position: relative;
+	top:-5px;
+}
+
+#virtualclassCont .vmchat_room_bt .inner_bt #chatroom_text{
+	float: left;
+}
+
+#virtualclassCont #usertab_text .icon-arrow-up::before, #virtualclassCont #chatroom_text .icon-arrow-up::before, #virtualclassCont #usertab_text .icon-arrow-down::after, #virtualclassCont #chatroom_text .icon-arrow-down::after{
+	left:15px;
+}
+
+#virtualclassCont #usertab_text .icon-arrow-down::after, #virtualclassCont #chatroom_text .icon-arrow-down::after, #virtualclassCont #usertab_text .icon-arrow-down::after, #virtualclassCont #chatroom_text .icon-arrow-down::after{
+	top: 0 !important;
+}
+
+#youtubeUrlContainer #submitURL{
+	margin-bottom: 0px;
+}
+
+#virtualclassCont #virtualclassOptionsCont, .tooltip{
+	line-height: 25px !important;
+}
+
+#page-mod-virtualclass-classroom .block{
+	max-height: 0;
+	margin-bottom: 0;
+	padding: 0 !important;
+	background-color: transparent;
+	border:none;
+}
+
+.inner_bt{
+	padding: 10px 0 12px !important;
 }
