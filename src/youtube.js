@@ -16,23 +16,48 @@
         var CTpre = 0, PLState = -2, PSmute = -1;
 
         return {
+            retryForPalyer : 1,
             player: '',
-            init: function (videoId, startFrom) {
+            init: function (videoObj, startFrom) {
 
-                if (virtualclass.gObj.uRole == 's') {
-                    if(typeof videoId == 'undefined'){
+                if(typeof videoObj != 'undefined'){
+                    if(videoObj.init != 'studentlayout'){
+                        var videoId = videoObj.init;
+                    }
+                }
+                //if (virtualclass.gObj.uRole == 's' && localStroage.getItem('orginalTeacherId') ==  null) {
+                // should not orginal teacher, If orginal teacher then, he/she should have not teacher role
+                if (localStorage.getItem('orginalTeacherId') ==  null ||
+                        (localStorage.getItem('orginalTeacherId') !=  null && localStorage.getItem('reclaim') != null )
+                                        ) {
+
+                    if(typeof videoId == 'undefined' && virtualclass.gObj.uRole == 's'){
                         this.UI.defaultLayoutForStudent();
                     } else {
                         this.UI.container();
-                        (typeof startFrom == 'undefined') ? this.onYTIframApi(videoId) : this.onYTIframApi(videoId, startFrom);
-                    }
+                        // if student has teacher role, localstorage validate because there is not ready actual role on virtualclass.gObj.uRole
 
+                        if (localStorage.getItem('teacherId') != null ){
+                            this.onYTIframApi(videoId, startFrom, 'fromReload');
+                            this.UI.inputURL();
+                            io.send({'yts': {init : 'studentlayout'}});
+                        } else {
+                            if(!videoObj.hasOwnProperty('fromReload')){
+                                (typeof startFrom == 'undefined') ? this.onYTIframApi(videoId) : this.onYTIframApi(videoId, startFrom);
+                            }
+                            //this.onYTIframApi(videoId, startFrom, 'fromReload');
+
+                        }
+                    }
                 } else {
                     this.UI.container();
                     if(typeof startFrom != 'undefined'){
                         this.onYTIframApi(videoId, startFrom, 'fromReload');
                     }
                     this.UI.inputURL();
+
+                    //For student layout
+                    io.send({'yts': {init : 'studentlayout'}});
                 }
             },
 
@@ -61,26 +86,52 @@
                     divYts.id = this.id;
                     divYts.className = this.class;
 
+                    this.createPlayerTag(divYts);
+
+                    //var divPlayer = document.createElement('div');
+                    //divPlayer.id = "player";
+                    //divYts.appendChild(divPlayer);
+
+                    var beforeAppend = document.getElementById(virtualclass.rWidgetConfig.id);
+                    document.getElementById(virtualclass.html.id).insertBefore(divYts, beforeAppend);
+                },
+
+                createPlayerTag : function (divYts){
                     var divPlayer = document.createElement('div');
                     divPlayer.id = "player";
                     divYts.appendChild(divPlayer);
-
-                    var beforeAppend = document.getElementById(virtualclass.rWidgetConfig.id);
-                    document.getElementById(virtualclass.html.id).insertBefore(divYts, beforeAppend);
-
                 },
 
                 defaultLayoutForStudent : function (){
-                    var divYts = document.createElement('div');
-                    divYts.id = this.id;
-                    divYts.className = this.class;
-                    divYts.innerHTML = "TEACH MAY SHARE THE YOUTUBE VIDEO";
+                    var ytsContainer = document.getElementById(this.id);
+                    if(ytsContainer == null){
+                        ytsContainer = document.createElement('div');
+                        ytsContainer.id = this.id;
+                        ytsContainer.className = this.class;
+                        var beforeAppend = document.getElementById(virtualclass.rWidgetConfig.id);
+                        document.getElementById(virtualclass.html.id).insertBefore(ytsContainer, beforeAppend);
+                    }
 
-                    var beforeAppend = document.getElementById(virtualclass.rWidgetConfig.id);
-                    document.getElementById(virtualclass.html.id).insertBefore(divYts, beforeAppend);
+                    var youtubeUrlContainer =  document.getElementById('youtubeUrlContainer');
+                    if(youtubeUrlContainer != null){
+                        youtubeUrlContainer.parentNode.removeChild(youtubeUrlContainer);
+                    }
+
+                    var messageLayoutId = 'messageLayout';
+                    if(document.getElementById(messageLayoutId) == null){
+                        var studentMessage = document.createElement('p');
+                        studentMessage.id =  messageLayoutId;
+                        studentMessage.innerHTML = virtualclass.lang.getString('teachermayshow');
+                        ytsContainer.appendChild(studentMessage);
+                    }
                 },
 
                 inputURL: function () {
+                    var studentMessage = document.getElementById('messageLayout');
+                    if(studentMessage != null){
+                        studentMessage.parentNode.removeChild(studentMessage);
+                    }
+
                     if (document.getElementById('youtubeUrlContainer') == null) {
                         var uiContainer = document.createElement('div');
                         uiContainer.id = "youtubeUrlContainer";
@@ -89,7 +140,7 @@
                         input.id = "youtubeurl";
                         input.cols = 70;
                         input.rows = 3;
-                        input.value =  virtualclass.lang.getString("youTubeUrl");
+                        input.placeholder =  virtualclass.lang.getString("youTubeUrl");
 
                         //var tnode = document.createTextNode("Please put here youtube url");
                         //input.appendChild(tnode);
@@ -164,8 +215,6 @@
                         this.player.unMute();
                     }
 
-
-
                 } else {
                     if (msg.yts.hasOwnProperty('init')) {
                         virtualclass.makeAppReady('Yts', undefined, msg.yts);
@@ -211,8 +260,6 @@
                     }
 
                     console.log('Player object is CREATED');
-                    //this.player = new YT.Player('player', videoObj);
-
                     if(typeof fromReload !=  'undefined'){
                         var that = this;
                         // YouTube player is not ready for when the page is being load
@@ -223,6 +270,9 @@
                     }else {
                         this.player = new YT.Player('player', videoObj);
                     }
+
+                    var youTubeContainer = document.getElementById(this.UI.id);
+                    youTubeContainer.className = youTubeContainer.className + " youTubeSharing";
                 }
             },
 

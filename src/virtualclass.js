@@ -5,6 +5,7 @@
             apps : ["Whiteboard", "ScreenShare", 'Yts', 'EditorRich', 'EditorCode'],
             appSessionEnd: "virtualclassSessionEnd",
             appAudioTest: "virtualclassAudioTest",
+
             //appAudioTestPlay : "virtualclassAudioTestPlay",
             rWidgetConfig: {id: 'audioWidget'},
             wb: "",
@@ -18,7 +19,8 @@
                 uRole: window.wbUser.role,
                 uName: window.wbUser.name,
                 tempReplayObjs : [], //for store temp replayObjs
-                alreadyReplayFromStorage : false
+                alreadyReplayFromStorage : false,
+                commandToolsWrapperId: 'commandToolsWrapper'
             },
 
             clearSession: function (appName) {
@@ -27,7 +29,7 @@
 
                 virtualclass.vutil.makeActiveApp("virtualclass" + appName, virtualclass.previous);
                 virtualclass.storage.config.endSession();
-              virtualclass.vutil.beforeSend({sEnd: true});
+                virtualclass.vutil.beforeSend({sEnd: true});
 
                 if (virtualclass.hasOwnProperty('prevScreen') && virtualclass.prevScreen.hasOwnProperty('currentStream')) {
                     virtualclass.prevScreen.unShareScreen();
@@ -53,7 +55,7 @@
                 this.recorder = window.recorder;
                 this.converter = window.converter;
                 this.clear = "";
-                this.currApp = app;
+                this.currApp = this.vutil.capitalizeFirstLetter(app);
 
                 this.dirtyCorner = window.dirtyCorner;
 
@@ -77,14 +79,19 @@
 
                 virtualclass.yts = window.yts();
 
+				virtualclass.vutil.createReclaimButtonIfNeed();
+				
+				if (this.gObj.uRole == 't') {
+                    this.vutil.setOrginalTeacher();
+                }
+				
                 if(typeof videoObj == 'undefined'){
                     this.makeAppReady(app, "byclick");
                 } else {
                     this.makeAppReady(app, "byclick", videoObj);
                 }
-
-
-                //TODO system checking function should be invoked before makeAppReady
+				
+			    //TODO system checking function should be invoked before makeAppReady
 
                 this.system.check();
                 this.vutil.isSystemCompatible(); //this should be at environment-validation.js file
@@ -113,9 +120,11 @@
                 if (app == this.apps[1]) {
                     this.system.setAppDimension();
                 }
-
-
-                //To teacher
+			
+				if(virtualclass.vutil.chkValueInLocalStorage('teacherId')){
+					virtualclass.gObj.uRole = 't'; //this done only for whiteboard in _init()
+				}
+		        //To teacher 
                 virtualclass.user.assignRole(virtualclass.gObj.uRole, app);
 
                 //2
@@ -182,6 +191,11 @@
 
                 //TODO this should be created throught the simple html
                 leftAppBar: function () {
+			        var appsLen = document.getElementsByClassName('appOptions');
+                    if(appsLen.length > 0){
+                        return; //which means the left app bar is already created
+                    }
+
                     var appCont = document.getElementById(this.id);
                     var appOptCont = this.createElement('div', 'virtualclassOptionsCont');
                     appCont.insertBefore(appOptCont, appCont.firstChild);
@@ -294,7 +308,7 @@
             makeAppReady: function (app, cusEvent, videoObj) {
 
                 this.view = window.view;
-                this.currApp = app;
+                this.currApp = virtualclass.vutil.capitalizeFirstLetter(app);
 
                 //TODO this should be simplyfied
                 if (app != this.apps[1]) {
@@ -310,10 +324,12 @@
                         this.user.control.toggleDisplayEditorController(editorType, 'none');
                     }
                 }
-
-                if (this.gObj.uRole == 't') {
+				
+				//this should perform only once
+                /*
+				if (this.gObj.uRole == 't') {
                     this.vutil.setOrginalTeacher();
-                }
+                }*/
 
                 //if not screen share
                 if(app != this.apps[1] ){
@@ -365,6 +381,12 @@
                            // }
 
                             virtualclass.wb.attachToolFunction(vcan.cmdWrapperDiv, true);
+
+                            //if (localStorage.getItem('orginalTeacherId') == null) {
+                            //    virtualclass.wb.attachToolFunction(vcan.cmdWrapperDiv, true); // after assign role whene refresh there would coming toolbar and reclaimb bar
+                            //}
+
+
                             vcan.utility.canvasCalcOffset(vcan.main.canid);
                         }
 
@@ -374,6 +396,12 @@
                         }
 
 
+                    } else {
+                        //if command tool wrapper is not added
+                        var commandToolsWrapper = document.getElementById('commandToolsWrapper');
+                        if(commandToolsWrapper == null && virtualclass.gObj.uRole == 't' ){
+                            virtualclass.wb.attachToolFunction(vcan.cmdWrapperDiv, true);
+                        }
                     }
 
                     if (typeof this.prevScreen != 'undefined' && this.prevScreen.hasOwnProperty('currentStream')) {
@@ -385,7 +413,9 @@
                     //offset problem have to think about this
                     if (document.getElementById('canvas') != null) {
                         vcan.utility.canvasCalcOffset(vcan.main.canid);
-                        virtualclass.wb.utility.makeCanvasEnable();
+                        if(this.gObj.tempReplayObjs.length == 0){
+                            virtualclass.wb.utility.makeCanvasEnable();
+                        }
                     }
 
                     if (this.previous == 'virtualclassScreenShare' && virtualclass.gObj.uRole == 't') {
@@ -409,7 +439,8 @@
                     //this.dispvirtualclassLayout(virtualclass.ytsConfig.id);
 
                     if (typeof videoObj != 'undefined') {
-                        virtualclass.yts.init(videoObj.init, videoObj.startFrom);
+                        //virtualclass.yts.init(videoObj.init, videoObj.startFrom);
+                        virtualclass.yts.init(videoObj, videoObj.startFrom);
                     } else {
                         virtualclass.yts.init();
                     }
@@ -482,21 +513,47 @@
             initlizer: function (elem) {
                 var appName = elem.parentNode.id.split("virtualclass")[1];
                 if (appName == 'SessionEndTool') {
-                    if (!confirm(virtualclass.lang.getString('savesession'))) {
-                        if (!confirm(virtualclass.lang.getString('startnewsession'))) {
-                            return;
+                   virtualclass.popup.confirmInput(virtualclass.lang.getString('savesession'), function (confirm){
+                        if(!confirm){
+                            virtualclass.popup.confirmInput(virtualclass.lang.getString('startnewsession'),
+                                function (confirm){
+                                    if(!confirm){
+                                        console.log('Not start new session');
+                                        return;
+                                    }
+                                    virtualclass.clearSession(appName);
+                                    window.location.reload();
+                                }
+                            )
+                        } else {
+                            io.completeStorage(undefined, undefined, 'sessionend');
+                            setTimeout(function () {
+                                    virtualclass.getContent = true;
+                                    virtualclass.vutil.beforeSend({sEnd: true}); //before close, clear student virtualclass data
+                                    io.sock.close();
+                                    virtualclass.recorder.startUploadProcess();
+                                }, 300
+                            );
                         }
-                        virtualclass.clearSession(appName);
-                        window.location.reload();
-                    } else {
-                        io.completeStorage(undefined, undefined, 'sessionend');
-                        setTimeout(function () {
-                                virtualclass.getContent = true;
-                                io.sock.close();
-                                virtualclass.recorder.startUploadProcess();
-                            }, 300
-                        );
-                    }
+
+                    });
+
+                    //if (!confirm(virtualclass.lang.getString('savesession'))) {
+                    //    if (!confirm(virtualclass.lang.getString('startnewsession'))) {
+                    //        return;
+                    //    }
+                    //    virtualclass.clearSession(appName);
+                    //    window.location.reload();
+                    //} else {
+                    //    io.completeStorage(undefined, undefined, 'sessionend');
+                    //    setTimeout(function () {
+                    //            virtualclass.getContent = true;
+                    //            io.sock.close();
+                    //            virtualclass.recorder.startUploadProcess();
+                    //        }, 300
+                    //    );
+                    //}
+
                 } else {
                     appName = appName.substring(0, appName.indexOf("Tool"));
                     //  this.currApp = appName; //could be dangerous

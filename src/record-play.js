@@ -118,6 +118,37 @@
             }
         },
 
+        replayFromStart : function (){
+            var tempItems = [];
+            tempItems = this.items;
+            virtualclass.storage.config.endSession();
+            virtualclass.popup.closeElem();
+
+            this.recImgPlay = false;
+            this.objn = 0;
+            this.playTimeout = "";
+            this.totalSent = 0;
+            this.fileQueue = [];
+            this.rnum = 1;
+            this.storeDone = 0;
+            this.emn= 0;
+            //76this.allFileFound= false;
+            this.waitServer= false;
+            this.waitPopup= false;
+            this.tempRecData= [];
+            this.alreadyAskForPlay= false;
+            this.playStart= false;
+            this.error= 0;
+            this.mkDownloadLink= "";
+            this.tillPlayTime= 0;
+            this.getPlayTotTime= false;
+            this.controller.ff = 1;
+            this.items = tempItems;
+            this.playProgressBar();
+            this.play();
+
+        },
+
         startUploadProcess: function () {
             virtualclass.recorder.exportData(function () {});
             virtualclass.popup.sendBackOtherElems();
@@ -246,6 +277,14 @@
                     // this has been performed when all files are stored
                     if ((dObj.hasOwnProperty('status')) && (dObj.status == 'done')) {
                         virtualclass.recorder.storeDone = 1;
+                        console.log('From here actuall recorder finished');
+                        setTimeout(
+                            function (){
+                                virtualclass.recorder.afterRecording();
+                            },
+                            1000
+                        );
+
                         if (typeof virtualclass.recorder.mkDownloadLink != 'undefined' || virtualclass.recorder.mkDownloadLink != " ") {
                             virtualclass.recorder.mkDownloadLink;
                         }
@@ -269,16 +308,21 @@
                         formData.append("cn", chunkNum);
                         formData.append('sesseionkey', virtualclass.recorder.sessionKey);
                         
-                        //TODO: display progress after file save
-                        virtualclass.pbar.renderProgressBar(dObj.totalStore, dObj.totalSent, 'progressBar', 'progressValue');
+                        ////TODO: display progress after file save
+                        //virtualclass.pbar.renderProgressBar(dObj.totalStore, dObj.totalSent, 'progressBar', 'progressValue');
 
                         virtualclass.recorder.items = []; //empty on each chunk sent
 
                         virtualclass.xhr.send(formData, importfilepath, function (msg) { //TODO Handle more situations
-                            //TODO: handle error
-                            //alert(msg);
-                            //debugger;
+
+                            //TODO: display progress after file save
+                            virtualclass.pbar.renderProgressBar(dObj.totalStore, dObj.totalSent, 'progressBar', 'progressValue');
+
+
+
+                            //Recording is finished //upload finished
                             if (msg === "done") {
+
                                 virtualclass.recorder.rnum++;
                                 chunkNum++;
                                 virtualclass.recorder.xhrsenddata(virtualclass.recorder.rnum);
@@ -295,6 +339,34 @@
                     }
                 }
             }, virtualclass.recorder.rnum);
+
+        },
+
+        afterRecording : function (){
+            return true;
+
+            virtualclass.storage.config.endSession();
+
+            var progressBarContainer =  document.getElementById('progressContainer');
+            progressBarContainer.style.display  =  'none';
+
+            var recordFinishedMessageBox = document.getElementById('recordFinishedMessageBox');
+            recordFinishedMessageBox.style.display = 'block';
+            recordFinishedMessageBox.classList.add('MessageBoxFinished');
+
+
+            var recordingContainer = document.getElementById('recordingContainer');
+            recordingContainer.classList.add('recordingFinished');
+
+
+
+            var recordingClose = document.getElementById('recordingClose');
+            recordingClose.addEventListener('click',
+                function (){
+                    //virtualclass.popup.closeElem();
+                    window.location.reload();
+                }
+            );
         },
 
         tryForReTransmit: function () {
@@ -404,8 +476,10 @@
 
                 virtualclass.pbar.renderProgressBar(0, 0, 'downloadProgressBar', 'downloadProgressValue');
 
-                var element = document.getElementById('about-modal');
-                virtualclass.popup.open(element);
+                virtualclass.popup.waitBlock();
+
+                //var element = document.getElementById('about-modal');
+                //virtualclass.popup.open(element);
 
                 this.waitPopup = true;
             }
@@ -445,6 +519,8 @@
                     virtualclass.recorder.ctotalStore = e.data.alldata.totalStore;
                     virtualclass.recorder.ctotalSent = e.data.alldata.totalSent;
 
+                    alert('hello');
+                    debugger;
                     virtualclass.pbar.renderProgressBar(e.data.alldata.totalStore, e.data.alldata.totalSent, 'downloadProgressBar', 'downloadProgressValue');
 
                     if (isUptoBase && !virtualclass.recorder.alreadyAskForPlay) {
@@ -465,14 +541,15 @@
                         }
                     }
 
+
                     if (!e.data.alldata.rdata[e.data.alldata.rdata.length - 1].hasOwnProperty('sessionEnd')) {
+                        console.log("request file");
                         virtualclass.recorder.requestDataFromServer(vcSessionId, reqFile);
                     } else {
-//                            alert('suman bogati');
-//                            debugger;
+                        console.log('Request file  Finished Here');
                         virtualclass.recorder.allFileFound = true;
-                        if (virtualclass.recorder.waitServer == true) { //if earlier replay is interrupt
 
+                        if (virtualclass.recorder.waitServer == true) { //if earlier replay is interrupt
                             virtualclass.storage.config.endSession();
                             var mainData = virtualclass.recorder.tempRecData.reduce(function (a, b) {
                                 return a.concat(b);
@@ -486,7 +563,6 @@
 
                         }
                     }
-//                        
                 }
             }
         },
@@ -532,6 +608,11 @@
         },
 
         play: function () {
+            if(this.objn == 0 ){
+                var recPlayCont = document.getElementById("recPlay");
+                //recPlayCont.classList.add("controlActive");
+                this.doControlActive(recPlayCont);
+            }
 
             var that = this;
 
@@ -577,7 +658,22 @@
 //                            virtualclass.recorder.ctotalSent = e.data.alldata.totalStore
                         virtualclass.pbar.renderProgressBar(virtualclass.recorder.ctotalStore, virtualclass.recorder.ctotalSent, 'downloadProgressBar', 'downloadProgressValue');
                     }
+                } else{
+
+                    //Play finished here
+                    if(this.items[this.objn].hasOwnProperty('sessionEnd')){
+                        virtualclass.popup.replayWindow();
+                        virtualclass.popup.sendBackOtherElems();
+                        document.getElementById('replayClose').addEventListener('click',
+                            function (){
+                                window.close(); //handle to moodle way
+                            }
+
+                        );
+                        document.getElementById('replayButton').addEventListener('click', function (){ virtualclass.recorder.replayFromStart.call(virtualclass.recorder); });
+                    }
                 }
+
                 //return;
             } else {
                 that.playTimeout = setTimeout(function () {
@@ -593,9 +689,9 @@
 
                         if ((that.allFileFound) && typeof that.items[that.objn + 1] == 'object') {
                             that.playProgressBar();
+                            virtualclass.popup.sendBackOtherElems();
                         }
                     }
-
                     // && that.totPlayTime > 0
 
                 }, that.playTime);
@@ -603,31 +699,57 @@
         },
 
         initController: function () {
-            var playController = document.getElementById('playController');
-            if (playController != null) {
-                playController.style.display = 'block';
+            var playControllerCont = document.getElementById('playControllerCont');
+            if (playControllerCont != null) {
+                playControllerCont.style.display = 'block';
 
+                var that = this;
                 //init fast forward
                 var recButton = document.getElementsByClassName('ff');
                 for (var i = 0; i < recButton.length; i++) {
                     recButton[i].onclick = function () {
                         var ffBy = this.id.split('ff')[1];
-                        virtualclass.recorder.controller.fastForward(parseInt(ffBy, 10));
+                        that.controller.fastForward(parseInt(ffBy, 10));
+                        that.doControlActive(this)
                     };
                 }
 
                 //init play
                 var recPlay = document.getElementById('recPlay');
                 recPlay.addEventListener('click', function () {
-                    virtualclass.recorder.controller._play();
+                    that.controller._play();
+                    that.doControlActive(this);
+
+                    //var controlButtons = document.getElementById('playControllerCont').getElementsByClassName('recButton');
+                    //for(var i=0; i<controlButtons.length; i++){
+                    //    controlButtons[i].classList.remove("controlActive");
+                    //}
+                    //
+                    //this.classList.add("controlActive");
                 });
 
                 //init pause
-                var recPlay = document.getElementById('recPause');
-                recPlay.addEventListener('click', function () {
-                    virtualclass.recorder.controller._pause();
+                var recPause= document.getElementById('recPause');
+                recPause.addEventListener('click', function () {
+                    that.controller._pause();
+                    that.doControlActive(this)
+                });
+
+                var replayFromStart =  document.getElementById('replayFromStart');
+                replayFromStart.addEventListener('click', function () {
+                    that.replayFromStart();
                 });
             }
+        },
+
+        doControlActive : function (elem){
+
+            var controlButtons = document.getElementById('playControllerCont').getElementsByClassName('recButton');
+            for(var i=0; i<controlButtons.length; i++){
+                controlButtons[i].classList.remove("controlActive");
+            }
+
+            elem.parentNode.classList.add("controlActive");
         },
 
         controller: {
@@ -636,20 +758,28 @@
             _play: function () {
 //                    this.pause = false; 
 //                    virtualclass.recorder.play();
-                this.ff = 1; //when click on play it should be normal
+         //       this.ff = 1; //when click on play it should be normal
 
-                if (!this.pause) {
-                    alert('This is in already play mode');
-                } else {
+                //if (!this.pause &&  this.ff == 1){
+                //
+                //    //alert('This is in already play mode');
+                //} else {
+                //
+                //    this.ff = 1;
+                //    this.pause = false;
+                //    virtualclass.recorder.play();
+                //
+                //}
+                this.ff = 1;
+                //if (this.pause){
                     this.pause = false;
                     virtualclass.recorder.play();
-
-                }
+                //}
             },
 
             _pause: function () {
                 if (this.puase) {
-                    alert('This is in already pause mode.');
+                  //  alert('This is in already pause mode.');
                 } else {
                     this.pause = true;
                 }
@@ -657,6 +787,9 @@
 
             fastForward: function (by) {
                 this.ff = by;
+                this.pause = false;
+                virtualclass.recorder.play();
+
             }
         }
     };

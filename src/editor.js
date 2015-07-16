@@ -89,11 +89,16 @@
                         virtualclass.dispvirtualclassLayout(virtualclass.currApp); //
                     }
 
-                    if(virtualclass.gObj.uRole == 't'){
-                        this.createAllEditorController();
+                    if(virtualclass.gObj.uRole == 't') {
+                        if (localStorage.getItem('orginalTeacherId') != null) {
+                            this.createAllEditorController();
+                        }
                         io.send({eddata : 'init', et: this.etype});
+                    } else {
+                        if (localStorage.getItem('orginalTeacherId') != null) {
+                            this.createAllEditorController();
+                        }
                     }
-
                 },
 
                 createAllEditorController : function (){
@@ -141,16 +146,21 @@
                  * @param docsInfo about docs(operation, revision, etc)
                  */
                 createEditorClient : function (editorType, docsInfo){
-                    //alert('sss');
-                    //debugger;
                     if(virtualclass.isPlayMode){
                         //this.readOnlyMode('disable', 'notCreateSyncBox');
                         this.readOnlyMode('enable', 'notCreateSyncBox');
                     }
-                    if(virtualclass.gObj.uRole == 't'){
+
+                    if(localStorage.getItem('orginalTeacherId') != null){
                         this.cm.setOption('readOnly', false);
                         editorType.readOnly = false;
-                    }
+                    };
+
+                    //if(virtualclass.gObj.uRole == 't'){
+                    //    this.cm.setOption('readOnly', false);
+                    //    editorType.readOnly = false;
+                    //}
+
                     Vceditor.fromCodeMirror({}, this.cm, editorType, docsInfo);
 
 
@@ -428,7 +438,7 @@
                  * @returns {boolean}
                  */
                 isEidtorWithTeacher : function(){
-                    return (virtualclass.gObj.uRole == 't' && (virtualclass.currApp == 'Editor' || virtualclass.currApp == 'EditorCode'));
+                    return (virtualclass.gObj.uRole == 't' && (virtualclass.currApp == 'EditorRich' || virtualclass.currApp == 'EditorCode'));
                 },
 
                 /**
@@ -480,16 +490,15 @@
                         //virtualclass.currApp = virtualclass.apps[3];
                         if(virtualclass.currAppEditor){
                             if(virtualclass.currAppEditorType == et){
-                                virtualclass.currApp = et;
+                                virtualclass.currApp = virtualclass.vutil.capitalizeFirstLetter(et);
                             }
                         }else{
-                            virtualclass.currApp = et;
+                            virtualclass.currApp = virtualclass.vutil.capitalizeFirstLetter(et);
                         }
                     }
 
                     this.removeCodeMirror();
                     this.codemirrorWithLayout(editorType);
-
                     virtualclass.dispvirtualclassLayout(virtualclass.currApp);
 
                     if ((this.cm)) {
@@ -558,8 +567,9 @@
                         virtualclass.user.control.toggleDisplayWriteModeMsgBox(virtualclass.vutil.capitalizeFirstLetter(this.etype), writeMode);
                     }
 
+                    var currApp  = virtualclass.vutil.capitalizeFirstLetter(virtualclass.currApp);
 
-                    if( virtualclass.currApp == 'EditorRich'){
+                    if(currApp == 'EditorRich' || currApp == 'EditorCode'){
                         virtualclass.previous = 'virtualclass' + virtualclass.currApp ;
                         virtualclass.system.setAppDimension(virtualclass.currApp);
                     }
@@ -575,11 +585,14 @@
                  * and from inline memoery
                  */
                 removeEditorData : function (){
-                    if(typeof this.vcAdapter == 'object' ){
-                         this.vcAdapter.operations.length = 0;
+                    if(typeof this.cm == 'object'){
+                        if(typeof this.vcAdapter == 'object' ){
+                            this.vcAdapter.operations.length = 0;
+                        }
+                        this.cm.setValue("");
+                        localStorage.removeItem(this.etype +'_allEditorOperations');
+                        localStorage.removeItem(this.etype + '_edOperationRev');
                     }
-                    localStorage.removeItem(this.etype +'_allEditorOperations');
-                    localStorage.removeItem(this.etype + '_edOperationRev');
                 },
 
                 /**
