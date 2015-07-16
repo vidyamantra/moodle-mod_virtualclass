@@ -344,7 +344,7 @@ echo '<div id="chatWidget">
          </div>
 
          <!--For confirm window-->
-          <div id="confirm" class="popupWindow simple-box">
+          <div id="confirm" class="popupWindow simple-box"> </div>
           </div>
         </div>
     </div>';
