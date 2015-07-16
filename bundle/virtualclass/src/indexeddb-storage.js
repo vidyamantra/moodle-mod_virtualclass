@@ -366,11 +366,16 @@
             },
             createNewSession: function () {
                 var currTime = new Date().getTime();
-                var t = that.db.transaction(["config"], "readwrite");
-                var objectStore = t.objectStore("config");
-                var config = JSON.stringify({createdDate: currTime, room: wbUser.room});
-                objectStore.add({myconfig: config, timeStamp: new Date().getTime()});
+                if(typeof that.db != 'undefined'){
+                    var t = that.db.transaction(["config"], "readwrite");
+                    var objectStore = t.objectStore("config");
+                    var config = JSON.stringify({createdDate: currTime, room: wbUser.room});
+                    objectStore.add({myconfig: config, timeStamp: new Date().getTime()});
+                } else {
+                    console.log('The Datbase is not created for Applicatoin.');
+                }
             },
+
             endSession: function (onlyStoredData) {
                 if (!onlyStoredData) {
                     if(typeof virtualclass.wb == 'object'){
@@ -386,6 +391,9 @@
                 if (!virtualclass.hasOwnProperty('notPLayed')) {
                     virtualclass.storage.clearStorageData();
                 }
+                //var prvAppObj = {name : "EditorRich"};
+                virtualclass.currApp = "EditorRich";
+                //localStorage.removeItem('prevApp', prvAppObj);
                 that.config.createNewSession();
             }
         },

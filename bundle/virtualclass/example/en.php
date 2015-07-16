@@ -6,5 +6,6 @@
     $string['downloadsession'] = 'Please wait while download Sesssion.';
     $string['askplaymsg'] = '<span id="askplaymsg"> Should we start playing session?</span><br /><span id="remaingmsg">Remaining data could be downloaded in background.</span>';
     $string['overallprogress'] = 'Overall Progress';
-    
+    $string['replay_message'] = 'Your recordered session has been played';
+    $string['uploadedsession'] = 'You have uploaded the current session.';
 ?>

@@ -21,58 +21,80 @@ $(document).ready(function () {
 
     virtualclass.gObj.sessionClear = false;
     virtualclass.prvCurrUsersSame();
+    if(wbUser.virtualclassPlay){
+        virtualclass.gObj.sessionClear = true;
+        localStorage.removeItem('orginalTeacherId');
+        localStorage.removeItem('teacherId');
+        //virtualclass.gObj.uid = 99955551230; // in replay mode the user can not be same which is using on actual program
+        wbUser.id = 99955551230;
+
+        virtualclass.gObj.uid =  wbUser.id;
+
+
+    } else {
+        //alert('should not true');
+    }
+
+    var capitalizeFirstLetter  = function (string) {
+        return string.charAt(0).toUpperCase() + string.slice(1);
+    };
 
     var previousApp = JSON.parse(localStorage.getItem('prevApp'));
     if(previousApp != null) {
         virtualclass.previousApp = previousApp;
-        var appIs = previousApp.name;
+        var appIs = capitalizeFirstLetter(previousApp.name);
 
         if(previousApp.name == 'Yts'){
             var videoObj = previousApp.metaData;
+            videoObj.fromReload = true;
         }
-
-
-
     } else {
         var appIs = "EditorRich";
     }
 
     (typeof videoObj == 'undefined') ? virtualclass.init(wbUser.role, appIs) : virtualclass.init(wbUser.role, appIs, videoObj);
 
+    if(localStorage.getItem('reclaim') != null){
+        virtualclass.vutil.toggleRoleClass(true);
+    }
 
     var alreadyInit = false;
 
-    //TODO this both setinterval functions should be merged into one
-    var tryEditorinit =  setInterval(
-        function (){
-            if(virtualclass.hasOwnProperty('connectedUsers')){
-                if(virtualclass.connectedUsers.length >= 1){
-                    if(!alreadyInit){
-                        virtualclass.editorRich.veryInit();
-                        alreadyInit = true;
-                        clearInterval(tryEditorinit);
-                    }
-                }
-            }
-        },
-        1100
-    );
+    //TODO this both setinterval functions should be merged into one\
 
-    var alreadyEditorCodeInit  = false;
-    var tryEditorCodeinit =  setInterval(
-        function (){
-            if(virtualclass.hasOwnProperty('connectedUsers')){
-                if(virtualclass.connectedUsers.length >= 1){
-                    if(!alreadyEditorCodeInit){
-                        virtualclass.editorCode.veryInit();
-                        alreadyEditorCodeInit = true;
-                        clearInterval(tryEditorCodeinit);
+    if(!wbUser.virtualclassPlay){
+        //Should not perform in play mode
+        var tryEditorinit =  setInterval(
+            function (){
+                if(virtualclass.hasOwnProperty('connectedUsers')){
+                    if(virtualclass.connectedUsers.length >= 1){
+                        if(!alreadyInit){
+                            virtualclass.editorRich.veryInit();
+                            alreadyInit = true;
+                            clearInterval(tryEditorinit);
+                        }
                     }
                 }
-            }
-        },
-        1150
-    );
+            },
+            1100
+        );
+
+        var alreadyEditorCodeInit  = false;
+        var tryEditorCodeinit =  setInterval(
+            function (){
+                if(virtualclass.hasOwnProperty('connectedUsers')){
+                    if(virtualclass.connectedUsers.length >= 1){
+                        if(!alreadyEditorCodeInit){
+                            virtualclass.editorCode.veryInit();
+                            alreadyEditorCodeInit = true;
+                            clearInterval(tryEditorCodeinit);
+                        }
+                    }
+                }
+            },
+            1150
+        );
+    }
 
     if (localStorage.getItem('tc') !== null) {
         virtualclass.vutil.toggleRoleClass();
@@ -119,14 +141,16 @@ $(document).ready(function () {
         showOverlay: true
     });
 
-    //db transaction of indexeddb is not ready on page onload, 10 ms delay
+    //db transaction of indexeddb is not ready on page onload, 50 ms delay
+    // OR find the alternative for this
+
     if (virtualclass.vutil.isPlayMode()) {
         setTimeout(
             function () {
                 virtualclass.recorder.requestDataFromServer(wbUser.vcSid, 1);
                 clearEverthing();
             },
-            10
+            50
         );
     }
 
@@ -159,10 +183,7 @@ $(document).ready(function () {
         virtualclass.connectedUsers = e.message;
         //virtualclass.wb.clientLen = e.message.length;
         virtualclass.jId = e.message[e.message.length - 1].userid; // JoinID
-
         memberUpdate(e, 'added');
-
-
         if (typeof virtualclass.gObj.hasOwnProperty('updateHeight')) {
             virtualclass.gObj.video.updateVidContHeight();
             virtualclass.gObj.updateHeight = true;
@@ -170,7 +191,6 @@ $(document).ready(function () {
 
         if (virtualclass.gObj.uRole === 't') {
             if(virtualclass.gObj.uid != virtualclass.jId){
-
                 if(virtualclass.currApp.toUpperCase() == 'EDITORRICH' || virtualclass.currApp.toUpperCase() == 'EDITORCODE'){
                     io.send({'eddata' : 'currAppEditor', et: virtualclass.currApp});
                 } else if (virtualclass.currApp === 'ScreenShare') {
@@ -344,7 +364,9 @@ $(document).ready(function () {
                 user = virtualclass.user.control.updateUser(e.fromUser.userid, 'ad', false);
                 virtualclass.user.control.audioSign(user, 'remove');
                 anchorTag = document.getElementById(user.id + 'contrAudAnch');
-                anchorTag.setAttribute('data-title', virtualclass.lang.getString('audioDisable'));
+                if(anchorTag != null){
+                    anchorTag.setAttribute('data-title', virtualclass.lang.getString('audioDisable'));
+                }
             }
             return true;
         };
@@ -444,17 +466,23 @@ $(document).ready(function () {
 
         this.reclaimRole = function (e) {
             if (localStorage.getItem('teacherId') !== null) {
-                virtualclass.wb.response.reclaimRole(e.fromUser.userid, wbUser.id);
+                virtualclass.vutil.vcResponseAReclaimRole(e.fromUser.userid, wbUser.id);
+                //virtualclass.wb.response.reclaimRole(e.fromUser.userid, wbUser.id);
             }
         };
 
         this.assignRole = function (e) {
             if (e.message.toUser === virtualclass.gObj.uid) {
-                virtualclass.wb.response.assignRole(e.fromUser.userid, wbUser.id);
+                virtualclass.vutil.vcResponseAssignRole(e.fromUser.userid, wbUser.id);
+
+                //virtualclass.wb.response.assignRole(e.fromUser.userid, wbUser.id);
             }
         };
 
         this.clearAll = function (e) {
+            if(typeof virtualclass.wb != 'object'){
+                virtualclass.makeAppReady(virtualclass.apps[0]);
+            }
             virtualclass.wb.response.clearAll(e.fromUser.userid, wbUser.id, e.message, virtualclass.wb.oTeacher);
         };
 
@@ -465,14 +493,22 @@ $(document).ready(function () {
         };
 
         this.createArrow = function (e) {
-            if (virtualclass.wb.oTeacher) {
-                virtualclass.wb.receivedPackets = virtualclass.wb.receivedPackets + (JSON.stringify(e.message).length);
-            } else {
-                virtualclass.wb.response.createArrow(e.message, virtualclass.wb.oTeacher);
+            if(typeof virtualclass.wb == 'object'){
+                if (virtualclass.wb.oTeacher) {
+                    virtualclass.wb.receivedPackets = virtualclass.wb.receivedPackets + (JSON.stringify(e.message).length);
+                } else {
+                    virtualclass.wb.response.createArrow(e.message, virtualclass.wb.oTeacher);
+                }
             }
         };
 
         this.repObj = function (e) {
+            if(typeof virtualclass.wb != 'object'){
+                virtualclass.makeAppReady(virtualclass.apps[0]);
+                return;
+            }
+
+
             if (!virtualclass.vutil.isPlayMode()) {
                 virtualclass.wb.response.repObjForMissedPkts(e.message.repObj);
             }
