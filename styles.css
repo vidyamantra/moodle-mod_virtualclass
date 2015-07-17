@@ -8,7 +8,22 @@
 }
 #page-mod-virtualclass-classroom.pagelayout-popup #page-header {
 	margin-bottom : 0;
+	display: none;
 }
+#page-mod-virtualclass-classroom.pagelayout-popup .inner{
+	display: none;
+}
+#page-mod-virtualclass-classroom.pagelayout-popup .container-fluid{
+	padding-left: 0 !important;
+	margin-left: 0 !important;
+	max-width: none !important;
+}
+
+#virtualclassCont #confirm.popupWindow #confirmOk #confirmOkButton, #virtualclassCont #confirm.popupWindow #confirmCancel #confirmCancelButton{
+	color:#333 !important;
+}
+
+
 #page-mod-virtualclass-classroom.pagelayout-popup #page, #page-mod-virtualclass-classroom.pagelayout-popup #page #page-content  {
 	margin-top : 0;
 }
@@ -164,7 +179,35 @@ font-size : 11.5px !important;
 }
 }
 
+#virtualclassCont #playButton{
+	color:#333 !important;
+}
+
 /* Moodle29 css */
+
+
+/* Azuline29 */
+
+#page-mod-virtualclass-classroom div [role="main"]{
+	padding: 0 !important;
+}
+
+#page-mod-virtualclass-classroom #page-content{
+	max-width: none !important;
+}
+
+
+/* BCU Responsive */
+
+#page-mod-virtualclass-classroom .fullin .container{
+	width: 100% !important;
+}
+
+
+#page-mod-virtualclass-classroom #virtualclassCont.student{
+	width: 102% !important;
+}
+
 
 .vceditor-toolbar {
 	padding-top: 15px;
@@ -249,7 +292,7 @@ a.vceditor-btn{
 }
 
 #virtualclassCont #playController{
-	width: 670px !important;
+	width: 700px !important;
 }
 
 #virtualclassCont #playController button{
@@ -260,8 +303,12 @@ a.vceditor-btn{
 	padding: 20px 15px 20px !important;
 }
 #virtualclassCont #playProgress{
-	margin-top: 10px !important;
+	margin-top: 14px !important;
+	margin-left: 12px !important;
+	
 }
+
+
 #virtualclassCont .recButton{
 	margin: 0px 2px !important;
 }
@@ -281,5 +328,3 @@ a.vceditor-btn{
 #virtualclassCont #replayFromStart  .tooltip:hover:after{
 	bottom: -2em !important;
 }
-
-
