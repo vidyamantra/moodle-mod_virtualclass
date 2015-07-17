@@ -180,18 +180,18 @@ echo html_writer::start_tag('div', array('id' => 'virtualclassCont', 'class' => 
    
    if($isplay){
             ?>
-          <div id="playControllerCont">
-                    <div id="playController">
-                        <div id="recPlayCont" class="recButton"> <button id="recPlay" class="icon-play tooltip" data-title="Play"></button></div>
-                        <div id="recPauseCont" class="recButton "> <button id="recPause" class="icon-pause tooltip" data-title="Pause"></button></div>
-                        <div id="ff2Cont" class="recButton"> <button id="ff2" class="ff icon-forward tooltip" data-title="Fast Forward 2"></button></div>
-                        <div id="ff8Cont" class="recButton"> <button id="ff8" class="ff icon-fast-forward tooltip" data-title="Fast Forward 8"></button></div>
-                        <div id="playProgress"> <div id="playProgressBar" class="progressBar" style="width: 0%;"></div> </div>
-                        <div id="repTimeCont"> <span id="tillRepTime">00:00</span> / <span id="totalRepTime">00:00</span> </div>
-                   </div>
-                   <div id="replayFromStart"> <button  class="ff icon-Replayfromstart tooltip" data-title="Replay from Start."></button> </div>
-                    <div style="clear:both;"></div>
+           <div id="playControllerCont">
+                <div id="playController">
+                    <div id="recPlayCont" class="recButton"> <button id="recPlay" class="icon-play tooltip" data-title="Play"></button></div>
+                    <div id="recPauseCont" class="recButton "> <button id="recPause" class="icon-pause tooltip" data-title="Pause"></button></div>
+                    <div id="ff2Cont" class="recButton"> <button id="ff2" class="ff icon-forward tooltip" data-title="Fast Forward 2"></button></div>
+                    <div id="ff8Cont" class="recButton"> <button id="ff8" class="ff icon-fast-forward tooltip" data-title="Fast Forward 8"></button></div>
+                    <div id="playProgress"> <div id="playProgressBar" class="progressBar" style="width: 0%;"></div> </div>
+                    <div id="repTimeCont"> <span id="tillRepTime">00:00</span> / <span id="totalRepTime">00:00</span> </div>
                </div>
+               <div id="replayFromStart"> <button  class="ff icon-Replayfromstart tooltip" data-title="Replay from Start."></button> </div>
+                <div style="clear:both;"></div>
+           </div>
     <?php
         }
     
@@ -224,54 +224,53 @@ echo html_writer::start_tag('div', array('id' => 'virtualclassCont', 'class' => 
             echo html_writer::end_tag('div');
         
         
-        echo html_writer::start_tag('div', array('id' => 'alwaysPress'));
-            echo html_writer::start_tag('div', array('id' => 'speakerPressing', 'class' => $classes));
-                echo html_writer::start_tag('a', array('id' => 'speakerPressingAnch', 'name' => 'speakerPressingAnch'));
-                    echo html_writer::start_tag('div', array('id' => 'speakerPressingButton', 'class' => "icon-speakerPressing"));
-                     
-//                        echo html_writer::tag('div',  array("class" => 'clear'));     
-                    echo html_writer::end_tag('div');
-                    echo html_writer::tag('div', '', array('class' => 'clear'));
-         
-                    
-                    echo html_writer::start_tag('div', array('id' => 'speakerPressingtext'));
-                        echo get_string("pushtotalk", "virtualclass") ;
-                    echo html_writer::end_tag('div');
-                echo html_writer::end_tag('a');
+            echo html_writer::start_tag('div', array('id' => 'alwaysPress'));
+                echo html_writer::start_tag('div', array('id' => 'speakerPressing', 'class' => $classes));
+                    echo html_writer::start_tag('a', array('id' => 'speakerPressingAnch', 'name' => 'speakerPressingAnch'));
+                        echo html_writer::start_tag('div', array('id' => 'speakerPressingButton', 'class' => "icon-speakerPressing"));
+
+    //                        echo html_writer::tag('div',  array("class" => 'clear'));     
+                        echo html_writer::end_tag('div');
+                        echo html_writer::tag('div', '', array('class' => 'clear'));
+
+
+                        echo html_writer::start_tag('div', array('id' => 'speakerPressingtext'));
+                            echo get_string("pushtotalk", "virtualclass") ;
+                        echo html_writer::end_tag('div');
+                    echo html_writer::end_tag('a');
+                echo html_writer::end_tag('div');
             echo html_writer::end_tag('div');
-        echo html_writer::end_tag('div');
         
-    echo html_writer::end_tag('div');
+         echo html_writer::end_tag('div');
       //  $pressonceimg = $whiteboardpath . "images/speakerpressonce.png";
     
     
-    echo html_writer::start_tag('div', array('id' => 'audioTest-box'));
-        echo html_writer::start_tag('div', array('id' => 'audioTest', 'class' => 'audioTool'));
-//            $audioimg = $whiteboardpath . "images/audiotest.png";
-            echo html_writer::start_tag('a', array('id' => 'audiotestAnch', 'class' => 'tooltip', 'data-title' => get_string('audiotest', 'virtualclass')));
-    //             echo html_writer::tag('img', '', array('id' => 'audiotestImg', 'src' => $audioimg));
-                echo html_writer::start_tag('span', array('id' => 'audiotestImg', 'class' => 'icon-audiotest'));
-                echo html_writer::end_tag('span');
-            echo html_writer::end_tag('a');
+        echo html_writer::start_tag('div', array('id' => 'audioTest-box'));
+            echo html_writer::start_tag('div', array('id' => 'audioTest', 'class' => 'audioTool'));
+    //            $audioimg = $whiteboardpath . "images/audiotest.png";
+                echo html_writer::start_tag('a', array('id' => 'audiotestAnch', 'class' => 'tooltip', 'data-title' => get_string('audiotest', 'virtualclass')));
+        //             echo html_writer::tag('img', '', array('id' => 'audiotestImg', 'src' => $audioimg));
+                    echo html_writer::start_tag('span', array('id' => 'audiotestImg', 'class' => 'icon-audiotest'));
+                    echo html_writer::end_tag('span');
+                echo html_writer::end_tag('a');
+            echo html_writer::end_tag('div');
         echo html_writer::end_tag('div');
+
     echo html_writer::end_tag('div');
 
-echo html_writer::end_tag('div');
-
-    echo html_writer::start_tag('div', array('id' => 'chatWidget'));
-        echo html_writer::tag('div', '', array('id' => 'stickycontainer'));
-    echo html_writer::end_tag('div');
-echo html_writer::end_tag('div');
+//    echo html_writer::start_tag('div', array('id' => 'chatWidget'));
+//        echo html_writer::tag('div', '', array('id' => 'stickycontainer'));
+//    echo html_writer::end_tag('div');
+//echo html_writer::end_tag('div');
 
 
 
 echo '<div id="chatWidget"> 
-    <div id = "stickycontainer"> </div>
+        <div id = "stickycontainer"> </div>
 </div>
     <div id="popupContainer">
         <div id="about-modal" class="rv-vanilla-modal">
 
-            <!-- for uploading progress bar -->
 
             <div id="recordingContainer" class="popupWindow">
 
@@ -307,13 +306,12 @@ echo '<div id="chatWidget">
 
                     <div id="recordFinishedMessageBox">
                         <span id="recordFinishedMessage"> You have uploaded the current session. </span>
-                           <span id="recordingClose" class="icon-close"></span>
+                        <span id="recordingClose" class="icon-close"></span>
                     </div>
                 </div>
 
             </div>
 
-            <!-- for play window -->
             <div id="recordPlay" class="popupWindow">
                 <div class="rv-vanilla-modal-body">
                     <div id="downloadPcCont">
@@ -329,24 +327,24 @@ echo '<div id="chatWidget">
 
                     <div id="askPlay">
                         <div id="askplayMessage"> </div>
-                        <button id="playButton" class="icon-play">Play</button>
+                         <button id="playButton" class="icon-play">Play</button>
+
                     </div>
                 </div>
              </div>
 
 
-         <!--for replay window -->
-         <div id="replayContainer" class="popupWindow">
-             <p id="replayMessage"><?php echo get_string("replay_message"); ?>  </p>
-             <div id="replayClose" class="close icon-close"></div>
-             <button id="replayButton" class="icon-repeat">Replay</button>
+            <div id="replayContainer" class="popupWindow">
+                <p id="replayMessage"><?php echo get_string("replay_message"); ?>  </p>
+                <div id="replayClose" class="close icon-close"></div>
+                <button id="replayButton" class="icon-repeat">Replay</button>
 
-         </div>
+            </div>
 
-         <!--For confirm window-->
-          <div id="confirm" class="popupWindow simple-box"> </div>
+          <div id="confirm" class="popupWindow simple-box">
           </div>
         </div>
-    </div>';
+    </div>
+</div>';
 // Finish the page.
 echo $OUTPUT->footer();
