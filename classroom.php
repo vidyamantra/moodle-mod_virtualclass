@@ -275,7 +275,7 @@ echo '<div id="chatWidget">
             <div id="recordingContainer" class="popupWindow">
 
                 <div class="rv-vanilla-modal-header group" id="recordingHeaderContainer">
-                    <h2 class="rv-vanilla-modal-title" id="recordingHeader"> <?php echo get_string("uploadsession"); ?> </h2>
+                    <h2 class="rv-vanilla-modal-title" id="recordingHeader">'. get_string('uploadsession', 'virtualclass') .' </h2>
                 </div>
 
                 <div class="rv-vanilla-modal-body">
@@ -283,7 +283,7 @@ echo '<div id="chatWidget">
                     <div id="progressContainer">
 
                         <div id="totProgressCont">
-                            <div id="totalProgressLabel"> <?php echo get_string("totalprogress"); ?> </div>
+                            <div id="totalProgressLabel"> '. get_string('totalprogress', 'virtualclass') .' </div>
                             
                             <div id="progress">
                                 <div id="progressBar" class="progressBar"></div>
@@ -292,7 +292,7 @@ echo '<div id="chatWidget">
                         </div>
                        
                         <div id="indvProgressCont">
-                            <div id="indvProgressLabel"> <?php echo get_string("indvprogress"); ?> </div>
+                            <div id="indvProgressLabel"> '. get_string('indvprogress', 'virtualclass') .' </div>
                         
                             <div id="indProgress">
                                 <div id="indProgressBar" class="progressBar">
@@ -315,9 +315,9 @@ echo '<div id="chatWidget">
             <div id="recordPlay" class="popupWindow">
                 <div class="rv-vanilla-modal-body">
                     <div id="downloadPcCont">
-                        <div id="downloadSessionText"> <?php echo get_string("downloadsession"); ?> </div>
+                        <div id="downloadSessionText"> '. get_string('downloadsession', 'virtualclass') .'</div>
 
-                        <div id="downloadPrgressLabel"> <?php echo get_string("overallprogress"); ?>  </div>
+                        <div id="downloadPrgressLabel"> '. get_string('overallprogress', 'virtualclass') .'  </div>
                         <div id="downloadProgress">
                             <div id="downloadProgressBar" class="progressBar"></div>
                             <div id="downloadProgressValue" class="progressValue"> 0% </div>
@@ -335,7 +335,7 @@ echo '<div id="chatWidget">
 
 
             <div id="replayContainer" class="popupWindow">
-                <p id="replayMessage"><?php echo get_string("replay_message"); ?>  </p>
+                <p id="replayMessage">'. get_string('replay_message', 'virtualclass') .'  </p>
                 <div id="replayClose" class="close icon-close"></div>
                 <button id="replayButton" class="icon-repeat">Replay</button>
 

@@ -25,12 +25,7 @@
 	width : auto;
 }
 
-/**
-We can't do this as scroll is invisible in chrome browser, colorful scroller should handle in some other way
-::-webkit-scrollbar, ::-webkit-scrollbar-track, ::-webkit-scrollbar-track-piece, ::-webkit-scrollbar-thumb, ::-webkit-scrollbar-corner {
-background-color : transparent !important;
-}
-**/
+
 #page-mod-virtualclass-classroom #page.container-fluid #page-header {
 	display : none !important;
 	margin : 0 !important;
@@ -43,49 +38,49 @@ background-color : transparent !important;
 	padding-left : 0;
 }
 
-#vAppCont #usertab_text .icon-arrow-down:after, #vAppCont #chatroom_text .icon-arrow-down:after {
+ #usertab_text .icon-arrow-down:after,  #chatroom_text .icon-arrow-down:after {
 	top : -2px !important;
 	vertical-align : sub !important;
 }
-#vAppCont .ui-memblist-usr a img {
+.ui-memblist-usr a img {
 	padding : 6px 13px !important;
 }
 .close {
 	float : left !important;
 }
-#vAppCont #alwaysPress .audioTool a:hover {
+ #alwaysPress .audioTool a:hover {
 	text-decoration : none;
 }
-#vAppCont #containerWb #commandToolsWrapper .tool a {
+ #containerWb #commandToolsWrapper .tool a {
 	padding : 11px 18px 10px !important;
 }
-#vAppCont #alwaysPress .audioTool.active #speakerPressingAnch #speakerPressingButton, #vAppCont #alwaysPress .audioTool.active #speakerPressingAnch {
+ #alwaysPress .audioTool.active #speakerPressingAnch #speakerPressingButton,  #alwaysPress .audioTool.active #speakerPressingAnch {
 	color : #fff;
 }
 #speakerPressingAnch #speakerPressingtext {
 	top : -11px;
 }
-#vAppCont #usertab_text .icon-arrow-up:before, #vAppCont #chatroom_text .icon-arrow-up:before, #vAppCont #usertab_text .icon-arrow-down:after, #vAppCont #chatroom_text .icon-arrow-down:after {
+ #usertab_text .icon-arrow-up:before,  #chatroom_text .icon-arrow-up:before,  #usertab_text .icon-arrow-down:after,  #chatroom_text .icon-arrow-down:after {
 	top : 0 !important;
 	vertical-align : middle !important;
 }
-#vAppCont .vmchat_room_bt .inner_bt #chatroom_text {
+ .vmchat_room_bt .inner_bt #chatroom_text {
 	top : 0 !important;
 }
 #chatroom_bt2 .inner_bt #chatroom_text {
 	margin-top : 0 !important;
 }
-#vAppCont #chatroom_bt2 .inner_bt {
+ #chatroom_bt2 .inner_bt {
 	margin-top : 3px !important;
 }
-#vAppCont #usertab_icon {
+ #usertab_icon {
 	margin : 4px 2px 0 0 !important;
 }
 .inner_bt {
-	padding : 12px 0 !important;
+	padding : 9px 0 !important;
 }
-#vAppCont #chat_div .controleCont {
-	margin-top : 8px;
+ #chat_div .controleCont {
+	margin-top : 2px;
 }
 .ui-memblist-usr a span {
 	margin-left : 5px !important;
@@ -93,17 +88,17 @@ background-color : transparent !important;
 .ui-memblist-usr .tooltip:hover:after {
 	bottom : 13px !important;
 }
-#vAppCont .ui-widget-header .icon-user:before {
+ .ui-widget-header .icon-user:before {
 	font-size : 21px !important;
 }
 .ui-memblist-usr a span.chatImg {
 	margin-left : 0 !important;
 }
-#vAppCont .icon-chatImg.enable:before {
+ .icon-chatImg.enable:before {
 	font-size : 100% !important;
 	top : 0 !important;
 }
-#vAppCont .ui-memblist-usr .icon-chatImg:before {
+ .ui-memblist-usr .icon-chatImg:before {
 	top : 0 !important;
 }
 #audioTest-box #audioTest #audiotestAnch.tooltip:hover:after {
@@ -112,7 +107,7 @@ background-color : transparent !important;
 #speakerPressOnce #speakerPressonceAnch.tooltip:hover:after {
 	bottom : 0em !important;
 }
-#vAppCont #speakerPressing .icon-speakerPressing:before {
+ #speakerPressing .icon-speakerPressing:before {
 	top : -12px !important;
 }
 .close:focus, .close:hover {
@@ -121,14 +116,14 @@ background-color : transparent !important;
 .close.tooltip:hover:after {
 	left : 7px !important;
 }
-#vAppCont #chat_div .ui-memblist-usr span {
+ #chat_div .ui-memblist-usr span {
 	position : relative;
 	top : 3px !important;
 }
-#vAppCont #alwaysPress .audioTool.deactive, #audioTest-box .audioTool {
+ #alwaysPress .audioTool.deactive, #audioTest-box .audioTool {
 	padding-bottom : 7px !important;
 }
-#vAppCont.student #chat_div .ui-memblist-usr a.tooltip:hover:after:first-child {
+.student #chat_div .ui-memblist-usr a.tooltip:hover:after:first-child {
 bottom : -3px !important;
 padding : 0.2em 1em !important;
 font-size : 11.5px !important;
@@ -137,18 +132,18 @@ font-size : 11.5px !important;
 	bottom : -28px !important;
 	left : -18px !important;
 }
-#vAppCont.student .ui-memblist-usr .icon-chatImg:before {
+.student .ui-memblist-usr .icon-chatImg:before {
 	left : 0 !important;
 }
 
-#vAppCont .ui-memblist-usr .icon-audioEnaOrange:before, #vAppCont .ui-memblist-usr .icon-audioEnaGreen:before {
+ .ui-memblist-usr .icon-audioEnaOrange:before,  .ui-memblist-usr .icon-audioEnaGreen:before {
 	font-size : 105% !important;
 }
 
-#vAppCont div.ui-memblist-usr .userVideos {
+ div.ui-memblist-usr .userVideos {
 	margin : 3px 5px 3px 2px !important;
 }
-#vAppCont #chat_div .ui-memblist-usr span.block {
+#chat_div .ui-memblist-usr span.block {
 	min-height : inherit !important;
 	padding : inherit !important;
 	margin-bottom : inherit !important;
@@ -158,11 +153,12 @@ font-size : 11.5px !important;
 	border-radius : 0 !important;
 	box-shadow : none !important;
 }
-#vAppCont #chat_div .ui-memblist-usr.teacher {
+
+ #chat_div .ui-memblist-usr.teacher {
 	pointer-events: visible !important;
 }
  @media screen and (-webkit-min-device-pixel-ratio:0) {
-#vAppCont #chat_div .ui-memblist-usr a.tooltip:hover:after {
+ #chat_div .ui-memblist-usr a.tooltip:hover:after {
 	bottom: -5px;
 	left: 0em !important;
 }
@@ -208,17 +204,23 @@ a.vceditor-btn{
 	
 }
 
-#virtualclassCont #chatroom_icon .icon-chatroom::before{
-	position: relative;
-	top:-5px;
+#chatWidget #chatroom_text .icon-arrow-down, #chatWidget #chatroom_text .icon-arrow-up{
+	
 }
+
+#virtualclassCont #chatWidget .mySelf span{
+	margin-top: 3px !important;
+}
+
 
 #virtualclassCont .vmchat_room_bt .inner_bt #chatroom_text{
-	float: left;
+	padding-left: 35px !important;
 }
 
+
+
 #virtualclassCont #usertab_text .icon-arrow-up::before, #virtualclassCont #chatroom_text .icon-arrow-up::before, #virtualclassCont #usertab_text .icon-arrow-down::after, #virtualclassCont #chatroom_text .icon-arrow-down::after{
-	left:15px;
+	left:10px;
 }
 
 #virtualclassCont #usertab_text .icon-arrow-down::after, #virtualclassCont #chatroom_text .icon-arrow-down::after, #virtualclassCont #usertab_text .icon-arrow-down::after, #virtualclassCont #chatroom_text .icon-arrow-down::after{
@@ -233,14 +235,51 @@ a.vceditor-btn{
 	line-height: 25px !important;
 }
 
-#page-mod-virtualclass-classroom .block{
-	max-height: 0;
-	margin-bottom: 0;
-	padding: 0 !important;
-	background-color: transparent;
-	border:none;
+
+#virtualclassCont .ui-memblist{
+	bottom: 40px !important;
 }
 
-.inner_bt{
-	padding: 10px 0 12px !important;
+.iconsmall.hand{
+	cursor: pointer;
 }
+
+#vc{
+	float: left;
+}
+
+#virtualclassCont #playController{
+	width: 670px !important;
+}
+
+#virtualclassCont #playController button{
+	margin: 0 !important;
+	box-shadow: none !important;
+}
+#virtualclassCont #playController{
+	padding: 20px 15px 20px !important;
+}
+#virtualclassCont #playProgress{
+	margin-top: 10px !important;
+}
+#virtualclassCont .recButton{
+	margin: 0px 2px !important;
+}
+
+#virtualclassCont #playController #repTimeCont{
+	margin-top: 5px !important;
+}
+
+#virtualclassCont #playController .tooltip:hover:after{
+	bottom: -3em !important;
+}
+
+#virtualclassCont #replayFromStart .tooltip:hover:after{
+	padding: 4px 12px !important;
+}
+
+#virtualclassCont #replayFromStart  .tooltip:hover:after{
+	bottom: -2em !important;
+}
+
+
