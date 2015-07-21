@@ -73,7 +73,7 @@ class mod_virtualclass_upload_file extends moodleform {
         
         $mform->addRule('name', get_string('maximumchars', '', 255), 'maxlength', 255, 'client');
         //$mform->addHelpButton('name', 'virtualclassname', 'virtualclass');
-        $maxbytes =91742*2;
+        $maxbytes = ini_get('post_max_size')*10000000;
         $mform->addElement('filepicker', 'userfile', get_string('file'), null,
                    array('maxbytes' => $maxbytes, 'accepted_types' => '*'));
 

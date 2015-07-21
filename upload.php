@@ -66,37 +66,67 @@ if ($mform->is_cancelled()) {
     // Do nothing.
 } else if ($fromform = $mform->get_data()) { 
     // Redirect($nexturl).
-    //$content = $mform->get_file_content('userfile');
-    //print_r($fromform);exit;
     $vcsession = generateRandomString();
     $name = $mform->get_new_filename('userfile');
     $filepath = "{$CFG->dataroot}/virtualclass/{$course->id}/{$virtualclass->id}/".$vcsession;
     if (!file_exists ($filepath) ) {
         mkdir($filepath, 0777, true);
     }
-    $fullpath = $filepath."/".$name;
-    //$filepath = $CFG->dataroot."/virtualclass/".$course->id."/".$virtualclass->id."/".sesskey()."/user";
-    if($success = $mform->save_file('userfile', $fullpath)){
-        //save file record in database        
-        $vcfile = new stdClass();
-        $vcfile->courseid = $course->id;
-        $vcfile->vcid = $virtualclass->id;
-        $vcfile->userid = $USER->id;
-        $vcfile->vcsessionkey = $vcsession;
-        if(empty($fromform->name)){
-            $vcfile->vcsessionname = 'vc-'.$course->shortname.'-'.$virtualclass->name.$cm->id.'-'.date("Ymd").'-'.date('Hi');
-        } else {
-           $vcfile->vcsessionname =  $fromform->name;
-        }
+       
+    // Object to save file info in db
+    $vcfile = new stdClass();
+    $vcfile->courseid = $course->id;
+    $vcfile->vcid = $virtualclass->id;
+    $vcfile->userid = $USER->id;
+    $vcfile->vcsessionkey = $vcsession;
+    if(empty($fromform->name)){
+        $vcfile->vcsessionname = 'vc-'.$course->shortname.'-'.$virtualclass->name.$cm->id.'-'.date("Ymd").'-'.date('Hi');
+    } else {
+        $vcfile->vcsessionname =  $fromform->name;
+    }        
+    $vcfile->numoffiles = 1;
+    $vcfile->timecreated = time();
+    
+    $content = $mform->get_file_content('userfile');
+    $decode_data = json_decode($content);
+    $file_length = count($decode_data);
+    //print_r($decode_data);exit;
         
-        $vcfile->numoffiles = 1;
-        $vcfile->timecreated = time();
-        //print_r($vcfile);exit;
-        $DB->insert_record('virtualclass_files', $vcfile);   
-        redirect( new moodle_url('/mod/virtualclass/view.php', array('id' => $cm->id)));
-                    
-    //print_r($success);
+    if($file_length > 1) {
+        //Break larage file in multiple files
+        $filenum = 1;
+        for ($i = 0; $i < $file_length; $i++) {
+            if (array_key_exists('rdata', $decode_data[$i])) {
+                $filename = "vc.".$filenum;               
+                $new_cunk = json_encode($decode_data[$i]);
+                
+                if (file_put_contents($filepath.'/'.$filename, $new_cunk) != false) {            	
+                	if ($filenum > 1) {
+                		// Update file count
+                		$vcfile = $DB->get_record('virtualclass_files', 
+                			array ('vcid'=> $virtualclass->id, 'vcsessionkey' => $vcsession));               			
+                		$vcfile->numoffiles = $filenum;               		
+                		$DB->update_record('virtualclass_files', $vcfile);
+                	} else {
+                		$DB->insert_record('virtualclass_files', $vcfile);
+                	}
+                	$filenum++;                	                	                 
+                } else { 
+                    print_error('Error occurred during file upload.');               
+                	//echo 'There was an error creating the file name';
+                }                
+            }
+        }
+    } else {
+        // Upload a single file
+        $fullpath = $filepath."/".$name;
+        if($success = $mform->save_file('userfile', $fullpath)){
+            //save file record in database        
+            $DB->insert_record('virtualclass_files', $vcfile);   
+            //redirect( new moodle_url('/mod/virtualclass/view.php', array('id' => $cm->id)));                       
+        }
     }
+    redirect( new moodle_url('/mod/virtualclass/view.php', array('id' => $cm->id)));
 }
 // Output starts here.
 echo $OUTPUT->header();
