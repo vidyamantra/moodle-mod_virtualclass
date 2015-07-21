@@ -111,6 +111,8 @@ $a = new stdClass();
 $a->open = userdate($virtualclass->opentime);
 $a->close = userdate($virtualclass->closetime);
 $user = $DB->get_record('user', array('id' => $virtualclass->moderatorid));
+ 
+echo html_writer::start_tag('div', array('class'=>'wrapper-button'));
 
 echo html_writer::tag('div', get_string('virtualclasstiming', 'mod_virtualclass', $a));
 echo html_writer::tag('div', get_string('teachername', 'mod_virtualclass', $user));
@@ -143,8 +145,13 @@ if ($virtualclass->closetime > time() && $virtualclass->opentime <= time()) {
 
         echo html_writer::start_tag('button', array('value' => get_string('joinroom', 'virtualclass'),
                      'id' => 'vc', 'onclick' => $vcpopup));
+                     
+                   
         echo get_string('joinroom', 'virtualclass');
         echo html_writer::end_tag('button');
+        echo html_writer::start_tag('div', array('class'=>'clear'));
+        echo html_writer::end_tag('div');
+        echo html_writer::end_tag('div');  
     } else {
         // Serve online at vidya.io.
         $url = "https://l.vidya.io";  // Online url
@@ -167,6 +174,8 @@ if ($virtualclass->closetime > time() && $virtualclass->opentime <= time()) {
     // Virtualclass closed.
     echo $OUTPUT->heading(get_string('sessionclosed', 'virtualclass'));
 }
+
+echo html_writer::start_tag('div', array('class'=>'wrapper-record-list'));
 //if (has_capability('mod/virtualclass:addinstance', $context)) {
 if (has_capability('mod/virtualclass:recordingupload', $context)) {
     echo html_writer::start_tag('div', array('class'=>'no-overflow'));
@@ -215,12 +224,16 @@ foreach ($recordings as $record){
     $table->data[] = $row;
 }
 
+
+
 if (!empty($table->data)) {
     echo html_writer::start_tag('div', array('class'=>'no-overflow'));
     echo html_writer::table($table);
     echo html_writer::end_tag('div');
     //echo $OUTPUT->paging_bar($usercount, $page, $perpage, $baseurl);
 }
-   
+        echo html_writer::start_tag('div', array('class'=>'clear'));
+        echo html_writer::end_tag('div');
+echo html_writer::end_tag('div');
 // Finish the page.
 echo $OUTPUT->footer();
