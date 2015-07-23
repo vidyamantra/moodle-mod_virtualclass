@@ -157,6 +157,8 @@ if ($virtualclass->closetime > time() && $virtualclass->opentime <= time()) {
         $url = "https://l.vidya.io";  // Online url
         $role = 's'; // Default role.
         $info = false; // Debugging off.
+        $upload = $CFG->wwwroot .'/recording.php';
+        $down = $CFG->wwwroot .'/play_recording.php';
 
         if (has_capability('mod/virtualclass:addinstance', $context)) {
             if ($USER->id == $virtualclass->moderatorid) {
@@ -167,8 +169,8 @@ if ($virtualclass->closetime > time() && $virtualclass->opentime <= time()) {
             $info = true;
         }
         $form = virtualclass_online_server($url, $authusername, $authpassword, $role, $rid, $room,
-                    $popupoptions, $popupwidth, $popupheight);
-        echo $form;
+                    $popupoptions, $popupwidth, $popupheight, $upload, $down);
+        echo $form; 
     }
 } else {
     // Virtualclass closed.

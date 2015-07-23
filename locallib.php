@@ -64,7 +64,7 @@ function virtualclass_course_teacher_list() {
  * @return string
  */
 function virtualclass_online_server($url, $authusername, $authpassword, $role, $rid, $room,
-            $popupoptions, $popupwidth, $popupheight, $debug = false) {
+            $popupoptions, $popupwidth, $popupheight, $upload, $down, $debug = false) {
     global $USER;
     $form = html_writer::start_tag('form', array('id' => 'overrideform', 'action' => $url, 'method' => 'post',
         'onsubmit' => 'return virtualclass_online_popup(this)', 'data-popupoption' => $popupoptions,
@@ -78,6 +78,8 @@ function virtualclass_online_server($url, $authusername, $authpassword, $role, $
     $form .= html_writer::empty_tag('input', array('type' => 'hidden', 'name' => 'user', 'value' => $authusername));
     $form .= html_writer::empty_tag('input', array('type' => 'hidden', 'name' => 'pass', 'value' => $authpassword));
     $form .= html_writer::empty_tag('input', array('type' => 'hidden', 'name' => 'rid', 'value' => $rid));
+    $form .= html_writer::empty_tag('input', array('type' => 'hidden', 'name' => 'upload', 'value' => $upload));
+    $form .= html_writer::empty_tag('input', array('type' => 'hidden', 'name' => 'down', 'value' => $down));
     $form .= html_writer::empty_tag('input', array('type' => 'hidden', 'name' => 'debug', 'value' => $debug));
     $form .= html_writer::empty_tag('input', array('type' => 'submit', 'name' => 'submit',
          'value' => get_string('joinroom', 'virtualclass')));
