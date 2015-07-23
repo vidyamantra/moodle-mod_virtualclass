@@ -157,7 +157,15 @@ if ($virtualclass->closetime > time() && $virtualclass->opentime <= time()) {
         $url = "https://l.vidya.io";  // Online url
         $role = 's'; // Default role.
         $info = false; // Debugging off.
-        $upload = $CFG->wwwroot .'/mod/virtualclass/recording.php';
+
+	$murl = parse_url($CFG->wwwroot);
+
+	if($murl['scheme'] == 'https'){
+	   $sendmurl = $CFG->wwwroot;
+	} else {
+	   $sendmurl = str_replace("http://", "https://", $CFG->wwwroot);
+	}
+        $upload = $sendmurl .'/mod/virtualclass/recording.php';
         $down = $CFG->wwwroot .'/mod/virtualclass/play_recording.php';
 
         if (has_capability('mod/virtualclass:addinstance', $context)) {

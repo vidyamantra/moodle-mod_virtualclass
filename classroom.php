@@ -172,7 +172,9 @@ if($info){
 
 **/
 
-require_once('bundle/virtualclass/build/js.debug.php');
+//require_once('bundle/virtualclass/build/js.debug.php');
+
+$PAGE->requires->js('/mod/virtualclass/bundle/virtualclass/build/wb.min.js');
 
 //$PAGE->requires->js('/mod/virtualclass/bundle/virtualclass/index.js');
 
