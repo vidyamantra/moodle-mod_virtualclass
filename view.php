@@ -165,7 +165,8 @@ if ($virtualclass->closetime > time() && $virtualclass->opentime <= time()) {
 	} else {
 	   $sendmurl = str_replace("http://", "https://", $CFG->wwwroot);
 	}
-        $upload = $sendmurl ."/mod/virtualclass/recording.php?cmid=$cm->id";
+        $mysession = session_id();
+        $upload = $sendmurl ."/mod/virtualclass/recording.php?cmid=$cm->id&key=$mysession";
         $down = $CFG->wwwroot ."/mod/virtualclass/play_recording.php?cmid=$cm->id";
 
         if (has_capability('mod/virtualclass:addinstance', $context)) {
