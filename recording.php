@@ -23,15 +23,15 @@
  */
  
 header("Access-Control-Allow-Origin: https://l.vidya.io");
-if (array_key_exists("key",$_REQUEST)) {
-	session_id($_REQUEST['key']);
+if (isset($_GET['key'])) {
+        session_id($_REQUEST['key']);
 }
 require_once(dirname(dirname(dirname(__FILE__))).'/config.php');
-$cmid = $_REQUEST['cmid'];
-$userid = $_REQUEST['user'];
-$filenum = $_REQUEST['cn'];
-$data = $_REQUEST['record_data'];
-$vmsession = $_REQUEST['sesseionkey'];
+$cmid = required_param('cmid', PARAM_INT);
+$userid = $_POST['user'];
+$filenum = $_POST['cn'];
+$data = $_POST['record_data'];
+$vmsession = $_POST['sesseionkey'];
 //echo $vmsession;exit;
 
 if ($cmid) {
