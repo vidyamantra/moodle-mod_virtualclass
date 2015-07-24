@@ -22,12 +22,13 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
  
+header("Access-Control-Allow-Origin: https://l.vidya.io");
 require_once(dirname(dirname(dirname(__FILE__))).'/config.php');
-$cmid = required_param('cmid', PARAM_INT);
-$userid = required_param('user', PARAM_INT);
-$filenum = required_param('cn' , PARAM_INT);
-$data = required_param('record_data', PARAM_RAW);
-$vmsession = required_param('sesseionkey', PARAM_RAW);
+$cmid = $_REQUEST['cmid'];
+$userid = $_REQUEST['user'];
+$filenum = $_REQUEST['cn'];
+$data = $_REQUEST['record_data'];
+$vmsession = $_REQUEST['sesseionkey'];
 //echo $vmsession;exit;
 
 if ($cmid) {
@@ -38,11 +39,11 @@ if ($cmid) {
     echo 'VCE6';exit;//'Course module ID missing.'; 
 }
 
-require_login($course, true, $cm);
-$context = context_module::instance($cm->id);
+//require_login($course, true, $cm);
+//$context = context_module::instance($cm->id);
 $basefilepath = $CFG->dataroot."/virtualclass"; // Place to save recording files.
 
-if(has_capability('mod/virtualclass:dorecording', $context)){
+//if(has_capability('mod/virtualclass:dorecording', $context)){
 //if(has_capability('mod/virtualclass:addinstance', $context)){
     
     if ($data) {
@@ -80,8 +81,8 @@ if(has_capability('mod/virtualclass:dorecording', $context)){
     } else {
         echo 'VCE4';//'No data for recording.';
     }
-} else {
-    echo 'VCE2';//'Permission denied';
-}
+//} else {
+//    echo 'VCE2';//'Permission denied';
+//}
 
 ?>

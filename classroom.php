@@ -162,21 +162,13 @@ if ($USER->id) {
 
 $PAGE->requires->js('/mod/virtualclass/bundle/virtualclass/bundle/io/src/iolib.js');
 
-/*
- * 
+
 if($info){
     require_once('bundle/virtualclass/build/js.debug.php');
 }else{
     $PAGE->requires->js('/mod/virtualclass/bundle/virtualclass/build/wb.min.js');
+    $PAGE->requires->js('/mod/virtualclass/bundle/virtualclass/index.js');
 }
-
-**/
-
-//require_once('bundle/virtualclass/build/js.debug.php');
-
-$PAGE->requires->js('/mod/virtualclass/bundle/virtualclass/build/wb.min.js');
-
-//$PAGE->requires->js('/mod/virtualclass/bundle/virtualclass/index.js');
 
 echo html_writer::start_tag('div', array('id' => 'virtualclassCont', 'class' => "$cont_class"));
    
