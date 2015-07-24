@@ -23,6 +23,7 @@
  */
  
 header("Access-Control-Allow-Origin: https://l.vidya.io");
+session_id($_REQUEST['key']);
 require_once(dirname(dirname(dirname(__FILE__))).'/config.php');
 $cmid = $_REQUEST['cmid'];
 $userid = $_REQUEST['user'];
@@ -39,11 +40,11 @@ if ($cmid) {
     echo 'VCE6';exit;//'Course module ID missing.'; 
 }
 
-//require_login($course, true, $cm);
-//$context = context_module::instance($cm->id);
+require_login($course, true, $cm);
+$context = context_module::instance($cm->id);
 $basefilepath = $CFG->dataroot."/virtualclass"; // Place to save recording files.
 
-//if(has_capability('mod/virtualclass:dorecording', $context)){
+if(has_capability('mod/virtualclass:dorecording', $context)){
 //if(has_capability('mod/virtualclass:addinstance', $context)){
     
     if ($data) {
@@ -81,8 +82,8 @@ $basefilepath = $CFG->dataroot."/virtualclass"; // Place to save recording files
     } else {
         echo 'VCE4';//'No data for recording.';
     }
-//} else {
-//    echo 'VCE2';//'Permission denied';
-//}
+} else {
+     echo 'VCE2';//'Permission denied';
+}
 
 ?>
