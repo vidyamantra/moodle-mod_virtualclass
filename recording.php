@@ -24,7 +24,7 @@
  
 header("Access-Control-Allow-Origin: https://l.vidya.io");
 if (isset($_GET['key'])) {
-        session_id($_REQUEST['key']);
+        session_id($_GET['key']);
 }
 require_once(dirname(dirname(dirname(__FILE__))).'/config.php');
 $cmid = required_param('cmid', PARAM_INT);
