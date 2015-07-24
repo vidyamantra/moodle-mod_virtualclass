@@ -72,5 +72,30 @@ function xmldb_virtualclass_upgrade($oldversion) {
     /*
      * Finally, return of upgrade result (true, all went good) to Moodle.
      */
+     
+     if ($oldversion < 2015072402) {
+
+        // Define table virtualclass_files to virtualclass.
+        $table = new xmldb_table('virtualclass_files');
+        $table->add_field('id', XMLDB_TYPE_INTEGER, '10', XMLDB_UNSIGNED, XMLDB_NOTNULL, XMLDB_SEQUENCE, null, null);
+        $table->add_field('courseid', XMLDB_TYPE_INTEGER, '10', XMLDB_UNSIGNED, XMLDB_NOTNULL, null, 0, null);
+		$table->add_field('vcid', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, 0, null);
+		$table->add_field('userid', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, 0, null);
+		$table->add_field('vcsessionkey', XMLDB_TYPE_CHAR, '100', null, XMLDB_NOTNULL, null, null, null);
+		$table->add_field('vcsessionname', XMLDB_TYPE_CHAR, '225', null, null, null, null, null);
+		$table->add_field('numoffiles', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, 0, null);
+		$table->add_field('timecreated', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, 0, null);		
+	 
+		$table->add_key('primary', XMLDB_KEY_PRIMARY, array('id'), null, null);
+
+        // Conditionally launch add table virtualclass_files.
+        if (!$dbman->table_exists($table)) {
+           $dbman->create_table($table);
+       	}
+
+        // Virtualclass savepoint reached.
+        upgrade_mod_savepoint(true, 2015072402, 'virtualclass');
+    }
+
     return true;
 }
