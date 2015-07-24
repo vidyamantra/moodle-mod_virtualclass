@@ -165,8 +165,8 @@ if ($virtualclass->closetime > time() && $virtualclass->opentime <= time()) {
 	} else {
 	   $sendmurl = str_replace("http://", "https://", $CFG->wwwroot);
 	}
-        $upload = $sendmurl .'/mod/virtualclass/recording.php';
-        $down = $CFG->wwwroot .'/mod/virtualclass/play_recording.php';
+        $upload = $sendmurl ."/mod/virtualclass/recording.php?cmid='".$cm->id."'";
+        $down = $CFG->wwwroot ."/mod/virtualclass/play_recording.php?cmid='".$cm->id."'";
 
         if (has_capability('mod/virtualclass:addinstance', $context)) {
             if ($USER->id == $virtualclass->moderatorid) {
