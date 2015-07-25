@@ -160,12 +160,10 @@ if ($USER->id) {
     }
 </script> <?php
 
-$PAGE->requires->js('/mod/virtualclass/bundle/virtualclass/bundle/io/src/iolib.js');
-
-
 if($info){
     require_once('bundle/virtualclass/build/js.debug.php');
 }else{
+    $PAGE->requires->js('/mod/virtualclass/bundle/virtualclass/bundle/io/build/iolib.min.js');
     $PAGE->requires->js('/mod/virtualclass/bundle/virtualclass/build/wb.min.js');
     $PAGE->requires->js('/mod/virtualclass/bundle/virtualclass/index.js');
 }
