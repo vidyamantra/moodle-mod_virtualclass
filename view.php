@@ -178,7 +178,7 @@ if ($virtualclass->closetime > time() && $virtualclass->opentime <= time()) {
             $info = true;
         }
         $form = virtualclass_online_server($url, $authusername, $authpassword, $role, $rid, $room,
-                    $popupoptions, $popupwidth, $popupheight, $upload, $down);
+                    $popupoptions, $popupwidth, $popupheight, $upload, $down, $info);
         echo $form; 
     }
 } else {
