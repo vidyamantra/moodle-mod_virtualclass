@@ -50,18 +50,24 @@ if (!$licen = get_config('local_getkey', 'keyvalue')) {
     print_error('You must specify Virtualclass API key');
     exit;
 }
-// Send auth detail to python script.
+// Send auth detail to server
 $authusername = substr(str_shuffle(md5(microtime())), 0, 12);
 $authpassword = substr(str_shuffle(md5(microtime())), 0, 12);
 $postdata = array('authuser' => $authusername, 'authpass' => $authpassword, 'licensekey' => $licen);
 $postdata = json_encode($postdata);
-$rid = mycurlrequest("https://c.vidya.io", $postdata); // REMOVE HTTP.
-if (empty($rid) or strlen($rid) > 32) {
-    print_error("Chat server is unavailable!");
-    exit;
-} else if(substr($rid, -9) !== '.vidya.io') { 
-    print_error($rid);
-    exit;
+
+if (true) { // False for local server deployment
+    $rid = mycurlrequest("https://c.vidya.io", $postdata); // REMOVE HTTP.
+    if (empty($rid) or strlen($rid) > 32) {
+        print_error("Chat server is unavailable!");
+        exit;
+    } else if(substr($rid, -9) !== '.vidya.io') {
+        print_error($rid);
+        exit;
+    }
+    $rid = "wss://$rid";
+} else {
+    $rid = "ws://127.0.0.1:8080";
 }
 ?>
 <script type="text/javascript">
