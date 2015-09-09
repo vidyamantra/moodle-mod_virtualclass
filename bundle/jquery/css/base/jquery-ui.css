@@ -837,7 +837,7 @@ body .ui-tooltip {
      background-image: -moz-linear-gradient(#fbfbfb, #d4d4d4);
      background-image: -o-linear-gradient(#fbfbfb, #d4d4d4);
      background-image: linear-gradient(#fbfbfb, #d4d4d4);
-	border: 1px solid #aaaaaa/*{borderColorHeader}*/;
+	border: 1px solid #8f8f8f/*{borderColorHeader}*/;
 	color: #222222/*{fcHeader}*/;
 	font-weight: bold;
 }
