@@ -78,4 +78,7 @@ $string['askplaymsg'] = '<span id="askplaymsg"> Should we start playing session?
 $string['overallprogress'] = 'Overall Progress';
 $string['replay_message'] = 'Your recordered session has been played';
 $string['uploadedsession'] = 'You have uploaded the current session.';
+$string['sessionendmsg'] = 'Teacher has been ended the session.';
+$string['play'] = 'Play';
+$string['replay'] = 'Re-play';
 

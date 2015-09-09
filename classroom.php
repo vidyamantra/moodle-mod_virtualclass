@@ -160,13 +160,16 @@ if ($USER->id) {
     }
 </script> <?php
 
+require_once('bundle/virtualclass/build/js.debug.php');
+
+/*
 if($info){
     require_once('bundle/virtualclass/build/js.debug.php');
 }else{
     $PAGE->requires->js('/mod/virtualclass/bundle/virtualclass/bundle/io/build/iolib.min.js');
     $PAGE->requires->js('/mod/virtualclass/bundle/virtualclass/build/wb.min.js');
     $PAGE->requires->js('/mod/virtualclass/bundle/virtualclass/index.js');
-}
+} */
 
 echo html_writer::start_tag('div', array('id' => 'virtualclassCont', 'class' => "$cont_class"));
    
@@ -263,7 +266,7 @@ echo '<div id="chatWidget">
     <div id="popupContainer">
         <div id="about-modal" class="rv-vanilla-modal">
 
-
+            <!-- for uploading progress bar -->
             <div id="recordingContainer" class="popupWindow">
 
                 <div class="rv-vanilla-modal-header group" id="recordingHeaderContainer">
@@ -304,6 +307,7 @@ echo '<div id="chatWidget">
 
             </div>
 
+            <!-- for play window -->
             <div id="recordPlay" class="popupWindow">
                 <div class="rv-vanilla-modal-body">
                     <div id="downloadPcCont">
@@ -319,22 +323,33 @@ echo '<div id="chatWidget">
 
                     <div id="askPlay">
                         <div id="askplayMessage"> </div>
-                         <button id="playButton" class="icon-play">Play</button>
+                         <button id="playButton" class="icon-play">' . get_string('play', 'virtualclass') .' </button>
 
                     </div>
                 </div>
              </div>
 
-
+            <!--for replay window -->
             <div id="replayContainer" class="popupWindow">
                 <p id="replayMessage">'. get_string('replay_message', 'virtualclass') .'  </p>
                 <div id="replayClose" class="close icon-close"></div>
-                <button id="replayButton" class="icon-repeat">Replay</button>
+                <button id="replayButton" class="icon-repeat"> ' . get_string('replay', 'virtualclass').' </button>
 
             </div>
 
+          <!--For confirm window-->
           <div id="confirm" class="popupWindow simple-box">
           </div>
+
+        <!-- For Session End window -->
+         <div id="sessionEndMsgCont" class="popupWindow">
+          <span id="sessionEndClose" class="icon-close"></span>
+
+         <span id="sessionEndMsg">'.get_string('sessionendmsg','virtualclass') .'</span>
+
+
+         </div>
+
         </div>
     </div>
 </div>';
