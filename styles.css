@@ -161,9 +161,6 @@ font-size : 11.5px !important;
 	font-size : 105% !important;
 }
 
-#page-mod-virtualclass-classroom div.ui-memblist-usr .userVideos {
-	margin : 3px 5px 3px 2px !important;
-}
 #page-mod-virtualclass-classroom #chat_div .ui-memblist-usr span.block {
 	min-height : inherit !important;
 	padding : inherit !important;
@@ -506,9 +503,6 @@ font-size : 11.5px !important;
 	font-size : 105% !important;
 }
 
-#page-mod-virtualclass-classroom div.ui-memblist-usr .userVideos {
-	margin : 3px 5px 3px 2px !important;
-}
 #page-mod-virtualclass-classroom #chat_div .ui-memblist-usr span.block {
 	min-height : inherit !important;
 	padding : inherit !important;
@@ -536,6 +530,28 @@ font-size : 11.5px !important;
 
 /* Moodle29 css */
 
+/* #virtualclassCont.student[data-currapp="EditorRich"], #virtualclassCont.student[data-currapp="Whiteboard"], #virtualclassCont.student[data-currapp="ScreenShare"]{right: -14px !important;} */
+/* #virtualclassCont.student[data-currapp="ScreenShare"]{right: 30px !important;} */
+
+
+#page-mod-virtualclass-classroom #virtualclassCont.student.presentor[data-currapp="Whiteboard"] #audioWidget, #page-mod-virtualclass-classroom #virtualclassCont.student.presentor[data-currapp="ScreenShare"] #audioWidget, #page-mod-virtualclass-classroom #virtualclassCont.student.presentor[data-currapp="Yts"] #audioWidget, #page-mod-virtualclass-classroom #virtualclassCont.student.presentor[data-currapp="EditorRich"] #audioWidget, #page-mod-virtualclass-classroom #virtualclassCont.student.presentor[data-currapp="EditorCode"] #audioWidget{
+	right: -10px !important;
+}
+
+#page-mod-virtualclass-classroom #virtualclassCont.student[data-currapp="Whiteboard"] #audioWidget, #page-mod-virtualclass-classroom #virtualclassCont.student[data-currapp="EditorRich"] #audioWidget, #page-mod-virtualclass-classroom #virtualclassCont.student[data-currapp="EditorCode"] #audioWidget{
+	right: -10px !important;
+}
+#page-mod-virtualclass-classroom #virtualclassCont.student[data-currapp="ScreenShare"]{
+	
+}
+ #audioWidget, #page-mod-virtualclass-classroom #virtualclassCont.student[data-currapp="Yts"] #audioWidget{
+	 right: 0px !important;
+ }
+ 
+ #page-mod-virtualclass-classroom #virtualclassCont.teacher.orginalTeacher.presentor[data-currapp="EditorCode"] #audioWidget{
+	 right: 0 !important;
+ }
+ 
 
 /* Azuline29 */
 
@@ -679,15 +695,9 @@ font-size : 11.5px !important;
 
 #page-mod-virtualclass-classroom{ padding-top: 0px;}
 
-/*
-#page-mod-virtualclass-classroom #virtualclassEditorRich{
-	margin-left: 10px;
+#virtualclassCont .ui-widget-header .icon-user:before{
+	bottom:3 !important;
 }
-
-#page-mod-virtualclass-classroom #virtualclassCont.student #virtualclassScreenShare, #page-mod-virtualclass-classroom #virtualclassCont #virtualclassEditorRich, #page-mod-virtualclass-classroom#virtualclassCont #virtualclassEditorCode{
-	margin-left: 60px;
-}
-*/
 
 #page-mod-virtualclass-classroom #virtualclassCont #downloadProgressValue.progressValue{
 	top: -19px;
@@ -728,7 +738,9 @@ font-size : 11.5px !important;
 #page-mod-virtualclass-classroom #page #page-content #region-main, #page-mod-virtualclass-classroom #page #page-content div[role=main], #page-mod-virtualclass-classroom.pagelayout-redirect #page-content #region-main, #page-mod-virtualclass-classroom.pagelayout-redirect #page-content div[role=main]{
 	margin-bottom: 0px;
 }
-
+#page-mod-virtualclass-classroom .rv-vanilla-modal-title{
+	margin-top: 0px;
+}
 
 #page-mod-virtualclass-classroom #page-mod-virtualclass-view #virtualclassintro.mod_introbox{
 	padding: 0;
