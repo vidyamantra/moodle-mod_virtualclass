@@ -160,16 +160,13 @@ if ($USER->id) {
     }
 </script> <?php
 
-require_once('bundle/virtualclass/build/js.debug.php');
-
-/*
 if($info){
     require_once('bundle/virtualclass/build/js.debug.php');
 }else{
     $PAGE->requires->js('/mod/virtualclass/bundle/virtualclass/bundle/io/build/iolib.min.js');
     $PAGE->requires->js('/mod/virtualclass/bundle/virtualclass/build/wb.min.js');
     $PAGE->requires->js('/mod/virtualclass/bundle/virtualclass/index.js');
-} */
+}
 
 echo html_writer::start_tag('div', array('id' => 'virtualclassCont', 'class' => "$cont_class"));
    
