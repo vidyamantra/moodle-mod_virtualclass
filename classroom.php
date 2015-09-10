@@ -187,7 +187,7 @@ echo html_writer::start_tag('div', array('id' => 'virtualclassCont', 'class' => 
     <?php
         }
     
-    echo html_writer::start_tag('div', array('id' => 'virtualclassWhiteboard', 'class' => 'vmApp'));
+    echo html_writer::start_tag('div', array('id' => 'virtualclassWhiteboard', 'class' => 'vmApp virtualclass'));
         echo html_writer::start_tag('div', array('id' => 'vcanvas', 'class' => 'canvasMsgBoxParent'));
             echo html_writer::tag('div', '', array('id' => 'containerWb'));
                 echo html_writer::start_tag('div', array('id' => 'mainContainer'));
