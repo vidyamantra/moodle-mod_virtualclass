@@ -120,7 +120,7 @@ if (has_capability('mod/virtualclass:addinstance', $context)) {
 $cont_class .= $role;
 
 if($isplay){
-	$cont_class .=  "playMode";
+	$cont_class .=  " playMode";
 	
 }
 
