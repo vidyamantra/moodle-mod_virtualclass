@@ -102,9 +102,7 @@
  #page-mod-virtualclass-classroom #chat_div .controleCont {
 	margin-top : 2px;
 }
-#page-mod-virtualclass-classroom .ui-memblist-usr a span {
-	margin-left : 5px !important;
-}
+
 #page-mod-virtualclass-classroom .ui-memblist-usr .tooltip:hover:after {
 	bottom : 13px !important;
 }
@@ -143,6 +141,7 @@
  #page-mod-virtualclass-classroom #alwaysPress .audioTool.deactive, #audioTest-box .audioTool {
 	padding-bottom : 7px !important;
 }
+/*
 #page-mod-virtualclass-classroom .student #chat_div .ui-memblist-usr a.tooltip:hover:after:first-child {
 bottom : -3px !important;
 padding : 0.2em 1em !important;
@@ -156,6 +155,7 @@ font-size : 11.5px !important;
 #page-mod-virtualclass-classroom .student .ui-memblist-usr .icon-chatImg:before {
 	left : 0 !important;
 }
+*/
 
 #page-mod-virtualclass-classroom .ui-memblist-usr .icon-audioEnaOrange:before,  #page-mod-virtualclass-classroom .ui-memblist-usr .icon-audioEnaGreen:before {
 	font-size : 105% !important;
@@ -491,10 +491,12 @@ padding : 0.2em 1em !important;
 font-size : 11.5px !important;
 }
 
+/*
 #page-mod-virtualclass-classroom .controleCont a.tooltip:hover:after {
 	bottom : -28px !important;
 	left : -18px !important;
 }
+*/
 #page-mod-virtualclass-classroom .student .ui-memblist-usr .icon-chatImg:before {
 	left : 0 !important;
 }
@@ -782,7 +784,7 @@ font-size : 11.5px !important;
 	bottom: -2em !important;
 }
 
-#virtualclassCont.studentplayMode #virtualclassEditorRich{
+#page-mod-virtualclass-classroom #virtualclassCont.studentplayMode #virtualclassEditorRich{
 	margin-left: 0px;
 }
 
@@ -794,6 +796,21 @@ font-size : 11.5px !important;
 	margin-bottom: 0px;
 }
 
+#page-mod-virtualclass-classroom #virtualclassCont #usertab_text.tooltip.open:hover:after{
+	left: 39px;
+}
+#virtualclassCont div.ui-memblist-usr:last-child video{
+	margin-bottom: 10px !important;
+	margin-top: 11px !important;
+}
+#virtualclassCont div.ui-memblist-usr .userVideos {
+	margin-top: 10px !important;
+    margin-bottom: 10px !important;
+}
+
+#page-mod-virtualclass-classroom .tooltip[data-action="disable"], #page-mod-virtualclass-classroom .tooltip[data-action="enable"]{
+	line-height: 20px !important;
+}
 /*  Azuline css */
 
 #page-mod-virtualclass-classroom #page #page-content #region-main div[role="main"] {
