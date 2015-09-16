@@ -242,7 +242,7 @@ echo html_writer::start_tag('div', array('id' => 'virtualclassCont', 'class' => 
         echo html_writer::start_tag('div', array('id' => 'audioTest-box'));
             echo html_writer::start_tag('div', array('id' => 'audioTest', 'class' => 'audioTool'));
     //            $audioimg = $whiteboardpath . "images/audiotest.png";
-                echo html_writer::start_tag('a', array('id' => 'audiotestAnch', 'class' => 'tooltip', 'data-title' => get_string('audiotest', 'virtualclass')));
+                echo html_writer::start_tag('a', array('id' => 'audiotestAnch', 'class' => 'tooltip', 'data-title' => get_string('tpAudioTest', 'virtualclass')));
         //             echo html_writer::tag('img', '', array('id' => 'audiotestImg', 'src' => $audioimg));
                     echo html_writer::start_tag('span', array('id' => 'audiotestImg', 'class' => 'icon-audiotest'));
                     echo html_writer::end_tag('span');
