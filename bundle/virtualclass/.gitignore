@@ -22,3 +22,5 @@ src/editor-sentinel-constants.js
 src/editor-entity.js
 test_cases.txt
 *.txt
+node_modules/
+

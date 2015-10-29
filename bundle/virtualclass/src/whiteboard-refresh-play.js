@@ -15,14 +15,34 @@
                 this.objNo = 0;
                 this.repMode = repMode;
                 this.callBkfunc = "";
+                this.rendering = false;
             },
+
+            makeCustomEvent : function (obj, broadCast){
+                if (obj.hasOwnProperty('mtext')) {
+                    var eventObj = {detail: {cevent: {x: obj.x, y: obj.y, mtext: obj.mtext}}};
+                } else {
+                    var eventObj = {detail: {cevent: {x: obj.x, y: obj.y}}};
+                }
+
+                if(typeof broadCast != 'undefined'){
+                     eventObj.detail.broadCast  = true; //For send packet to other.
+                }
+
+                var eventConstruct = new CustomEvent(event, eventObj); //this is not supported for ie9 and older ie browsers
+                vcan.main.canvas.dispatchEvent(eventConstruct);
+
+//                return new CustomEvent(event, eventObj); // This is not supported for ie9 and older ie browsers
+            },
+
             renderObj: function (myfunc) {
-                //console.log("browser mode " + this.repMode);
-                virtualclass.wb.drawMode = true;
                 if (typeof this.objs[this.objNo] == 'undefined') {
-                    console.log("is this happend");
+                    console.log(this.objs + "is undefined cannot continue play.");
                     return;
                 }
+
+                virtualclass.wb.drawMode = true; // TODO this should be removed
+                this.rendering = true;
                 if (typeof myfunc != 'undefined') {
                     this.callBkfunc = myfunc;
                 }
@@ -43,7 +63,10 @@
                         } else if (this.objs[this.objNo].ac == 'u') {
                             event = 'mouseup';
                         }
+
                         var currObj = this.objs[this.objNo];
+
+                        //this.makeCustomEvent(currObj);
 
                         if (currObj.hasOwnProperty('mtext')) {
                             var eventObj = {detail: {cevent: {x: currObj.x, y: currObj.y, mtext: currObj.mtext}}};
@@ -53,15 +76,28 @@
                         var eventConstruct = new CustomEvent(event, eventObj); //this is not supported for ie9 and older ie browsers
                         vcan.main.canvas.dispatchEvent(eventConstruct);
                     }
+
+                    //console.log('Whiteboard objects length ' + this.objs.length);
+
                     //alert(this.objs[this.objNo].uid);
                     virtualclass.wb.gObj.displayedObjId = this.objs[this.objNo].uid;
                 }
 
-                if (typeof this.callBkfunc == 'function') {
-                    if (this.objs[this.objs.length - 1].uid == virtualclass.wb.gObj.displayedObjId) {
+                console.log('Whiteboard : Till now play ' + virtualclass.wb.gObj.displayedObjId);
+
+                if (this.objs[this.objs.length - 1].uid == virtualclass.wb.gObj.displayedObjId) {
+                    if (typeof this.callBkfunc == 'function') {
                         this.callBkfunc('callBkfunc');
                     }
+                    this.rendering = false; // Now rendering is finished
                 }
+
+                if(roles.hasControls()){
+                    if (virtualclass.wb.gObj.tempRepObjs[virtualclass.wb.gObj.tempRepObjs.length-1].uid == virtualclass.wb.gObj.displayedObjId){
+                        vcan.main.replayObjs = virtualclass.wb.gObj.tempRepObjs;
+                    }
+                }
+
 
                 if (typeof this.objs[this.objNo + 1] == 'object') {
                     if (typeof this.repMode != 'undefined' && this.repMode == 'fromBrowser') {
