@@ -19,9 +19,13 @@
         //TODO this should be dynamic
         if (type == 'editorRich') {
             var editorType = {lineWrapping: true};
-            var editorToolbar = {richTextToolbar: true, richTextShortcuts: true, readOnly: 'nocursor'}; //For RichText Editor here we need to make readOnly parameter
+            var editorToolbar = {richTextToolbar: true, richTextShortcuts: true, readOnly: false};
+            //------------------------------------------------------------------------------^---
+            // By Default, readOnly need to be false, and perform the action according to need.
+            // If we do readOnly : nocurosr by default then the bullet and number would not be generated on student window
+            // for more info about bug https://github.com/vidyamantra/virtualclass/issues/119
         } else {
-            var editorType = {lineNumbers: true, mode: 'markdown', readOnly: 'nocursor'};
+            var editorType = {lineNumbers: true, mode: 'markdown', readOnly: false};
             var editorToolbar = {defaultText: 'Markdown Editor '};
         }
 
@@ -258,7 +262,9 @@
                     console.log('received whole data');
 
                     if (roles.hasView()) {
-                        virtualclass[e.message.et].vcAdapter.removeOperations(e);
+                        if(typeof virtualclass[e.message.et].vcAdapter.removeOperations == 'function'){
+                            virtualclass[e.message.et].vcAdapter.removeOperations(e);
+                        }
                     }
 
                     if ((!roles.hasControls()) ||
@@ -419,7 +425,10 @@
             responseToRequest: function (toUser) {
                 var initPacket = this.getWrappedOperations(true);
                 initPacket.layoutEd = "1";  //this would be for create editor layout
-                initPacket.capp = virtualclass.currApp;
+                if(roles.isTeacher()){
+                    initPacket.capp = virtualclass.currApp; // this should pass only when user is educator
+                }
+
                 initPacket.et = this.etype;
 
                 if (toUser) {
