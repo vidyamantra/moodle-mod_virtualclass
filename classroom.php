@@ -34,8 +34,6 @@ $n  = optional_param('n', 0, PARAM_INT);  // ... virtualclass instance ID - it s
 $isplay  = optional_param('play', 0, PARAM_INT);  // Play recording
 $vcSid = optional_param('vcSid', 0, PARAM_INT); // virtual class session record id
 
-
-
 if ($id) {
     $cm         = get_coursemodule_from_id('virtualclass', $id, 0, false, MUST_EXIST);
     $course     = $DB->get_record('course', array('id' => $cm->course), '*', MUST_EXIST);
@@ -47,6 +45,9 @@ if ($id) {
 } else {
     print_error('You must specify a course_module ID or an instance ID');
 }
+
+// Theme color
+$theme = $virtualclass->themecolor;
 
 require_login($course, true, $cm);
 $context = context_module::instance($cm->id);
@@ -70,12 +71,12 @@ $PAGE->requires->jquery(true);
 $PAGE->requires->jquery_plugin('ui');
 $PAGE->requires->jquery_plugin('ui-css');
 
-$PAGE->requires->css(new moodle_url($CFG->wwwroot . '/mod/virtualclass/bundle/virtualclass/css/styles.css'));
-$PAGE->requires->css(new moodle_url($CFG->wwwroot . '/mod/virtualclass/bundle/virtualclass/bundle/jquery/css/base/jquery-ui.css'));
-$PAGE->requires->css(new moodle_url($CFG->wwwroot . '/mod/virtualclass/bundle/virtualclass/css/jquery.ui.chatbox.css'));
+$PAGE->requires->css(new moodle_url($CFG->wwwroot . '/mod/virtualclass/bundle/virtualclass/css/'.$theme.'/styles.css'));
+$PAGE->requires->css(new moodle_url($CFG->wwwroot . '/mod/virtualclass/bundle/virtualclass/bundle/jquery/css/base/'.$theme.'_jquery-ui.css'));
+$PAGE->requires->css(new moodle_url($CFG->wwwroot . '/mod/virtualclass/bundle/virtualclass/css/'.$theme.'/jquery.ui.chatbox.css'));
 $PAGE->requires->css(new moodle_url($CFG->wwwroot . '/mod/virtualclass/bundle/virtualclass/codemirror/lib/codemirror.css'));
-$PAGE->requires->css(new moodle_url($CFG->wwwroot . '/mod/virtualclass/bundle/virtualclass/css/vceditor.css'));
-$PAGE->requires->css(new moodle_url($CFG->wwwroot . '/mod/virtualclass/bundle/virtualclass/css/popup.css'));
+$PAGE->requires->css(new moodle_url($CFG->wwwroot . '/mod/virtualclass/bundle/virtualclass/css/'.$theme.'/vceditor.css'));
+$PAGE->requires->css(new moodle_url($CFG->wwwroot . '/mod/virtualclass/bundle/virtualclass/css/'.$theme.'/popup.css'));
 
 
 
@@ -97,15 +98,7 @@ $sid = $USER->sesskey;
 
 $r = 's'; // Default role.
 $role  = 'student';
-$dap = "false";
-$classes = "audioTool deactive";
-//$isplay = false;
-$speakermsg = get_string('enablespeaker', 'virtualclass');
-
-
-$pressingimg = $whiteboardpath . "images/speakerpressing.png";
 $cont_class = '';
-
 
 if (has_capability('mod/virtualclass:addinstance', $context)) {
     if ($USER->id == $virtualclass->moderatorid && !$isplay) {
@@ -118,13 +111,32 @@ if (has_capability('mod/virtualclass:addinstance', $context)) {
     }
 }
 $cont_class .= $role;
-
-if($isplay){
-	$cont_class .=  " playMode";
-	
+if(empty($virtualclass->moderatorid)) {
+    $anyonepresenter = 1;
+} else {
+    $anyonepresenter = 0;
 }
+if($isplay){
+	$cont_class .=  " playMode";	
+}
+// Push to talk
+$cont_class  .=  $virtualclass->pushtotalk ? ' pt_enable' : ' pt_disable';
 
-
+// Audio enable/disable
+if($virtualclass->audio){
+    $classes = "audioTool active";
+    $speakermsg = "Disable Speaker";
+    $dap = "true";
+    $speakerimg = $whiteboardpath . "images/speakerpressingactive.png";
+    $audio_tooltip =  get_string('disableAudio','virtualclass');
+} else {
+    $dap = "false";
+    $classes = "audioTool deactive";
+    //$isplay = false;
+    $speakermsg = get_string('enablespeaker', 'virtualclass');
+    $pressingimg = $whiteboardpath . "images/speakerpressing.png";
+    $audio_tooltip =  get_string('enableAudio','virtualclass');
+}
 
 // Output starts here.
 echo $OUTPUT->header();
@@ -150,6 +162,7 @@ if ($USER->id) {
 //    wbUser.fname =  '<?php // echo $USER->firstname; ?>';
     wbUser.lname =  '<?php echo $USER->lastname; ?>';
     wbUser.name =  '<?php echo $USER->firstname; ?>';
+    wbUser.anyonepresenter =  '<?php echo $anyonepresenter ?>';
     
     window.whiteboardPath =  '<?php echo $whiteboardpath; ?>';
     window.importfilepath = "<?php echo $CFG->wwwroot."/mod/virtualclass/recording.php?cmid=".$cm->id ?>";
@@ -187,7 +200,7 @@ echo html_writer::start_tag('div', array('id' => 'virtualclassCont', 'class' => 
                 <div style="clear:both;"></div>
            </div>
     <?php
-        }
+    }
     
     echo html_writer::start_tag('div', array('id' => 'virtualclassWhiteboard', 'class' => 'vmApp virtualclass'));
         echo html_writer::start_tag('div', array('id' => 'vcanvas', 'class' => 'canvasMsgBoxParent'));
@@ -341,14 +354,14 @@ echo '<div id="chatWidget">
           </div>
 
         <!-- For Session End window -->
-         <div id="sessionEndMsgCont" class="popupWindow">
-          <span id="sessionEndClose" class="icon-close"></span>
-
-         <span id="sessionEndMsg">'.get_string('sessionendmsg','virtualclass') .'</span>
-
-
-         </div>
-
+        <div id="sessionEndMsgCont" class="popupWindow">
+            <span id="sessionEndClose" class="icon-close"></span>
+            <span id="sessionEndMsg">'.get_string('sessionendmsg','virtualclass') .'</span>
+        </div>
+        <!--For confirm window-->
+            <div id="waitMsgCont" class="popupWindow">
+                <span id="waitMsg"> '.get_string('waitmsgconnect','virtualclass') .'</span>
+            </div>
         </div>
     </div>
 </div>';

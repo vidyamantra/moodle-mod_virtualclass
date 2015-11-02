@@ -73,7 +73,7 @@ function xmldb_virtualclass_upgrade($oldversion) {
      * Finally, return of upgrade result (true, all went good) to Moodle.
      */
      
-     if ($oldversion < 2015072402) {
+    if ($oldversion < 2015072402) {
 
         // Define table virtualclass_files to virtualclass.
         $table = new xmldb_table('virtualclass_files');
@@ -97,5 +97,40 @@ function xmldb_virtualclass_upgrade($oldversion) {
         upgrade_mod_savepoint(true, 2015072402, 'virtualclass');
     }
 
+    if ($oldversion < 2015103000) {
+        $table = new xmldb_table('virtualclass');
+        $field = new xmldb_field('themecolor', XMLDB_TYPE_CHAR, '225', null, null, null, '0', 'closetime');
+        
+        // Conditionally launch add field themecolor.
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+
+        $table = new xmldb_table('virtualclass');
+        $field = new xmldb_field('audio', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, '0', 'themecolor');
+
+        // Conditionally launch add field audio.
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+        
+        $table = new xmldb_table('virtualclass');
+        $field = new xmldb_field('pushtotalk', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, '0', 'audio');
+        
+        // Conditionally launch add field pushtotalk.
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+        upgrade_mod_savepoint(true, 2015103000, 'virtualclass');
+        
+    }
+
+
     return true;
 }
+
+/*
+ALTER TABLE  `mdl_virtualclass` ADD  `themecolor` VARCHAR( 225 ) NULL DEFAULT NULL AFTER  `closetime` ,
+ADD  `audio` BIGINT( 10 ) NOT NULL DEFAULT  '0' AFTER  `themecolor` ,
+ADD  `pushtotalk` BIGINT( 10 ) NOT NULL DEFAULT  '0' AFTER  `audio` ;
+*/

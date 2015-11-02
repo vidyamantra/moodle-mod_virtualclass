@@ -71,8 +71,17 @@ class mod_virtualclass_mod_form extends moodleform_mod {
         }
         $mform->addElement('select', 'moderatorid', get_string('selectteacher', 'virtualclass'), $teacheroptions);
         $mform->addHelpButton('moderatorid', 'selectteacher', 'virtualclass');
-        $mform->addRule('moderatorid', get_string('error'), 'required', null, 'client');
-
+        //$mform->addRule('moderatorid', get_string('error'), 'required', null, 'client');
+        $mform->disabledIf('moderatorid', 'anyonepresenter', 'checked');
+        
+        $mform->addElement('checkbox', 'anyonepresenter', get_string('anyonepresenter', 'virtualclass'));
+        $mform->addHelpButton('anyonepresenter', 'anyonepresenter', 'virtualclass');
+        if(empty($teacheroptions)) {
+            $mform->setDefault('anyonepresenter', 'checked');
+        }
+        //$mform->enabledIf('Anyonepresenter', 'moderatorid', '');
+        
+        // Schedule fo session
         $mform->addElement('header', 'general', get_string('sessionsschedule', 'virtualclass'));
         $mform->addElement('date_time_selector', 'opentime', get_string('opentime', 'virtualclass'));
         // $mform->setDefault('timeavailable', 0);
@@ -80,6 +89,19 @@ class mod_virtualclass_mod_form extends moodleform_mod {
         $mform->addElement('date_time_selector', 'closetime', get_string('closetime', 'virtualclass'));
         // $mform->setDefault('timedue', 0);
         $mform->addRule('closetime', null, 'required', null, 'client');
+        
+        // Layout settings
+        $mform->addElement('header', 'general', get_string('customsetting', 'virtualclass'));
+        $themeoptions = array('black' =>'Black', 'white' => 'White', 'gray' => 'Gray');
+        $mform->addElement('select', 'themecolor', get_string('selectcolor', 'virtualclass'), $themeoptions);
+        $mform->addHelpButton('themecolor', 'selectcolor', 'virtualclass');
+        $audiooptions = array('Disable', 'Enable');
+        $mform->addElement('select', 'audio', get_string('audio', 'virtualclass'), $audiooptions);
+        $mform->addHelpButton('audio', 'audio', 'virtualclass');
+        
+        $pushtotalkoptions = array('Disable', 'Enable');
+        $mform->addElement('select', 'pushtotalk', get_string('pushtotalk', 'virtualclass'), $pushtotalkoptions);
+        $mform->addHelpButton('pushtotalk', 'pushtotalk', 'virtualclass');
 
         // Add standard elements, common to all modules.
         $this->standard_coursemodule_elements();

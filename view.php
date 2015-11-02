@@ -115,7 +115,12 @@ $user = $DB->get_record('user', array('id' => $virtualclass->moderatorid));
 echo html_writer::start_tag('div', array('class'=>'wrapper-button'));
 
 echo html_writer::tag('div', get_string('virtualclasstiming', 'mod_virtualclass', $a));
-echo html_writer::tag('div', get_string('teachername', 'mod_virtualclass', $user));
+if (!empty($virtualclass->moderatorid)) {
+    echo html_writer::tag('div', get_string('teachername', 'mod_virtualclass', $user));
+} else {
+    echo html_writer::tag('div', 'Moderator : None');
+}
+    
 // Conditions to show the intro can change to look for own settings or whatever.
 if ($virtualclass->intro) {
     echo $OUTPUT->box(format_module_intro('virtualclass', $virtualclass, $cm->id), 'generalbox mod_introbox', 'virtualclassintro');
@@ -133,6 +138,10 @@ echo '<pre>';
 print_r($virtualclass);
 echo time();
 exit; */
+$themecolor = $virtualclass->themecolor;
+$audio = $virtualclass->audio;
+$pushtotalk = $virtualclass->pushtotalk;
+$anyonepresenter = empty($virtualclass->moderatorid) ? 1 :0;
 // Check virtualclass is open.
 if ($virtualclass->closetime > time() && $virtualclass->opentime <= time()) {    
     $room = $course->id . "_" . $cm->id;
@@ -158,13 +167,13 @@ if ($virtualclass->closetime > time() && $virtualclass->opentime <= time()) {
         $role = 's'; // Default role.
         $info = false; // Debugging off.
 
-	$murl = parse_url($CFG->wwwroot);
+        $murl = parse_url($CFG->wwwroot);
 
-	if($murl['scheme'] == 'https'){
-	   $sendmurl = $CFG->wwwroot;
-	} else {
-	   $sendmurl = str_replace("http://", "https://", $CFG->wwwroot);
-	}
+    	if($murl['scheme'] == 'https'){
+    	   $sendmurl = $CFG->wwwroot;
+    	} else {
+    	   $sendmurl = str_replace("http://", "https://", $CFG->wwwroot);
+    	}
         $mysession = session_id();
         $upload = $sendmurl ."/mod/virtualclass/recording.php?cmid=$cm->id&key=$mysession";
         $down = $CFG->wwwroot ."/mod/virtualclass/play_recording.php?cmid=$cm->id";
@@ -178,7 +187,7 @@ if ($virtualclass->closetime > time() && $virtualclass->opentime <= time()) {
             $info = true;
         }
         $form = virtualclass_online_server($url, $authusername, $authpassword, $role, $rid, $room,
-                    $popupoptions, $popupwidth, $popupheight, $upload, $down, $info);
+                    $popupoptions, $popupwidth, $popupheight, $upload, $down, $info, $anyonepresenter, $audio, $pushtotalk, $themecolor);
         echo $form; 
     }
 } else {

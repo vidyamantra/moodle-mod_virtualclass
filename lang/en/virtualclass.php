@@ -83,4 +83,15 @@ $string['virtualclass:recordingdelete'] = 'Delete recording';
 $string['virtualclass:recordingupload'] = 'Upload recorded file';
 $string['virtualclass:view'] = 'View virtualclass';
 $string['wheretorunvirtualclass'] = 'From where to serve Virtualclass App';
-
+$string['anyonepresenter'] = 'Anyone can be a presenter';
+$string['anyonepresenter_help'] = 'If enable anyone (including student) can be a presenter.';
+$string['customsetting'] = 'Custom settings';
+$string['selectcolor'] = 'Select color';
+$string['audio'] = 'Audio';
+$string['audio_help'] = 'If enable , By default audio of all student will be enabled.';
+$string['pushtotalk'] = 'Push to talk';
+$string['pushtotalk_help'] = 'If enable , an extra option for audio testing display.';
+$string['selectcolor_help'] = 'Choose your own color for your classroom';
+$string['enableAudio'] = 'Enable audio';
+$string['disableAudio'] = 'Disable audio';
+$string['waitmsgconnect'] = 'Please wait a whlie. Application is trying to connect.';

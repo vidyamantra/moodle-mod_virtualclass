@@ -98,7 +98,10 @@ function virtualclass_add_instance(stdClass $virtualclass, mod_virtualclass_mod_
  */
 function virtualclass_update_instance(stdClass $virtualclass, mod_virtualclass_mod_form $mform = null) {
     global $DB;
-
+//print_r($virtualclass);exit;
+    if(!empty($virtualclass->anyonepresenter)) {
+        $virtualclass->moderatorid = 0;
+    }
     $virtualclass->timemodified = time();
     $virtualclass->id = $virtualclass->instance;
 
