@@ -71,14 +71,6 @@ $PAGE->requires->jquery(true);
 $PAGE->requires->jquery_plugin('ui');
 $PAGE->requires->jquery_plugin('ui-css');
 
-$PAGE->requires->css(new moodle_url($CFG->wwwroot . '/mod/virtualclass/bundle/virtualclass/css/'.$theme.'/styles.css'));
-$PAGE->requires->css(new moodle_url($CFG->wwwroot . '/mod/virtualclass/bundle/virtualclass/bundle/jquery/css/base/'.$theme.'_jquery-ui.css'));
-$PAGE->requires->css(new moodle_url($CFG->wwwroot . '/mod/virtualclass/bundle/virtualclass/css/'.$theme.'/jquery.ui.chatbox.css'));
-$PAGE->requires->css(new moodle_url($CFG->wwwroot . '/mod/virtualclass/bundle/virtualclass/codemirror/lib/codemirror.css'));
-$PAGE->requires->css(new moodle_url($CFG->wwwroot . '/mod/virtualclass/bundle/virtualclass/css/'.$theme.'/vceditor.css'));
-$PAGE->requires->css(new moodle_url($CFG->wwwroot . '/mod/virtualclass/bundle/virtualclass/css/'.$theme.'/popup.css'));
-
-
 
 // Chrome extension for desktop sharing.
 echo '<link rel="chrome-webstore-item" href="https://chrome.google.com/webstore/detail/ijhofagnokdeoghaohcekchijfeffbjl">';
@@ -91,6 +83,18 @@ $completion->set_module_viewed($cm);
 $info = 0;
 if ($CFG->debug == 32767 && $CFG->debugdisplay == 1) {
     $info = 1;
+}
+
+$PAGE->requires->css(new moodle_url($CFG->wwwroot . '/mod/virtualclass/bundle/virtualclass/codemirror/lib/codemirror.css'));
+$PAGE->requires->css(new moodle_url($CFG->wwwroot . '/mod/virtualclass/bundle/virtualclass/bundle/jquery/css/base/'.$theme.'_jquery-ui.css'));
+
+if($info){
+    $PAGE->requires->css(new moodle_url($CFG->wwwroot . '/mod/virtualclass/bundle/virtualclass/css/'.$theme.'/styles.css'));
+    $PAGE->requires->css(new moodle_url($CFG->wwwroot . '/mod/virtualclass/bundle/virtualclass/css/'.$theme.'/popup.css'));
+    $PAGE->requires->css(new moodle_url($CFG->wwwroot . '/mod/virtualclass/bundle/virtualclass/css/'.$theme.'/jquery.ui.chatbox.css'));
+    $PAGE->requires->css(new moodle_url($CFG->wwwroot . '/mod/virtualclass/bundle/virtualclass/css/'.$theme.'/vceditor.css'));
+}else{
+    $PAGE->requires->css(new moodle_url($CFG->wwwroot . '/mod/virtualclass/bundle/virtualclass/css/'.$theme.'.min.css'));
 }
 
 $whiteboardpath = $CFG->wwwroot . "/mod/virtualclass/bundle/virtualclass/";
