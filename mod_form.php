@@ -56,12 +56,12 @@ class mod_virtualclass_mod_form extends moodleform_mod {
 
         // Adding the standard "intro" and "introformat" fields.
         //$this->add_intro_editor();
-       //  $this->standard_intro_elements();
-	   if($CFG->version > 2014111007.02){
-			$this->standard_intro_elements();
-		} else {
-			$this->add_intro_editor(); //moodle.28 or earlier
-		}
+        //  $this->standard_intro_elements();
+        if($CFG->version > 2014111008){
+            $this->standard_intro_elements();
+        } else {
+            $this->add_intro_editor(); //moodle.2.8.9 or earlier
+        }
 
         // Adding the rest of virtualclass settings
         // Adding list of teachers.
@@ -73,14 +73,14 @@ class mod_virtualclass_mod_form extends moodleform_mod {
         $mform->addHelpButton('moderatorid', 'selectteacher', 'virtualclass');
         //$mform->addRule('moderatorid', get_string('error'), 'required', null, 'client');
         $mform->disabledIf('moderatorid', 'anyonepresenter', 'checked');
-        
+
         $mform->addElement('checkbox', 'anyonepresenter', get_string('anyonepresenter', 'virtualclass'));
         $mform->addHelpButton('anyonepresenter', 'anyonepresenter', 'virtualclass');
         if(empty($teacheroptions)) {
             $mform->setDefault('anyonepresenter', 'checked');
         }
         //$mform->enabledIf('Anyonepresenter', 'moderatorid', '');
-        
+
         // Schedule fo session
         $mform->addElement('header', 'general', get_string('sessionsschedule', 'virtualclass'));
         $mform->addElement('date_time_selector', 'opentime', get_string('opentime', 'virtualclass'));
@@ -89,7 +89,7 @@ class mod_virtualclass_mod_form extends moodleform_mod {
         $mform->addElement('date_time_selector', 'closetime', get_string('closetime', 'virtualclass'));
         // $mform->setDefault('timedue', 0);
         $mform->addRule('closetime', null, 'required', null, 'client');
-        
+
         // Layout settings
         $mform->addElement('header', 'general', get_string('customsetting', 'virtualclass'));
         $themeoptions = array('black' =>'Black', 'white' => 'White', 'gray' => 'Gray');
@@ -98,7 +98,7 @@ class mod_virtualclass_mod_form extends moodleform_mod {
         $audiooptions = array('Disable', 'Enable');
         $mform->addElement('select', 'audio', get_string('audio', 'virtualclass'), $audiooptions);
         $mform->addHelpButton('audio', 'audio', 'virtualclass');
-        
+
         $pushtotalkoptions = array('Disable', 'Enable');
         $mform->addElement('select', 'pushtotalk', get_string('pushtotalk', 'virtualclass'), $pushtotalkoptions);
         $mform->addHelpButton('pushtotalk', 'pushtotalk', 'virtualclass');

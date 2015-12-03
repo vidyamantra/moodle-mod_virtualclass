@@ -25,11 +25,9 @@
 defined('MOODLE_INTERNAL') || die;
 
 if ($ADMIN->fulltree) {
-
     $defaultrun = array();
     $defaultrun[0] = get_string("liverun", "virtualclass");
     $defaultrun[1] = get_string("localrun", "virtualclass");
-
     $settings->add(new admin_setting_configselect('virtualclass_serve', get_string('wheretorunvirtualclass', 'virtualclass'),
             get_string('configactiontolocalrun', 'virtualclass'), 0, $defaultrun));
 }

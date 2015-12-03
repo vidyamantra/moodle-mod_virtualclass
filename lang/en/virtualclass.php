@@ -30,7 +30,7 @@ defined('MOODLE_INTERNAL') || die();
 
 $string['modulename'] = 'Virtualclass';
 $string['modulenameplural'] = 'Virtualclasss';
-$string['modulename_help'] = 'Use the virtualclass module for real-time online learning.  The virtualclass module allows you to participate in synchronous learning,which means that the teacher and students are logged into the virtual learning environment and interacting with each other at the same time.
+$string['modulename_help'] = 'Use the virtualclass module for real-time online learning.  virtualclass module allows you to participate in synchronous learning,which means that the teacher and students are logged into the virtual learning environment and interacting with each other at the same time.
 This module provide students with asynchronous communication tools, such as whiteboard and chat capabilities';
 
 $string['audiotest'] = 'Test Audio';
@@ -82,7 +82,7 @@ $string['virtualclass:dorecording'] = 'Save recoding';
 $string['virtualclass:recordingdelete'] = 'Delete recording';
 $string['virtualclass:recordingupload'] = 'Upload recorded file';
 $string['virtualclass:view'] = 'View virtualclass';
-$string['wheretorunvirtualclass'] = 'From where to serve Virtualclass App';
+$string['wheretorunvirtualclass'] = 'From where to serve virtualclass App';
 $string['anyonepresenter'] = 'Anyone can be a presenter';
 $string['anyonepresenter_help'] = 'If enable anyone (including student) can be a presenter.';
 $string['customsetting'] = 'Custom settings';

@@ -32,7 +32,7 @@ defined('MOODLE_INTERNAL') || die();
 
 /*
  * Example constant:
- * define(' VIRTUALCLASS_ULTIMATE_ANSWER', 42);
+ * define(' virtualclass_ULTIMATE_ANSWER', 42);
  */
 
 /**
@@ -82,7 +82,7 @@ function virtualclass_add_instance(stdClass $virtualclass, mod_virtualclass_mod_
     $virtualclass->id = $vclass;
     update_calendar($virtualclass);
     return $vclass;
-    
+
 }
 
 /**
@@ -126,11 +126,8 @@ function virtualclass_delete_instance($id) {
     if (! $virtualclass = $DB->get_record('virtualclass', array('id' => $id))) {
         return false;
     }
-
     // Delete any dependent records here.
-
     $DB->delete_records('virtualclass', array('id' => $virtualclass->id));
-
     return true;
 }
 

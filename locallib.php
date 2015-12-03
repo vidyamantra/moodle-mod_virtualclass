@@ -85,6 +85,7 @@ function virtualclass_online_server($url, $authusername, $authpassword, $role, $
     $form .= html_writer::empty_tag('input', array('type' => 'hidden', 'name' => 'audio', 'value' => $audio));
     $form .= html_writer::empty_tag('input', array('type' => 'hidden', 'name' => 'themecolor', 'value' => $themecolor));
     $form .= html_writer::empty_tag('input', array('type' => 'hidden', 'name' => 'pushtotalk', 'value' => $pushtotalk));
+    $form .= html_writer::empty_tag('input', array('type' => 'hidden', 'name' => 'anyonepresenter', 'value' => $anyonepresenter));
     $form .= html_writer::empty_tag('input', array('type' => 'submit', 'name' => 'submit',
          'value' => get_string('joinroom', 'virtualclass')));
     $form .= html_writer::end_tag('form');
@@ -130,12 +131,12 @@ function update_calendar($virtualclass) {
             $calendarevent->update($event);
         } else {
             unset($event->id);
-            $event->courseid    = $virtualclass->course;
-            $event->groupid     = 0;
-            $event->userid      = 0;
-            $event->modulename  = 'virtualclass';
-            $event->instance    = $virtualclass->id;
-            $event->eventtype   = 'open';
+            $event->courseid = $virtualclass->course;
+            $event->groupid = 0;
+            $event->userid = 0;
+            $event->modulename = 'virtualclass';
+            $event->instance = $virtualclass->id;
+            $event->eventtype = 'open';
             $event->timeduration = 0;
             calendar_event::create($event);
         }
@@ -163,27 +164,27 @@ function deleteAll($directory, $empty = false) {
         return false;
     } else {
         $directoryHandle = opendir($directory);
-       
+
         while ($contents = readdir($directoryHandle)) {
             if($contents != '.' && $contents != '..') {
                 $path = $directory . "/" . $contents;
-               
+
                 if(is_dir($path)) {
                     deleteAll($path);
                 } else {
                     unlink($path);
                 }
             }
-        }      
+        }
         closedir($directoryHandle);
         if($empty == false) {
             if(!rmdir($directory)) {
                 return false;
             }
-        }       
+        }
         return true;
     }
-} 
+}
 
 /**
  * Returns the rename action.
@@ -235,7 +236,6 @@ if ($mod->has_view() && $hasmanageactivities && course_ajax_enabled($COURSE) &&
     return '';
 }
 
-
 /**
  * Generate random string of specified length
  *
@@ -252,4 +252,3 @@ function generateRandomString($length = 11) {
     }
     return $randomString;
 }
-

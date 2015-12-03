@@ -22,14 +22,14 @@
  * /admin/index.php
  *
  * @package    mod_virtualclass
- * @copyright  2014 Pinky Sharma
+ * @copyright  2015 Pinky Sharma
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version   = 2015103000;      // The current module version (Date: YYYYMMDDXX).
-$plugin->release = '1.2 (Build: 2015072402)';
+$plugin->version   = 2015111200;      // The current module version (Date: YYYYMMDDXX).
+$plugin->release = '2.0 (Build: 2015111200)';
 $plugin->requires  = 2014051202;      // Requires this Moodle version.(2.7.2+)
 $plugin->cron      = 0;               // Period for cron to check this module (secs).
 $plugin->component = 'mod_virtualclass'; // To check on upgrade, that module sits in correct place.

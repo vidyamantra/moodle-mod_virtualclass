@@ -71,6 +71,8 @@ $PAGE->requires->jquery(true);
 $PAGE->requires->jquery_plugin('ui');
 $PAGE->requires->jquery_plugin('ui-css');
 
+$PAGE->requires->css(new moodle_url($CFG->wwwroot . '/mod/virtualclass/bundle/virtualclass/codemirror/lib/codemirror.css'));
+$PAGE->requires->css(new moodle_url($CFG->wwwroot . '/mod/virtualclass/bundle/virtualclass/bundle/jquery/css/base/'.$theme.'_jquery-ui.css'));
 
 // Chrome extension for desktop sharing.
 echo '<link rel="chrome-webstore-item" href="https://chrome.google.com/webstore/detail/ijhofagnokdeoghaohcekchijfeffbjl">';
@@ -84,16 +86,13 @@ $info = 0;
 if ($CFG->debug == 32767 && $CFG->debugdisplay == 1) {
     $info = 1;
 }
-
-$PAGE->requires->css(new moodle_url($CFG->wwwroot . '/mod/virtualclass/bundle/virtualclass/codemirror/lib/codemirror.css'));
-$PAGE->requires->css(new moodle_url($CFG->wwwroot . '/mod/virtualclass/bundle/virtualclass/bundle/jquery/css/base/'.$theme.'_jquery-ui.css'));
-
-if($info){
+// File included if debugging on
+if($info) { 
     $PAGE->requires->css(new moodle_url($CFG->wwwroot . '/mod/virtualclass/bundle/virtualclass/css/'.$theme.'/styles.css'));
     $PAGE->requires->css(new moodle_url($CFG->wwwroot . '/mod/virtualclass/bundle/virtualclass/css/'.$theme.'/popup.css'));
     $PAGE->requires->css(new moodle_url($CFG->wwwroot . '/mod/virtualclass/bundle/virtualclass/css/'.$theme.'/jquery.ui.chatbox.css'));
-    $PAGE->requires->css(new moodle_url($CFG->wwwroot . '/mod/virtualclass/bundle/virtualclass/css/'.$theme.'/vceditor.css'));
-}else{
+    $PAGE->requires->css(new moodle_url($CFG->wwwroot . '/mod/virtualclass/bundle/virtualclass/css/'.$theme.'/vceditor.css'));   
+} else {
     $PAGE->requires->css(new moodle_url($CFG->wwwroot . '/mod/virtualclass/bundle/virtualclass/css/'.$theme.'.min.css'));
 }
 
@@ -188,8 +187,8 @@ if($info){
 }
 
 echo html_writer::start_tag('div', array('id' => 'virtualclassCont', 'class' => "$cont_class"));
-   
-   if($isplay){
+
+   if ($isplay) {
             ?>
            <div id="playControllerCont">
                 <div id="playController">
@@ -205,7 +204,7 @@ echo html_writer::start_tag('div', array('id' => 'virtualclassCont', 'class' => 
            </div>
     <?php
     }
-    
+
     echo html_writer::start_tag('div', array('id' => 'virtualclassWhiteboard', 'class' => 'vmApp virtualclass'));
         echo html_writer::start_tag('div', array('id' => 'vcanvas', 'class' => 'canvasMsgBoxParent'));
             echo html_writer::tag('div', '', array('id' => 'containerWb'));
@@ -216,7 +215,6 @@ echo html_writer::start_tag('div', array('id' => 'virtualclassCont', 'class' => 
             echo html_writer::tag('div', '', array('class' => 'clear'));
         echo html_writer::end_tag('div');
     echo html_writer::end_tag('div');
-
 
     echo html_writer::start_tag('div', array('id' => 'audioWidget'));
         echo html_writer::start_tag('div', array('id' => 'mainAudioPanel'));
@@ -233,17 +231,15 @@ echo html_writer::start_tag('div', array('id' => 'virtualclassCont', 'class' => 
     //            echo html_writer::start_tag('div', array('id' => 'silenceDetect', 'class' => 'audioTool', 'data-silence-detect' => 'stop'));
                     //echo "sd";
             echo html_writer::end_tag('div');
-        
-        
+
             echo html_writer::start_tag('div', array('id' => 'alwaysPress'));
                 echo html_writer::start_tag('div', array('id' => 'speakerPressing', 'class' => $classes));
                     echo html_writer::start_tag('a', array('id' => 'speakerPressingAnch', 'name' => 'speakerPressingAnch'));
                         echo html_writer::start_tag('div', array('id' => 'speakerPressingButton', 'class' => "icon-speakerPressing"));
 
-    //                        echo html_writer::tag('div',  array("class" => 'clear'));     
+    //                        echo html_writer::tag('div',  array("class" => 'clear'));
                         echo html_writer::end_tag('div');
                         echo html_writer::tag('div', '', array('class' => 'clear'));
-
 
                         echo html_writer::start_tag('div', array('id' => 'speakerPressingtext'));
                             echo get_string("pushtotalk", "virtualclass") ;
@@ -251,11 +247,10 @@ echo html_writer::start_tag('div', array('id' => 'virtualclassCont', 'class' => 
                     echo html_writer::end_tag('a');
                 echo html_writer::end_tag('div');
             echo html_writer::end_tag('div');
-        
+
          echo html_writer::end_tag('div');
       //  $pressonceimg = $whiteboardpath . "images/speakerpressonce.png";
-    
-    
+
         echo html_writer::start_tag('div', array('id' => 'audioTest-box'));
             echo html_writer::start_tag('div', array('id' => 'audioTest', 'class' => 'audioTool'));
     //            $audioimg = $whiteboardpath . "images/audiotest.png";
